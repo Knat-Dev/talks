@@ -1,6 +1,6 @@
 # Decoupling in Angular: Letting the Code Tell You What It Needs
 
-## Full Talk Script (Final Version v4)
+## Full Talk Script (v8 - Teaching Version)
 
 ---
 
@@ -13,139 +13,144 @@ Dor Peled
 @Knat-Dev
 
 Software Engineer @ Coralogix
-4 years in the industry
-I love metal and code 🤘
+I tend to stay with hard things longer than is comfortable
 ```
 
 **You say:**
 
-"Hey everyone! I'm Dor, I go by Knat-Dev online. I'm a software engineer at Coralogix, been in the industry for about four years now.
+"Hey everyone, I'm Dor. I'm a software engineer at Coralogix.
 
-Two things I love: metal and code. Sometimes at the same time.
+I've noticed something about myself over the years.
 
-Today I want to share a story about a refactor that taught me how to listen to code."
+When something gets complicated or messy, I usually don't bounce right away. I tend to sit with it and try to understand what's actually going on.
+
+That shows up in different places. In music, I play technical metal, where shortcuts are very obvious. In reading, I gravitate toward long, dense series like Malazan Book of the Fallen and The Wheel of Time.
+
+Not because they're impressive, but because they don't explain themselves quickly. You have to hold a lot in your head, trust that structure exists, and keep going even when it's unclear.
+
+And large Angular codebases behave the same way. They don't fail immediately. They accumulate complexity quietly. And if you don't stay with them long enough, you miss the signals that tell you what they actually need.
+
+So this talk isn't about best practices or patterns. It's about what I learned by staying with components that were under pressure.
+
+How do you know when a component needs to be split up? And more importantly, how do you split it without guessing?
+
+I'm gonna give you a mental model. Four tools, and the cues that tell you when to use each one."
 
 ---
 
-### Slide 2 – The Setup
+### Slide 2 – The Universal Story
 
 **On screen:**
 
 ```
-Month 1:
-  rowData
-  loading
+Every Angular dev has written this component:
 
-That's it. That's the component.
+Month 1: Clean, simple, works great
+Month 6: "Why is this so hard to change?"
 ```
 
 **You say:**
 
-"Six months ago, we built a data grid from scratch. Clean slate. No legacy.
+"So here's a story you've probably lived.
 
-Month one: two inputs. Row data. Loading state.
+Month one, you build a component. It's clean. Two inputs, maybe an output. Life is good.
 
-Clear responsibility. Easy to test. Life was good."
+Month six, product wants a variation. And you realize... this thing is stuck. Every change breaks something else."
 
 ---
 
-### Slide 3 – The Accumulation
+### Slide 3 – Our Example: DataGrid
 
 **On screen:**
 
-```
-Month 6:
-  rowData
-  loading
-  isAggregation
-  onRowSelected
-  onAggregationRowSelected
-  ...and 5 more
+```typescript
+// Month 1
+@Component({ selector: 'app-data-grid' })
+export class DataGridComponent<T> {
+  data = input<T[]>([]);
+  columns = input<ColumnDef<T>[]>([]);
+  loading = input(false);
+}
 ```
 
 **You say:**
 
-"Month six.
+"Let's use a data grid as our example. Everyone's built one of these, right?
 
-Every feature added another input. Every consumer variation added another flag.
-
-Look at those outputs - `onRowSelected` AND `onAggregationRowSelected`. Two outputs for what should be one concept.
-
-We didn't inherit this mess. We built it. One reasonable decision at a time."
+Month one - three inputs. Data, columns, loading state. That's it. Clean."
 
 ---
 
-### Slide 4 – The Breaking Point
+### Slide 4 – Month 6
 
 **On screen:**
 
-```
-"Can we reuse this grid
- in two other places?"
+```typescript
+// Month 6
+@Component({ selector: 'app-data-grid' })
+export class DataGridComponent<T> {
+  data = input<T[]>([]);
+  columns = input<ColumnDef<T>[]>([]);
+  loading = input(false);
+  sortable = input(false);
+  filterable = input(false);
+  editable = input(false);
+  persistColumns = input(false);
+  showContextMenu = input(false);
+  // ... and it keeps growing
+}
 ```
 
 **You say:**
 
-"Then product asked the question.
+"Month six. Sortable, filterable, editable, persist columns, context menu...
 
-'Can we reuse this grid in two other places? Same core, slightly different behaviors.'
-
-And we discovered the component was welded shut."
+And here's the thing - we didn't inherit this mess. We built it. One reasonable feature at a time."
 
 ---
 
-**[MEME: "This is fine" dog in burning room]**
+<p align="center">
+  <img src="./assets/this-is-fine.jpg" alt="This is fine meme" width="500" />
+</p>
 
 ---
 
-**You say:**
-
-"Every variation required threading another flag through the entire stack.
-
-This talk is about how we took it apart - and the mental model I now use to see these signals before the deadline hits."
-
----
-
-### Slide 5 – The Real Enemy
+### Slide 5 – The Real Problem
 
 **On screen:**
 
 ```
 Coupling isn't the problem.
 
-Implicit coupling is.
+Hidden coupling is.
 ```
 
 **You say:**
 
-"Every system has coupling. That's not the issue.
+"But here's what I want you to understand.
 
-The issue is whether that coupling is visible and intentional - or scattered and accidental.
+Coupling isn't bad. Every system has coupling. The problem is when coupling is hidden. When you can't see it, you can't manage it.
 
-Today I'll show you four decoupling tools Angular gives us. When each one fits. And the signal that tells you it's time for the next one."
+Today I'll show you four tools Angular gives us, and the tells that show you when to reach for each one."
 
 ---
 
-### Slide 6 – Let's Pair
+### Slide 6 – The Four Tools
 
 **On screen:**
 
 ```
-Imagine we're pairing on this.
-
-You and me.
-Looking at the same screen.
+1. Inputs/Outputs     → Parent configures child
+2. Content Projection → Structure varies
+3. Strategy via DI    → Behavior A or B
+4. Directives         → Behavior A and B and C
 ```
 
 **You say:**
 
-"I want you to imagine something.
+"These are our four tools. Each one solves a different problem.
 
-We're sitting together. Pairing on this grid component. You're driving, I'm navigating.
-
-We're looking at the code, and I'm pointing at things saying 'see that? That's a signal.'
-
-Let's go."
+The trick isn't knowing the tools - you probably know all of these. The trick is recognizing WHEN to use each one."
 
 ---
 
@@ -155,64 +160,77 @@ Let's go."
 
 ```
 The Baseline
+
+Parent decides WHAT.
+Child decides HOW.
 ```
 
 **You say:**
 
-"Inputs and outputs. The baseline. Everyone's first tool.
+"Inputs and outputs. Everyone's first tool.
 
-Parent decides what. Child decides how.
-
-This is correct. This is where you start."
+Parent passes data down, child emits events up. Simple. This is where you start, and honestly, it's where you should stay as long as possible."
 
 ---
 
-### Slide 8 – Inputs/Outputs: The Code
+### Slide 8 – Inputs: The Code
 
 **On screen:**
 
 ```typescript
-@Component({
-  selector: 'app-data-grid',
-})
-export class DataGridComponent {
-  readonly rowData = input<Row[]>([]);
-  readonly loading = input(false);
+@Component({ selector: 'app-data-grid' })
+export class DataGridComponent<T> {
+  data = input<T[]>([]);
+  columns = input<ColumnDef<T>[]>([]);
+  loading = input(false);
+
+  rowClicked = output<T>();
+}
+```
+
+```html
+<app-data-grid
+  [data]="items"
+  [columns]="columns"
+  [loading]="isLoading"
+  (rowClicked)="onSelect($event)"
+/>
+```
+
+**You say:**
+
+"Clean contract. Parent owns the data, child owns the rendering. They can evolve independently.
+
+This is the right abstraction for simple cases."
+
+---
+
+### Slide 9 – The Smell: Boolean Flags
+
+**On screen:**
+
+```typescript
+// The smell:
+readonly isAdmin = input(false);
+readonly isReadOnly = input(false);
+readonly isCompactMode = input(false);
+
+// Component checking who's using it:
+if (this.isAdmin()) {
+  // show delete button
+}
+if (this.isCompactMode()) {
+  // hide some columns
 }
 ```
 
 **You say:**
 
-"Month one. Two inputs. Clean contract.
+"But here's the smell that inputs are breaking down.
 
-This is the right abstraction for this moment."
+Boolean flags. The component is asking 'who's using me?' and changing behavior based on the answer.
 
----
-
-### Slide 9 – Inputs/Outputs: The Signal
-
-**On screen:**
-
-```typescript
-// The signal it's breaking down:
-readonly isAggregation = input(false);
-
-handleRowClick(row: Row) {
-  if (this.isAggregation()) {
-    this.aggregationSelected.emit(row);
-    return;
-  }
-  this.rowSelected.emit(row);
-}
-```
-
-**You say:**
-
-"Here's the signal.
-
-The component is making decisions based on who's using it. It knows too much about its consumers.
-
-When you see `if` branches based on context flags - inputs have outgrown their welcome."
+When you see if-branches based on context flags, inputs have outgrown their welcome."
 
 ---
 
@@ -221,14 +239,16 @@ When you see `if` branches based on context flags - inputs have outgrown their w
 **On screen:**
 
 ```
-When structure varies
+When STRUCTURE varies.
+
+Not behavior. Structure.
 ```
 
 **You say:**
 
 "Content projection. The parent passes structure in, not configuration down.
 
-Use this when the variation is about what goes where - not about behavior."
+Use this when the variation is about WHAT goes WHERE. Headers, footers, custom templates."
 
 ---
 
@@ -238,54 +258,57 @@ Use this when the variation is about what goes where - not about behavior."
 
 ```typescript
 @Component({
-  selector: 'app-panel',
+  selector: 'app-card',
   template: `
-    <div class="header">
-      <ng-content select="[header]" />
-    </div>
-    <div class="body">
+    <div class="card">
+      <div class="header">
+        <ng-content select="[header]" />
+      </div>
       <ng-content />
     </div>
   `,
 })
-export class PanelComponent {}
+export class CardComponent {}
 ```
 
 ```html
-<app-panel>
+<app-card>
   <h2 header>My Title</h2>
-  <p>My content here</p>
-</app-panel>
+  <p>Card content here</p>
+</app-card>
 ```
 
 **You say:**
 
-"The panel owns layout. The consumer owns meaning.
+"The card owns layout. The consumer owns content.
 
-They evolve independently. Beautiful - when structure is what varies."
+Different consumers can put different things in, but the card doesn't need to know or care."
 
 ---
 
-### Slide 12 – Content Projection: The Signal
+### Slide 12 – The Tell: Behavior, Not Structure
 
 **On screen:**
 
 ```
-Works for: header, footer, actions
+Content projection works for:
+  ✓ Headers and footers
+  ✓ Custom row templates
+  ✓ Action buttons
 
 Doesn't work for:
-  "click this row differently"
-  "fetch data this way"
-  "navigate on enter"
+  ✗ "Save to localStorage vs server"
+  ✗ "Sort ascending vs descending by default"
+  ✗ "Fetch data this way vs that way"
 ```
 
 **You say:**
 
-"The signal it's breaking down?
+"But here's the tell it's breaking down.
 
-When you need different behavior, not different structure.
+You need different BEHAVIOR, not different structure. Content projection can't help you there.
 
-Content projection can't help you there."
+If you're trying to ng-content a function... you've gone too far."
 
 ---
 
@@ -294,255 +317,365 @@ Content projection can't help you there."
 **On screen:**
 
 ```
-When behavior is exclusive
+When behavior is exclusive.
 
 A or B. Never both.
 ```
 
 **You say:**
 
-"Strategy via dependency injection.
+"Strategy pattern via dependency injection.
 
-This is for mutually exclusive behavior. Exactly one wins at runtime.
-
-REST or WebSocket. Pagination or streaming. Log detail or aggregation drilldown."
+This is for mutually exclusive behavior. Exactly one implementation wins at runtime."
 
 ---
 
-### Slide 14 – Strategy: The Code
+### Slide 14 – Strategy: The Problem
 
 **On screen:**
 
 ```typescript
-export interface RowClickHandler {
-  handle(row: Row): void;
-}
+// The grid needs to persist column state
+// But WHERE it persists depends on context:
 
-export const ROW_CLICK_HANDLER =
-  new InjectionToken<RowClickHandler>('RowClickHandler');
-```
-
-```typescript
-// Context A:
-providers: [
-  {
-    provide: ROW_CLICK_HANDLER,
-    useClass: LogDetailHandler,
-  },
-];
-
-// Context B:
-providers: [
-  {
-    provide: ROW_CLICK_HANDLER,
-    useClass: AggregationHandler,
-  },
-];
+// Admin dashboard → save to server
+// Public view → save to localStorage
+// Preview mode → don't save at all
 ```
 
 **You say:**
 
-"The grid no longer knows which context it's in.
+"Let's say our grid persists column state. Width, order, visibility.
 
-It just calls the handler. The decision lives in the provider, where it belongs."
+But where it saves depends on who's using it. Server for admins, localStorage for regular users, nowhere for previews.
+
+Three different behaviors. The grid shouldn't know which one."
 
 ---
 
-### Slide 15 – Strategy: The Grid Now
+### Slide 15 – Strategy: The Interface
 
 **On screen:**
 
 ```typescript
-export class DataGridComponent {
-  private handler = inject(ROW_CLICK_HANDLER);
+// Define WHAT, not HOW
+export interface StorageStrategy {
+  save(key: string, data: unknown): void;
+  load(key: string): unknown | null;
+}
 
-  handleRowClick(row: Row) {
-    this.handler.handle(row);
+// Create a token
+export const STORAGE_STRATEGY =
+  new InjectionToken<StorageStrategy>('StorageStrategy');
+```
+
+**You say:**
+
+"Step one - define the contract. Save and load. That's it.
+
+The token lets Angular swap implementations."
+
+---
+
+### Slide 16 – Strategy: The Implementations
+
+**On screen:**
+
+```typescript
+// Implementation A: localStorage
+export class LocalStorageStrategy implements StorageStrategy {
+  save(key: string, data: unknown) {
+    localStorage.setItem(key, JSON.stringify(data));
+  }
+  load(key: string) {
+    return JSON.parse(localStorage.getItem(key) ?? 'null');
+  }
+}
+
+// Implementation B: Server
+export class ServerStorageStrategy implements StorageStrategy {
+  save(key: string, data: unknown) {
+    this.http.post('/api/preferences', { key, data });
+  }
+  load(key: string) {
+    return this.http.get(`/api/preferences/${key}`);
   }
 }
 ```
 
 **You say:**
 
-"No more `if (isAggregation)`.
-
-One line. The component is ignorant of its context. That's the goal."
+"Two implementations. Same interface. The grid doesn't know which one it's using."
 
 ---
 
-### Slide 16 – Strategy: The Signal
+### Slide 17 – Strategy: The Provider
 
 **On screen:**
 
 ```typescript
-@if (featureA() && featureB()) {
-  <row-variant-ab />
+// Context A: Admin dashboard
+@Component({
+  providers: [
+    { provide: STORAGE_STRATEGY, useClass: ServerStorageStrategy }
+  ]
+})
+export class AdminDashboard {}
+
+// Context B: Public view
+@Component({
+  providers: [
+    { provide: STORAGE_STRATEGY, useClass: LocalStorageStrategy }
+  ]
+})
+export class PublicView {}
+```
+
+**You say:**
+
+"The decision lives in the provider. Same grid component, different storage behavior.
+
+Zero if-statements in the grid. The context decides, not the component."
+
+---
+
+### Slide 18 – Provider Functions
+
+**On screen:**
+
+```typescript
+// Bundle defaults into a reusable function
+export function provideStorageDefaults(): Provider[] {
+  return [
+    { provide: STORAGE_STRATEGY, useClass: LocalStorageStrategy }
+  ];
 }
-@if (featureA() && !featureB()) {
-  <row-variant-a />
+
+// Provide once at app or feature level
+bootstrapApplication(AppComponent, {
+  providers: [provideStorageDefaults()]
+});
+
+// Override only where needed
+@Component({
+  providers: [
+    { provide: STORAGE_STRATEGY, useClass: ServerStorageStrategy }
+  ]
+})
+export class AdminDashboard {}
+```
+
+**You say:**
+
+"Pro tip - bundle your defaults into a provider function.
+
+Call it once at the top. Everything below gets the default. Override only where you need something different.
+
+DI hierarchy does the rest. Closest parent wins."
+
+---
+
+### Slide 19 – The Cue: God Component
+
+**On screen:**
+
+```typescript
+// The grid owns ALL the behaviors:
+@Component(...)
+export class DataGridComponent {
+  #storage = inject(STORAGE_STRATEGY);
+  #sorter = inject(SORT_STRATEGY);
+  #filter = inject(FILTER_STRATEGY);
+  #selection = inject(SELECTION_STRATEGY);
+  // Can't opt out of any of these
 }
 ```
 
 **You say:**
 
-"Here's the signal strategy is breaking down.
+"But here's the cue that something's wrong.
 
-The moment you need 'this AND that' - not 'this OR that' - strategy bends.
+The component is injecting four strategies. Six. Ten. It's becoming a god component.
 
-You're not choosing behavior anymore. You're accumulating it."
+Even with provider functions, you can't opt out. Every grid has storage, sorting, filtering, selection - whether you want them or not.
+
+The component is doing too much. It owns behaviors that should be optional."
 
 ---
 
-### Slide 17 – The Combinatorial Problem
+<p align="center">
+  <img src="./assets/one-does-not-simply.jpg" alt="One does not simply inject 6 strategies" width="500" />
+</p>
+
+---
+
+### Slide 20 – Tool 4: Directive Composition
 
 **On screen:**
 
 ```
-2 features → 4 cases
-3 features → 8 cases
-4 features → 16 cases
-```
+When behaviors ACCUMULATE.
 
-**You say:**
-
-"This is a combinatorial smell.
-
-The cases grow faster than the features. The template becomes the integration layer.
-
-And templates are terrible integration layers."
-
----
-
-**[MEME: "One does not simply handle every feature combination with @if blocks"]**
-
----
-
-### Slide 18 – Tool 4: Directive Composition
-
-**On screen:**
-
-```
-When behaviors accumulate
-
-This AND that AND that.
+A and B and C.
 ```
 
 **You say:**
 
 "Directive composition.
 
-Each behavior is a directive. They coexist on the same element. They compose by addition."
+Each behavior is a directive. They don't replace each other - they stack. They compose by addition."
 
 ---
 
-### Slide 19 – Directives: The Code
+### Slide 21 – Directives: The Code
 
 **On screen:**
 
 ```typescript
-@Directive({ selector: '[selectableRow]' })
-export class SelectableRowDirective {
-  readonly isSelected = signal(false);
-  toggle() {
-    this.isSelected.update((v) => !v);
+@Directive({ selector: 'app-data-grid[persistColumns]' })
+export class PersistColumnsDirective {
+  #storage = inject(STORAGE_STRATEGY);
+  // Uses whatever strategy is provided above in the tree
+}
+
+@Directive({ selector: 'app-data-grid[sortable]' })
+export class SortableDirective {
+  #grid = inject(DataGridComponent);
+  // Adds sorting behavior
+}
+```
+
+**You say:**
+
+"Each directive owns one behavior.
+
+The directive can use a strategy internally. It picks up whatever's provided in the DI tree - from the provider function we set up earlier.
+
+The directive is composable - you add it or you don't. The strategy inside is exclusive - localStorage OR server, never both."
+
+---
+
+### Slide 22 – Directives: Override When Needed
+
+**On screen:**
+
+```typescript
+// Most consumers: just add the directive, default works
+<app-data-grid persistColumns [data]="items" />
+
+// Admin dashboard needs server storage:
+@Component({
+  providers: [
+    { provide: STORAGE_STRATEGY, useClass: ServerStorageStrategy }
+  ]
+})
+export class AdminDashboard {}
+
+// Template is identical - directive picks up the override
+<app-data-grid persistColumns [data]="items" />
+```
+
+**You say:**
+
+"Most consumers just add the directive. The default works.
+
+But when you need different behavior, override the token in your component. The directive picks it up through DI hierarchy. Zero changes to the template."
+
+---
+
+### Slide 23 – Directives: The Usage
+
+**On screen:**
+
+```html
+<!-- Simple grid: just sorting -->
+<app-data-grid sortable [data]="items" />
+
+<!-- Full-featured: everything -->
+<app-data-grid
+  sortable
+  filterable
+  persistColumns
+  contextMenu
+  [data]="items"
+/>
+```
+
+**You say:**
+
+"Compose what you need. Skip what you don't.
+
+Simple view gets one directive. Power user view gets four. Same component."
+
+---
+
+### Slide 24 – Directive Communication
+
+**On screen:**
+
+```typescript
+@Directive({ selector: 'app-data-grid[sortable]' })
+export class SortableDirective {
+  // Inject the host component
+  #grid = inject(DataGridComponent);
+
+  constructor() {
+    // React to grid state via signals
+    effect(() => {
+      const data = this.#grid.data();
+      // Apply sorting...
+    });
   }
 }
-
-@Directive({ selector: '[keyboardNav]' })
-export class KeyboardNavDirective {
-  // handles arrow keys, enter, etc.
-}
-
-@Directive({ selector: '[hoverHighlight]' })
-export class HoverHighlightDirective {
-  // handles hover state
-}
 ```
 
 **You say:**
 
-"Each directive owns one reason to change.
+"How do directives talk to the component? They inject it.
 
-Selection logic? One file. Keyboard navigation? Different file. Hover styling? Another file.
+The component exposes signals. Directives read them, react to them, modify behavior.
 
-They don't know about each other."
+No special events. No services between them. Just signals."
 
 ---
 
-### Slide 20 – Directives: The Usage
+### Slide 25 – The Sign: Repeated Patterns
 
 **On screen:**
 
 ```html
-<tr selectableRow keyboardNav hoverHighlight></tr>
+<!-- Page A -->
+<app-data-grid sortable filterable persistColumns contextMenu />
+
+<!-- Page B -->
+<app-data-grid sortable filterable persistColumns contextMenu />
+
+<!-- Page C -->
+<app-data-grid sortable filterable persistColumns contextMenu />
 ```
 
 **You say:**
 
-"They compose by coexisting.
+"But here's the sign that directives need one more step.
 
-If you've seen ECS in game engines - same idea. The element is the entity. Directives are components. Behaviors as data you attach."
+Same four directives. Copy-pasted three times. That's implicit coupling through repetition.
 
----
-
-### Slide 21 – Directives: The Noise
-
-**On screen:**
-
-```html
-<tr
-  selectableRow
-  keyboardNav
-  hoverHighlight
-  copyOnClick
-  contextMenu
-></tr>
-```
-
-**You say:**
-
-"This is where people get uncomfortable.
-
-The behavior is decoupled. Each directive does one thing. But the usage is noisy."
+If this pattern appears three times, it's not a coincidence. It's a concept that needs a name."
 
 ---
 
-**[MEME: Distracted boyfriend looking at "clean architecture" while ignoring "readable templates"]**
+<p align="center">
+  <img src="./assets/distracted-boyfriend.jpg" alt="Distracted boyfriend meme" width="500" />
+</p>
 
 ---
 
-### Slide 22 – The Real Problem
-
-**On screen:**
-
-```html
-<!-- file-a.html -->
-<tr selectableRow keyboardNav hoverHighlight></tr>
-
-<!-- file-b.html -->
-<tr selectableRow keyboardNav hoverHighlight></tr>
-
-<!-- file-c.html -->
-<tr selectableRow keyboardNav hoverHighlight></tr>
-```
-
-**You say:**
-
-"Here's the real problem.
-
-If this same combination appears in three places - that's implicit coupling through repetition.
-
-Same directives. Same order. Same assumptions. Scattered."
-
----
-
-### Slide 23 – The Promotion Rule
+### Slide 26 – The Promotion Rule
 
 **On screen:**
 
 ```
 Two times is coincidence.
-
 Three times is a concept.
 
 Name it.
@@ -552,107 +685,103 @@ Name it.
 
 "This is the core insight.
 
-Two times is coincidence. Three times is a concept.
+Two times might be coincidence. Three times? That's a concept hiding in plain sight.
 
-When you see the same pattern three times - the code is telling you something is missing from your model. Something that deserves a name."
+When you see the same pattern three times, the code is telling you something's missing from your vocabulary."
 
 ---
 
-### Slide 24 – Promotion: The Code
+### Slide 27 – hostDirectives
 
 **On screen:**
 
 ```typescript
 @Directive({
-  selector: '[interactiveRow]',
+  selector: '[simpleGrid]',
   hostDirectives: [
-    SelectableRowDirective,
-    KeyboardNavDirective,
-    HoverHighlightDirective,
+    SortableDirective,
+    FilterableDirective,
   ],
 })
-export class InteractiveRowDirective {}
+export class SimpleGridDirective {}
+
+@Directive({
+  selector: '[powerGrid]',
+  hostDirectives: [
+    SortableDirective,
+    FilterableDirective,
+    PersistColumnsDirective,
+    ContextMenuDirective,
+  ],
+})
+export class PowerGridDirective {}
 ```
 
 **You say:**
 
-"Host directives let you compose directives into a named concept.
+"Host directives let you bundle directives into a named concept.
 
-This isn't abstraction up front. This is abstraction earned through repetition."
+Simple grid, power grid. One attribute instead of four. And now you can talk about it, test it, document it."
 
 ---
 
-### Slide 25 – Promotion: Before/After
+### Slide 28 – Before/After
 
 **On screen:**
 
 ```html
-<!-- Before: implicit pattern -->
-<tr selectableRow keyboardNav hoverHighlight></tr>
+<!-- Before: 4 attributes everywhere -->
+<app-data-grid
+  sortable
+  filterable
+  persistColumns
+  contextMenu
+  [data]="items"
+/>
 
-<!-- After: explicit concept -->
-<tr interactiveRow></tr>
+<!-- After: 1 named concept -->
+<app-data-grid
+  powerGrid
+  [data]="items"
+/>
 ```
 
 **You say:**
 
-"Promotion isn't about reducing characters.
+"Four attributes become one.
 
-It's about making implicit concepts explicit. Now you can talk about it. Test it. Evolve it in one place."
-
----
-
-**[MEME: "Friendship ended with scattered directives, now interactiveRow is my best friend"]**
+But more importantly - the pattern has a name now. 'Power grid' is a thing in your codebase. It's not just 'grid with these four directives'."
 
 ---
 
-### Slide 26 – When Directives Need to Talk
-
-**On screen:**
-
-```
-"When selected, enable keyboard nav"
-"When hovered, change highlight priority"
-
-Coordination is coupling.
-Where does it live?
-```
-
-**You say:**
-
-"Sometimes these directives need to interact.
-
-Selection affects keyboard navigation. Hover affects styling priority.
-
-That interaction is coupling. It's unavoidable. The question is where it lives."
+<p align="center">
+  <img src="./assets/pam-theyre-different.jpg" alt="Pam from The Office meme" width="400" />
+</p>
 
 ---
 
-### Slide 27 – Coordination: The Code
+### Slide 29 – Coordinator Directive
 
 **On screen:**
 
 ```typescript
+// Sorting and persistence need to work together:
+// When sort changes → persist the new sort
+// On init → restore persisted sort
+
 @Directive({
-  selector: '[interactiveRow]',
-  hostDirectives: [
-    SelectableRowDirective,
-    KeyboardNavDirective,
-  ],
+  selector: 'app-data-grid[persistedSort]',
+  hostDirectives: [SortableDirective, PersistColumnsDirective],
 })
-export class InteractiveRowDirective {
-  private selectable = inject(SelectableRowDirective, {
-    self: true,
-  });
-  private keyboard = inject(KeyboardNavDirective, {
-    self: true,
-  });
+export class PersistedSortDirective {
+  #sortable = inject(SortableDirective);
+  #persist = inject(PersistColumnsDirective);
 
   constructor() {
+    // Coordinate the coupling
     effect(() => {
-      if (this.selectable.isSelected()) {
-        this.keyboard.enable();
-      }
+      const sort = this.#sortable.currentSort();
+      this.#persist.save('sort', sort);
     });
   }
 }
@@ -660,53 +789,19 @@ export class InteractiveRowDirective {
 
 **You say:**
 
-"The promoted directive becomes the coordinator.
+"Here's a powerful pattern. Sometimes directives A and B need to be coupled - by product spec.
 
-The coupling exists - but now it's explicit, testable, isolated. One place with a name."
+When sorting changes, persist it. On load, restore it. These two need to talk.
 
----
+Instead of coupling them inside the grid, create a COORDINATOR directive. It hosts both directives and manages their interaction.
 
-### Slide 28 – The Mediator Pattern
-
-**On screen:**
-
-```
-This is the Mediator pattern.
-
-Coupling still exists.
-It just has an address now.
-```
-
-**You say:**
-
-"This is essentially the Mediator pattern from Gang of Four.
-
-The coupling didn't disappear. It just has an address now."
+The grid stays dumb. The coupling is explicit and testable."
 
 ---
 
-**[MEME: Pam from The Office - "Corporate needs you to find the difference between coupling scattered everywhere and coupling in one named place" - "They're actually very different"]**
-
----
-
-### Slide 29 – One Rule
-
-**On screen:**
-
-```
-The coordinator coordinates
-its hosted directives.
-
-Nothing else.
-```
-
-**You say:**
-
-"One rule.
-
-The coordinator only coordinates its hosted directives. The moment it reaches into services, app state, router - it's no longer a coordinator.
-
-It's a god object. Don't do that."
+<p align="center">
+  <img src="./assets/galaxy-brain.jpg" alt="Galaxy brain meme" width="400" />
+</p>
 
 ---
 
@@ -714,47 +809,47 @@ It's a god object. Don't do that."
 
 **On screen:**
 
-| Signal                       | Tool                     |
-| ---------------------------- | ------------------------ |
-| Parent configures child      | Inputs/Outputs           |
-| Context flags, `if` branches | → Time to graduate       |
-| Structure varies             | Content Projection       |
-| Behavior exclusive (A or B)  | Strategy via DI          |
-| Behaviors accumulate         | Directives               |
-| Same combo repeats 3x        | Promote (hostDirectives) |
-| Composed behaviors interact  | Coordinator              |
+| Cue | Tool |
+|-----|------|
+| Parent configures child | Inputs/Outputs |
+| Boolean flags, if-branches | Time to graduate |
+| Structure varies | Content Projection |
+| Behavior A or B | Strategy via DI |
+| Repeated provider setup | Provider functions |
+| Behaviors A and B and C | Directives |
+| Directive needs flexibility | Strategy inside directive |
+| Same combo 3x | hostDirectives |
+| A and B must be coupled | Coordinator directive |
 
 **You say:**
 
-"This is the mental model.
+"Here's the mental model on one slide.
 
-Not 'which pattern is best' - but 'what is the code telling me right now?'
+It's not 'which pattern is best'. It's 'what is the code telling me right now?'
 
-Each row is a response to a signal. You don't pick up front. You listen."
+Each row is a response to a cue. You don't pick upfront. You listen."
 
 ---
 
-### Slide 31 – Your Call to Action
+### Slide 31 – Your Monday Morning
 
 **On screen:**
 
 ```
-Monday morning:
-
-Look at your biggest component.
+Find your biggest component.
 Count the inputs.
 Find the if-branches.
 
-Ask: "What signal is this?"
+Ask: "What is this telling me?"
 ```
 
 **You say:**
 
-"Here's what I want you to do Monday morning.
+"Here's your homework.
 
-Find your biggest component. Count the inputs. Find the `if` branches that check context.
+Monday morning. Find the scariest component in your codebase. Count the inputs. Find the if-statements that check context.
 
-Ask yourself: what signal is this giving me? What tool does it point to?
+Ask yourself: what is this telling me? What tool does it point to?
 
 You might not refactor it. But you'll see it differently."
 
@@ -772,17 +867,13 @@ They're discovered.
 
 **You say:**
 
-"Angular gives us the tools. Inputs. Content projection. DI. Directives. Host directives.
+"Angular gives us the tools. Inputs, content projection, DI, directives, host directives.
 
-Our job isn't to pick our favorite and apply it everywhere.
+Our job isn't to pick our favorite and force it everywhere.
 
-Our job is to listen to the code. Notice the repetition. Recognize the signals.
+Our job is to listen to the code. Notice the repetition. Recognize the patterns.
 
 Good abstractions aren't chosen. They're discovered."
-
----
-
-_Pause._
 
 ---
 
@@ -794,16 +885,14 @@ _Pause._
 Dor Peled
 @Knat-Dev
 
-Thanks for listening 🤘
-
 Questions?
 ```
 
 **You say:**
 
-"Thank you.
+"Thanks for listening. I'm Dor, Knat-Dev online.
 
-I'm Dor, Knat-Dev online. Come find me if you want to talk about decoupling, Angular, or metal.
+Come find me if you wanna talk about Angular, decoupling, or why your component has 47 inputs.
 
 Questions?"
 
@@ -811,64 +900,62 @@ Questions?"
 
 ## Timing Estimate
 
-| Slide     | Content                    | Minutes     |
-| --------- | -------------------------- | ----------- |
-| 1         | About me                   | 0.5         |
-| 2-4       | The story setup            | 2           |
-| 5-6       | Real enemy + pairing setup | 1.5         |
-| 7-9       | Inputs/Outputs             | 2           |
-| 10-12     | Content Projection         | 1.5         |
-| 13-17     | Strategy via DI            | 2.5         |
-| 18-22     | Directive composition      | 2.5         |
-| 23-25     | Promotion rule             | 2.5         |
-| 26-29     | Coordination               | 2.5         |
-| 30        | Decision framework         | 1.5         |
-| 31-33     | CTA + Close                | 1.5         |
-| **Total** |                            | **~20 min** |
+| Section | Slides | Minutes |
+|---------|--------|---------|
+| Intro + Story | 1-5 | 4 |
+| Tool 1: Inputs | 6-9 | 3 |
+| Tool 2: Content Projection | 10-12 | 2 |
+| Tool 3: Strategy + Provider Functions | 13-19 | 5 |
+| Tool 4: Directives + Strategy combo | 20-25 | 5 |
+| Promotion + hostDirectives + Coordinator | 26-29 | 4 |
+| Framework + Close | 30-33 | 2 |
+| **Total** | | **~25 min** |
 
 ---
 
 ## Q&A Prep
 
-**"Why not just start with directives?"**
+**"Why not start with directives?"**
 
-> "Because inputs are simpler, and simpler is better when sufficient. You don't reach for directives until you feel the pain. Premature abstraction is its own coupling."
+> "Because inputs are simpler. Simpler is better when it's sufficient. Only reach for complexity when you see a clear cue that demands it."
 
-**"What's the signal inputs have broken down?"**
-
-> "When your component has `if` branches based on _who's consuming it_. When you're adding paired outputs like `rowSelected` and `aggregationRowSelected`."
-
-**"When do I promote?"**
+**"When do I promote to hostDirectives?"**
 
 > "Two times is coincidence. Three times is a concept. Name it."
 
-**"How do I prevent the coordinator becoming a god object?"**
+**"How do directives communicate?"**
 
-> "It only coordinates its hosted directives. If it reaches into services or app state, it's doing too much."
+> "Through the component's signals. The component is the mediator. Directives inject it, read its signals, react to changes."
 
-**"What does `{ self: true }` do?"**
+**"Can a directive use a strategy?"**
 
-> "Ensures you inject the directive on _this_ element, not one from a parent. Makes intent explicit."
+> "Absolutely. The directive provides a default strategy, so it works out of the box. If a consumer needs different behavior, they override the token in their component. The directive picks it up through DI. Composable AND flexible."
 
-**"Can I expose inputs from host directives?"**
+**"When would I use a coordinator directive vs just using both directives?"**
 
-> "Yes. `hostDirectives` supports input/output mapping. I kept slides simple but the capability is there."
+> "When A and B need to talk. If they're independent - just add both. But if sorting needs to trigger persistence, or filtering needs to update selection - that's a product requirement. Make it explicit with a coordinator. It's testable, documented, and the coupling is visible."
 
----
+**"What about performance?"**
 
-## Change Log from v3
+> "Directives are just classes. Effects watching signals. No extra change detection, no extra DOM. If anything it's faster because dependencies are clearer."
 
-| Item         | Change                                           |
-| ------------ | ------------------------------------------------ |
-| Added        | About me slides (open and close)                 |
-| Added        | "Let's pair" imagination framing (Slide 6)       |
-| Added        | Call to action slide (Slide 31)                  |
-| Removed      | AI coda entirely                                 |
-| Simplified   | Code examples - fewer lines per slide            |
-| Split        | Dense slides into multiple focused slides        |
-| Added        | Clear "signal" framing for each tool's breakdown |
-| Restructured | Flow follows Shai's "why → how → do" arc         |
+**"Can I use this with existing components?"**
+
+> "Absolutely. Start by extracting one behavior into a directive. Then another. You don't have to do it all at once."
 
 ---
 
-Ready for rehearsal or slide design?
+## Key Differences from v8
+
+| Item | Change |
+|------|--------|
+| Slide 18 (new) | Provider functions - bundle defaults, provide once, override where needed |
+| Slide 19 | God component - the real problem is owning behaviors you can't opt out of |
+| Slide 21 | Directives use DI tree (no directive-level providers - would block override) |
+| Decision framework | Added "Repeated provider setup → Provider functions" |
+| DI hierarchy | Explained "closest parent wins" pattern |
+| Core message | God component = owns everything, can't opt out. Directives = opt-in behaviors |
+
+---
+
+Ready for rehearsal.
