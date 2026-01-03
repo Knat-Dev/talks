@@ -1,0 +1,19 @@
+{
+  "name": "decoupling",
+  "version": "1.0.0",
+  "description": "Decoupling in Angular - Angular TLV 2025",
+  "scripts": {
+    "dev": "marp slides.md --theme theme.css --preview",
+    "build:html": "marp slides.md --theme theme.css -o dist/slides.html",
+    "build:pdf": "marp slides.md --theme theme.css --pdf -o dist/slides.pdf",
+    "build:pptx": "marp slides.md --theme theme.css --pptx -o dist/slides.pptx",
+    "build": "pnpm build:html && pnpm build:pdf && pnpm build:pptx"
+  },
+  "keywords": ["angular", "decoupling", "presentation"],
+  "author": "Dor Peled",
+  "license": "ISC",
+  "packageManager": "pnpm@10.11.0",
+  "devDependencies": {
+    "@marp-team/marp-cli": "^4.2.3"
+  }
+}
