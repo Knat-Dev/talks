@@ -1,28 +1,33 @@
 ---
-marp: true
-theme: coralogix
-paginate: true
----
+theme: ./theme
+title: Decoupling in Angular
+info: |
+  ## Decoupling in Angular
+  Letting the Code Tell You What It Needs
 
-<!-- _class: title -->
+  Dor Peled · @Knat-Dev
+layout: center
+highlighter: shiki
+transition: slide-left
+mdc: true
+---
 
 # Decoupling in Angular
 ## Letting the Code Tell You What It Needs
 
 **Dor Peled** · @Knat-Dev
+
 Software Engineer @ Coralogix
 
 ---
 
 # About Me
 
-```
-Dor Peled
-@Knat-Dev
+**Dor Peled** · @Knat-Dev
 
 Software Engineer @ Coralogix
-I tend to stay with hard things longer than is comfortable
-```
+
+*I tend to stay with hard things longer than is comfortable*
 
 <!--
 Hey everyone, I'm Dor. I'm a software engineer at Coralogix.
@@ -44,12 +49,12 @@ I'm gonna give you a mental model. Four tools, and the cues that tell you when t
 
 # The Universal Story
 
-```
 Every Angular dev has written this component:
 
-Month 1: Clean, simple, works great
-Month 6: "Why is this so hard to change?"
-```
+| Month | Reality |
+|-------|---------|
+| Month 1 | Clean, simple, works great |
+| Month 6 | *"Why is this so hard to change?"* |
 
 <!--
 So here's a story you've probably lived.
@@ -99,27 +104,27 @@ export class DataGridComponent<T> {
 }
 ```
 
+<v-click>
+
+<img src="./assets/this-is-fine.jpg" class="absolute bottom-10 right-10 w-80 rounded-lg shadow-xl" />
+
+</v-click>
+
 <!--
 Month six. Sortable, filterable, editable, persist columns, context menu...
 
 And here's the thing - we didn't inherit this mess. We built it. One reasonable feature at a time.
+
+[click] Show the "this is fine" meme
 -->
-
----
-
-<!-- _class: image-slide -->
-
-![This is fine](./assets/this-is-fine.jpg)
 
 ---
 
 # The Real Problem
 
-```
 Coupling isn't the problem.
 
-Hidden coupling is.
-```
+## Hidden coupling is.
 
 <!--
 But here's what I want you to understand.
@@ -133,12 +138,12 @@ Today I'll show you four tools Angular gives us, and the tells that show you whe
 
 # The Four Tools
 
-```
-1. Inputs/Outputs     → Parent configures child
-2. Content Projection → Structure varies
-3. Strategy via DI    → Behavior A or B
-4. Directives         → Behavior A and B and C
-```
+| Tool | When to Use |
+|------|-------------|
+| **Inputs/Outputs** | Parent configures child |
+| **Content Projection** | Structure varies |
+| **Strategy via DI** | Behavior A **or** B |
+| **Directives** | Behavior A **and** B **and** C |
 
 <!--
 These are our four tools. Each one solves a different problem.
@@ -150,12 +155,11 @@ The trick isn't knowing the tools - you probably know all of these. The trick is
 
 # Tool 1: Inputs/Outputs
 
-```
-The Baseline
+## The Baseline
 
-Parent decides WHAT.
-Child decides HOW.
-```
+**Parent** decides WHAT.
+
+**Child** decides HOW.
 
 <!--
 Inputs and outputs. Everyone's first tool.
@@ -224,11 +228,9 @@ When you see if-branches based on context flags, inputs have outgrown their welc
 
 # Tool 2: Content Projection
 
-```
-When STRUCTURE varies.
+## When STRUCTURE varies.
 
-Not behavior. Structure.
-```
+Not behavior. **Structure.**
 
 <!--
 Content projection. The parent passes structure in, not configuration down.
@@ -272,17 +274,23 @@ Different consumers can put different things in, but the card doesn't need to kn
 
 # The Tell: Behavior, Not Structure
 
-```
-Content projection works for:
-  ✓ Headers and footers
-  ✓ Custom row templates
-  ✓ Action buttons
+<v-clicks>
 
-Doesn't work for:
-  ✗ "Save to localStorage vs server"
-  ✗ "Sort ascending vs descending by default"
-  ✗ "Fetch data this way vs that way"
-```
+- ✓ Headers and footers
+- ✓ Custom row templates
+- ✓ Action buttons
+
+</v-clicks>
+
+<v-click>
+
+**Doesn't work for:**
+
+- ✗ *"Save to localStorage vs server"*
+- ✗ *"Sort ascending vs descending by default"*
+- ✗ *"Fetch data this way vs that way"*
+
+</v-click>
 
 <!--
 But here's the tell it's breaking down.
@@ -296,11 +304,9 @@ If you're trying to ng-content a function... you've gone too far.
 
 # Tool 3: Strategy via DI
 
-```
-When behavior is exclusive.
+## When behavior is exclusive.
 
-A or B. Never both.
-```
+**A** or **B**. Never both.
 
 <!--
 Strategy pattern via dependency injection.
@@ -312,14 +318,13 @@ This is for mutually exclusive behavior. Exactly one implementation wins at runt
 
 # Strategy: The Problem
 
-```typescript
-// The grid needs to persist column state
-// But WHERE it persists depends on context:
+The grid needs to persist column state. But **where**?
 
-// Admin dashboard → save to server
-// Public view → save to localStorage
-// Preview mode → don't save at all
-```
+| Context | Storage |
+|---------|---------|
+| Admin dashboard | Server API |
+| Public view | localStorage |
+| Preview mode | Don't save |
 
 <!--
 Let's say our grid persists column state. Width, order, visibility.
@@ -459,6 +464,12 @@ export class DataGridComponent {
 }
 ```
 
+<v-click>
+
+<img src="./assets/one-does-not-simply.jpg" class="absolute bottom-10 right-10 w-80 rounded-lg shadow-xl" />
+
+</v-click>
+
 <!--
 But here's the cue that something's wrong.
 
@@ -467,23 +478,17 @@ The component is injecting four strategies. Six. Ten. It's becoming a god compon
 Even with provider functions, you can't opt out. Every grid has storage, sorting, filtering, selection - whether you want them or not.
 
 The component is doing too much. It owns behaviors that should be optional.
+
+[click] One does not simply inject 6 strategies
 -->
-
----
-
-<!-- _class: image-slide -->
-
-![One does not simply inject 6 strategies](./assets/one-does-not-simply.jpg)
 
 ---
 
 # Tool 4: Directive Composition
 
-```
-When behaviors ACCUMULATE.
+## When behaviors ACCUMULATE.
 
-A and B and C.
-```
+**A** and **B** and **C**.
 
 <!--
 Directive composition.
@@ -610,30 +615,31 @@ No special events. No services between them. Just signals.
 <app-data-grid sortable filterable persistColumns contextMenu />
 ```
 
+<v-click>
+
+<img src="./assets/distracted-boyfriend.jpg" class="absolute bottom-10 right-10 w-72 rounded-lg shadow-xl" />
+
+</v-click>
+
 <!--
 But here's the sign that directives need one more step.
 
 Same four directives. Copy-pasted three times. That's implicit coupling through repetition.
 
 If this pattern appears three times, it's not a coincidence. It's a concept that needs a name.
+
+[click] Distracted by the pattern
 -->
-
----
-
-<!-- _class: image-slide -->
-
-![Distracted boyfriend](./assets/distracted-boyfriend.jpg)
 
 ---
 
 # The Promotion Rule
 
-```
 Two times is coincidence.
-Three times is a concept.
 
-Name it.
-```
+**Three times is a concept.**
+
+## Name it.
 
 <!--
 This is the core insight.
@@ -696,17 +702,19 @@ Simple grid, power grid. One attribute instead of four. And now you can talk abo
 />
 ```
 
+<v-click>
+
+<img src="./assets/pam-theyre-different.jpg" class="absolute bottom-10 right-10 w-80 rounded-lg shadow-xl" />
+
+</v-click>
+
 <!--
 Four attributes become one.
 
 But more importantly - the pattern has a name now. 'Power grid' is a thing in your codebase. It's not just 'grid with these four directives'.
+
+[click] They're the same picture... or are they?
 -->
-
----
-
-<!-- _class: image-slide -->
-
-![They're the same picture](./assets/pam-theyre-different.jpg)
 
 ---
 
@@ -735,6 +743,12 @@ export class PersistedSortDirective {
 }
 ```
 
+<v-click>
+
+<img src="./assets/galaxy-brain.jpg" class="absolute bottom-10 right-10 w-72 rounded-lg shadow-xl" />
+
+</v-click>
+
 <!--
 Here's a powerful pattern. Sometimes directives A and B need to be coupled - by product spec.
 
@@ -743,13 +757,9 @@ When sorting changes, persist it. On load, restore it. These two need to talk.
 Instead of coupling them inside the grid, create a COORDINATOR directive. It hosts both directives and manages their interaction.
 
 The grid stays dumb. The coupling is explicit and testable.
+
+[click] Galaxy brain moment
 -->
-
----
-
-<!-- _class: image-slide -->
-
-![Galaxy brain](./assets/galaxy-brain.jpg)
 
 ---
 
@@ -779,13 +789,19 @@ Each row is a response to a cue. You don't pick upfront. You listen.
 
 # Your Monday Morning
 
-```
-Find your biggest component.
-Count the inputs.
-Find the if-branches.
+<v-clicks>
 
-Ask: "What is this telling me?"
-```
+1. Find your biggest component
+2. Count the inputs
+3. Find the if-branches
+
+</v-clicks>
+
+<v-click>
+
+### Ask: *"What is this telling me?"*
+
+</v-click>
 
 <!--
 Here's your homework.
@@ -801,11 +817,9 @@ You might not refactor it. But you'll see it differently.
 
 # The Takeaway
 
-```
 Good abstractions aren't chosen.
 
-They're discovered.
-```
+## They're discovered.
 
 <!--
 Angular gives us the tools. Inputs, content projection, DI, directives, host directives.
@@ -818,12 +832,14 @@ Good abstractions aren't chosen. They're discovered.
 -->
 
 ---
-
-<!-- _class: title -->
+layout: center
+class: text-center
+---
 
 # Thank You
 
 **Dor Peled**
+
 @Knat-Dev
 
 Questions?

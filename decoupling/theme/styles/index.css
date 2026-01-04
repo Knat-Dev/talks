@@ -1,0 +1,302 @@
+/* ==========================================================================
+   CORALOGIX SLIDEV THEME
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+
+:root {
+  /* Coralogix Colors */
+  --slidev-theme-primary: #00c853;
+  --slidev-theme-primary-light: #4cda73;
+
+  /* Background & Surface */
+  --slidev-theme-background: #0c0c0c;
+  --slidev-theme-surface: #1a1a1a;
+  --slidev-theme-surface-elevated: #242424;
+
+  /* Text */
+  --slidev-theme-foreground: #e8e8e8;
+  --slidev-theme-foreground-muted: #8a8a8a;
+
+  /* Borders */
+  --slidev-theme-border: #333333;
+
+  /* Fonts */
+  --slidev-theme-font-sans: 'Nunito Sans', system-ui, sans-serif;
+  --slidev-theme-font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+/* Apply Nunito Sans globally (excluding code elements) */
+html, body, .slidev-layout, .slidev-page {
+  font-family: 'Nunito Sans', system-ui, sans-serif !important;
+}
+
+h1, h2, h3, h4, h5, h6, p, li, td, th {
+  font-family: 'Nunito Sans', system-ui, sans-serif !important;
+}
+
+
+/* ==========================================================================
+   GLOBAL BACKGROUND - Full coverage
+   ========================================================================== */
+
+html, body, #app, #slide-container, .slidev-page {
+  background: var(--slidev-theme-background) !important;
+}
+
+.slidev-page {
+  background: var(--slidev-theme-background) !important;
+}
+
+/* ==========================================================================
+   SLIDE BASE
+   ========================================================================== */
+
+.slidev-layout {
+  background: var(--slidev-theme-background) !important;
+  color: var(--slidev-theme-foreground);
+  padding: 2.5rem 3rem;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+/* Default layout - vertically centered */
+.slidev-layout.default {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  height: 100%;
+}
+
+/* ==========================================================================
+   TYPOGRAPHY
+   ========================================================================== */
+
+h1 {
+  color: var(--slidev-theme-primary) !important;
+  font-weight: 700 !important;
+  font-size: 2.5rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+h2 {
+  color: var(--slidev-theme-primary-light) !important;
+  font-weight: 600 !important;
+  font-size: 1.75rem !important;
+}
+
+h3 {
+  color: var(--slidev-theme-foreground) !important;
+  font-weight: 600 !important;
+}
+
+strong, b {
+  color: var(--slidev-theme-primary);
+}
+
+a {
+  color: var(--slidev-theme-primary);
+}
+
+/* ==========================================================================
+   CODE BLOCKS
+   ========================================================================== */
+
+.slidev-code-wrapper {
+  background: var(--slidev-theme-surface) !important;
+  border-radius: 12px !important;
+  corner-shape: squircle !important;
+  border: 1px solid var(--slidev-theme-border) !important;
+  overflow: hidden !important;
+}
+
+.shiki {
+  background: var(--slidev-theme-surface) !important;
+  padding: 0.75rem 1rem !important;
+  font-size: 0.85rem !important;
+  line-height: 1.4 !important;
+}
+
+pre {
+  background: var(--slidev-theme-surface) !important;
+  border-radius: 12px;
+  corner-shape: squircle;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--slidev-theme-border);
+  margin: 0.5rem 0;
+}
+
+code:not(.shiki *):not(pre code) {
+  background: var(--slidev-theme-surface-elevated);
+  color: var(--slidev-theme-foreground);
+  padding: 0.1rem 0.4rem;
+  border-radius: 6px;
+  corner-shape: squircle;
+  font-size: 0.9em;
+}
+
+/* ==========================================================================
+   TABLES
+   ========================================================================== */
+
+table {
+  width: auto;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 1.1rem;
+  margin-top: 1.5rem;
+  border-radius: 16px;
+  corner-shape: squircle;
+  overflow: hidden;
+  border: 1px solid var(--slidev-theme-border);
+}
+
+th {
+  background: var(--slidev-theme-surface-elevated);
+  color: var(--slidev-theme-primary);
+  padding: 1rem 2rem;
+  text-align: left;
+  font-weight: 600;
+}
+
+th:first-child {
+  border-top-left-radius: 16px;
+  corner-shape: squircle;
+}
+
+th:last-child {
+  border-top-right-radius: 16px;
+  corner-shape: squircle;
+}
+
+td {
+  padding: 1rem 2rem;
+  border-top: 1px solid var(--slidev-theme-border);
+  background: var(--slidev-theme-surface);
+}
+
+tr:last-child td:first-child {
+  border-bottom-left-radius: 16px;
+  corner-shape: squircle;
+}
+
+tr:last-child td:last-child {
+  border-bottom-right-radius: 16px;
+  corner-shape: squircle;
+}
+
+tr:hover td {
+  background: var(--slidev-theme-surface-elevated);
+}
+
+/* ==========================================================================
+   IMAGES
+   ========================================================================== */
+
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  corner-shape: squircle;
+}
+
+/* ==========================================================================
+   SLIDE NUMBER / PAGINATION
+   ========================================================================== */
+
+.slidev-page-number {
+  color: var(--slidev-theme-foreground-muted);
+}
+
+/* ==========================================================================
+   v-click ANIMATIONS
+   ========================================================================== */
+
+.slidev-vclick-target {
+  transition: all 0.3s ease;
+}
+
+.slidev-vclick-hidden {
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+}
+
+/* Ensure slide is clickable */
+.slidev-page,
+.slidev-layout {
+  pointer-events: auto;
+}
+
+/* ==========================================================================
+   LAYOUT: CENTER
+   ========================================================================== */
+
+.slidev-layout.center {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center !important;
+  height: 100% !important;
+}
+
+/* ==========================================================================
+   LAYOUT: COVER (Title slides)
+   ========================================================================== */
+
+.slidev-layout.cover {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center !important;
+  height: 100% !important;
+}
+
+.slidev-layout.cover h1 {
+  font-size: 3rem !important;
+}
+
+/* ==========================================================================
+   NAVIGATION & CONTROLS
+   ========================================================================== */
+
+.slidev-nav {
+  background: var(--slidev-theme-surface) !important;
+}
+
+/* ==========================================================================
+   PRESENTER MODE - Notes Panel
+   ========================================================================== */
+
+.slidev-layout-presenter-note,
+.prose,
+.prose p,
+.slidev-note,
+[class*="presenter"] .prose,
+[class*="presenter"] p,
+[class*="note"] {
+  color: #b0b0b0 !important;
+  font-size: 1.1rem !important;
+  line-height: 1.7 !important;
+}
+
+.slidev-layout-presenter-note p,
+.prose p {
+  color: #b0b0b0 !important;
+  margin-bottom: 1rem !important;
+}
+
+/* Presenter view background */
+[class*="presenter"] {
+  --slidev-note-color: #b0b0b0;
+}
+
+/* Notes container */
+.slidev-note-container,
+.overflow-auto {
+  color: #b0b0b0 !important;
+}
