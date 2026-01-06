@@ -64,9 +64,9 @@ So this talk isn't best practices. It's pattern recognition. I'll show you what 
 layout: default
 ---
 
-# Month 1
+# Day 1
 
-```typescript
+```ts [list.ts]
 @Component({ selector: 'app-list' })
 export class ListComponent {
   items = input<Item[]>([]);
@@ -81,7 +81,7 @@ Clean. Simple. Works great.
 
 Alright, let's build something. A list component. Simple.
 
-Month one. Two inputs - items, loading. Look at this code. What do you think?
+Day one. Two inputs - items, loading. Look at this code. What do you think?
 
 Clean, right? Simple. Easy to test. This is good code.
 
@@ -96,16 +96,29 @@ Enjoy this moment. It won't last.
 layout: default
 ---
 
-# Month 6
+# Month 2
 
-```typescript {4-7}
+```ts [list.ts] {5-7,9-11,13-14,16-20}
 @Component({ selector: 'app-list' })
 export class ListComponent {
   items = input<Item[]>([]);
+  loading = input(false);
   sortable = input(false);
-  filterable = input(false);
+  showHeader = input(false);
   persistState = input(false);
-  // ... and it keeps growing
+
+  storageKey = input<string>();
+  initialState = input<ListState>();
+  stateSaved = output<void>();
+
+  #api = inject(ApiService);
+  #storage = inject(StorageService);
+
+  ngOnInit() {
+    if (this.persistState()) {
+      // 30 lines of restoration logic...
+    }
+  }
 }
 ```
 
@@ -116,11 +129,13 @@ export class ListComponent {
 <!--
 [2:45 - 4:00]
 
-Month six. Product shows up. "Can we add sorting?" Sure. "Filtering?" Okay. "Remember state?" Fine.
+Month two. Product shows up. "Can we add sorting?" Sure. "A header option?" Okay. "Remember state?" Fine.
 
-Now look at this code. What do you see?
+Now look at this code. Really look.
 
-Boolean flags. sortable, filterable, persistState. And somewhere in the template, there's an ngIf for each one.
+Boolean flags - sortable, showHeader, persistState. Dependent inputs - storageKey, initialState. An output. Two injected services. Lifecycle code.
+
+And this is month TWO. Imagine month six. Imagine year two.
 
 We didn't inherit this mess. We built it. One reasonable feature request at a time.
 
@@ -130,7 +145,7 @@ Show of hands - who's worked on a component like this?
 
 [Pause for hands - acknowledge them]
 
-Yeah. Me too. So what went wrong?
+Yeah. Me too. This is where we're starting today. This is what we're going to systematically take apart.
 
 [Set up the thesis]
 -->
@@ -232,30 +247,104 @@ layout: default
 
 # The Signal
 
-```typescript {1-2,4-5}
-readonly isAdmin = input(false);
-readonly isCompactMode = input(false);
-
-if (this.isAdmin()) { /* show delete */ }
-if (this.isCompactMode()) { /* hide columns */ }
+```ts [list.ts] {1-3}
+sortable = input(false);
+showHeader = input(false);
+persistState = input(false);
 ```
 
-Component asking _"who's using me?"_ via isAdmin, isCompactMode
+Boolean flags. The component asking _"what features am I?"_
+
+But look closer at our Month 2 code...
 
 <!--
 [6:30 - 7:30]
 
-Look at this code. What's wrong here?
+Look at these. Boolean flags. sortable, showHeader, persistState.
 
-isAdmin. isCompactMode. These aren't data. These are context flags. The component is asking: "WHO is using me?"
+Each one is a feature toggle. The component is asking: "What features am I running today?"
 
-See the problem? Every new context means touching this component. Admin context. Mobile context. Preview context. The component has to know about all of them.
+That's the signal. When you see boolean flags accumulating, the component is trying to be too many things.
 
-The code is saying: "I don't want to know who's using me. Just tell me what to do."
+But here's the thing - and we'll come back to this - boolean flags are just the surface. Look back at the Month 2 code. Notice how storageKey and initialState only matter when persistState is true? They travel together. The truth is deeper than just flags.
 
-That's the signal. When inputs ask WHO instead of WHAT - time for different tools.
+For now, let's start with the simplest case. One of these flags isn't like the others.
 
-[Pause - let them internalize the WHO vs WHAT distinction]
+[Pause - plant the seed, don't explain yet]
+-->
+
+---
+layout: default
+---
+
+# The Structural Flag
+
+```ts [list.ts]
+// From our Month 2 component:
+showHeader = input(false);
+```
+
+```html [list.html]
+@if (showHeader()) {
+  <app-header />
+}
+<div class="list-body">...</div>
+```
+
+Why does the **list** decide whether a header exists?
+
+<!--
+[7:30 - 8:00]
+
+Let's start with showHeader. This one is different from sortable or persistState.
+
+It doesn't change behavior - it controls structure. What DOM elements exist.
+
+Look at this. showHeader. And somewhere in the template, an @if that renders a header.
+
+Why does the LIST decide whether a header exists? That's not data. That's not behavior. That's the parent's concern.
+
+Bonus: if the parent projects, the list doesn't need to import the header component. Cleaner dependency graph - the list doesn't need to know about the header's type at all.
+
+This is the simplest extraction we can make.
+
+[Let them feel the discomfort]
+-->
+
+---
+layout: default
+---
+
+# Extract the @if
+
+```html [before]
+<!-- Before: component decides structure -->
+<app-list [showHeader]="true" />
+```
+
+```html [after]
+<!-- After: parent decides structure -->
+<app-list>
+  <app-header header />
+</app-list>
+```
+
+The `@if` becomes a **slot**. The boolean disappears.
+
+<!--
+[8:00 - 8:30]
+
+Watch what happens when you extract the conditional.
+
+Before: showHeader equals true. Component renders the header internally.
+
+After: No boolean. Parent just... puts the header there. Or doesn't.
+
+The @if block becomes an ng-content slot. The boolean vanishes.
+
+Content projection isn't a "layout feature". It's what happens when you extract structural decisions from components.
+
+[This is the "aha" moment - content projection is removal of conditionals]
 -->
 
 ---
@@ -269,7 +358,7 @@ When **structure** varies
 Not behavior. Structure.
 
 <!--
-[7:30 - 8:00]
+[8:30 - 9:00]
 
 Tool two. Content projection.
 
@@ -288,7 +377,7 @@ layout: default
 
 # Content Projection
 
-```html
+```html [card.html]
 <div class="header">
   <ng-content select="[header]" />
 </div>
@@ -298,7 +387,7 @@ layout: default
 Card owns layout. Consumer owns content via ng-content.
 
 <!--
-[8:00 - 8:30]
+[9:00 - 9:30]
 
 Two ng-content slots. Header and default.
 
@@ -318,20 +407,22 @@ layout: default
 Doesn't work for:
 
 - _"Save to localStorage vs server"_
-- _"Sort ascending vs descending"_
+- _"Persist state when flag is true"_
 
 You need different **behavior**, not structure.
 
 <!--
-[8:30 - 9:00]
+[9:30 - 10:00]
 
-But here's when content projection doesn't work.
+So we handled showHeader. That boolean is gone. One down.
 
-"Save to localStorage vs server" - can't ng-content a storage mechanism.
+But look back at Month 2. What about persistState? And its friends - storageKey, initialState, the services?
 
-"Sort ascending vs descending" - that's behavior, not structure.
+Can we ng-content an HttpClient? Can we put localStorage in a slot?
 
-Content projection is for DOM nodes. Visual stuff. When variation is about WHAT HAPPENS, not WHAT APPEARS - that's tool three.
+No. Content projection is for DOM nodes. Visual stuff.
+
+When the variation is about WHAT HAPPENS, not WHAT APPEARS - that's a different tool.
 
 [Transition to strategy]
 -->
@@ -347,7 +438,7 @@ layout: section
 Never both.
 
 <!--
-[9:00 - 9:30]
+[10:00 - 10:30]
 
 Tool three. Strategy via DI.
 
@@ -365,6 +456,53 @@ Let me show you what this looks like.
 -->
 
 ---
+layout: default
+---
+
+# The Behavioral Bundle
+
+```ts [list.ts] {1,3-5,7-8,10-13}
+persistState = input(false);
+
+storageKey = input<string>();
+initialState = input<ListState>();
+stateSaved = output<void>();
+
+#api = inject(ApiService);
+#storage = inject(StorageService);
+
+ngOnInit() {
+  if (this.persistState()) {
+    // 30 lines of restoration logic...
+  }
+}
+```
+
+Remember I said the truth was deeper? **This is it.**
+
+<!--
+[10:30 - 11:15]
+
+Remember earlier I said the truth is deeper than just boolean flags?
+
+This is it. Look at our Month 2 component again - just the persistence part.
+
+One flag - persistState. But it's not alone.
+
+storageKey - WHERE to save. initialState - what to restore. stateSaved - notify when done.
+
+Then the services. ApiService for server. StorageService for browser. And the lifecycle code.
+
+All of this only matters if persistState is true. These things travel together. They're a behavioral unit.
+
+And here's the key insight: you can't content-project behavior. You can't put a service in an ng-content slot.
+
+So what do we do when a whole bundle of behavior needs to move?
+
+[This is the reveal - set up Strategy]
+-->
+
+---
 layout: image-right
 ---
 
@@ -372,7 +510,7 @@ layout: image-right
 
 # Strategy: The Problem
 
-Component persists state. But **where**?
+That whole bundle needs to **move**. But where?
 
 ::default::
 
@@ -383,15 +521,17 @@ Component persists state. But **where**?
 | Preview | Don't save   |
 
 <!--
-[9:30 - 10:00]
+[11:15 - 11:45]
 
-Back to our component. It needs to persist state. But WHERE depends on context.
+That whole bundle - the flag, the inputs, the services, the lifecycle code - needs to move OUT of the component.
 
-Admin? Server. Public? localStorage. Preview? Don't save.
+But WHERE it goes depends on context.
 
-Old way: storageMode input. If-statements everywhere.
+Admin dashboard? Save to server. Public view? localStorage. Preview mode? Don't save at all.
 
-New way: Component says "I need to save." Doesn't care where.
+Same component, different storage behavior.
+
+Old way: another boolean flag, another if-statement. New way: the component doesn't know. Doesn't care.
 
 [Quick - set up the solution]
 -->
@@ -402,10 +542,10 @@ layout: default
 
 # Strategy: The Interface
 
-```typescript
+```ts [storage-strategy.ts]
 export interface StorageStrategy {
-  save(key: string, data: unknown): void;
-  load(key: string): unknown | null;
+  save(key: string, data: unknown): Promise<void>;
+  load<T>(key: string): Promise<T | null>;
 }
 
 export const STORAGE_STRATEGY =
@@ -413,7 +553,7 @@ export const STORAGE_STRATEGY =
 ```
 
 <!--
-[10:00 - 10:20]
+[11:45 - 12:00]
 
 Step one: define what we need. save() and load(). Not HOW - just that it CAN.
 
@@ -430,16 +570,16 @@ layout: default
 
 # Strategy: LocalStorage
 
-```typescript
+```ts [local-storage.ts]
 export class LocalStorageStrategy
   implements StorageStrategy
 {
-  save(key: string, data: unknown) {
+  async save(key: string, data: unknown) {
     localStorage.setItem(key, JSON.stringify(data));
   }
-  load(key: string) {
+  async load<T>(key: string) {
     const item = localStorage.getItem(key);
-    return item ? JSON.parse(item) : null;
+    return item ? JSON.parse(item) as T : null;
   }
 }
 ```
@@ -447,7 +587,7 @@ export class LocalStorageStrategy
 Uses localStorage. Works offline.
 
 <!--
-[10:20 - 10:35]
+[12:00 - 12:15]
 
 First implementation. LocalStorageStrategy.
 
@@ -462,20 +602,20 @@ layout: default
 
 # Strategy: Server
 
-```typescript
+```ts [server-storage.ts]
 export class ServerStorageStrategy
   implements StorageStrategy
 {
-  #http = inject(HttpClient);
+  #api = inject(ApiService);
 
-  save(key: string, data: unknown) {
-    this.#http
-      .post('/api/preferences', { key, data })
-      .subscribe();
+  async save(key: string, data: unknown): Promise<void> {
+    await firstValueFrom(
+      this.#api.post<void>('/api/preferences', { key, data })
+    );
   }
-  load(key: string) {
+  async load<T>(key: string): Promise<T | null> {
     return firstValueFrom(
-      this.#http.get(`/api/preferences/${key}`)
+      this.#api.get<T | null>(`/api/preferences/${key}`)
     );
   }
 }
@@ -484,13 +624,13 @@ export class ServerStorageStrategy
 Uses HttpClient. Syncs across devices.
 
 <!--
-[10:35 - 11:00]
+[12:15 - 12:45]
 
 Second implementation. ServerStorageStrategy.
 
 API call. Syncs across devices.
 
-From the outside? Identical. Grid calls save() and load(). Doesn't know which one it got.
+From the outside? Identical. List calls save() and load(). Doesn't know which one it got.
 
 Could add NoopStrategy for preview. Same interface, does nothing.
 
@@ -503,7 +643,7 @@ layout: default
 
 # Strategy: The Provider
 
-```typescript
+```ts [admin-dashboard.ts]
 @Component({
   providers: [
     {
@@ -518,21 +658,33 @@ export class AdminDashboard {}
 **Zero if-statements.** Context decides, not component.
 
 <!--
-[11:00 - 11:45]
+[12:45 - 13:30]
 
 Here's where the decision lives. In the provider.
 
 AdminDashboard says: "In my subtree, use ServerStorageStrategy."
 
-Grid injects STORAGE_STRATEGY. Gets the server version. Zero if-statements.
+Key insight: this provider is scoped to the AdminDashboard component subtree - not global. That's the magic of hierarchical injection.
 
-Different page? Provides LocalStorageStrategy. Same grid, different behavior.
+List injects STORAGE_STRATEGY. Gets the server version. Zero if-statements.
 
-The grid never changes. New mode? Write new strategy, provide it somewhere. Grid doesn't know, doesn't care.
+Different page? Provides LocalStorageStrategy. Same list, different behavior.
+
+Pro tip: provide a NoopStorageStrategy at root, override where needed. Safe by default, customized per context.
+
+```ts
+// The third implementation - does nothing, safely
+export class NoopStorageStrategy implements StorageStrategy {
+  async save() {}
+  async load() { return null; }
+}
+```
+
+The list never changes. New mode? Write new strategy, provide it somewhere. List doesn't know, doesn't care.
 
 THAT's visible coupling. You can see exactly what behavior each context gets.
 
-[Emphasize: zero if-statements, visible coupling]
+[Emphasize: scoped providers, zero if-statements, visible coupling]
 -->
 
 ---
@@ -541,7 +693,7 @@ layout: default
 
 # The Cue
 
-```typescript
+```ts [list.ts]
 export class ListComponent {
   #storage = inject(STORAGE_STRATEGY);
   #sorter = inject(SORT_STRATEGY);
@@ -549,26 +701,26 @@ export class ListComponent {
 }
 ```
 
-Can't opt out. All three are injected.
+Features invisible in template. All three always present.
 
 <v-click>
 <img src="/assets/one-does-not-simply.jpg" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-120 rounded-lg shadow-xl" />
 </v-click>
 
 <!--
-[11:45 - 12:30]
+[13:30 - 14:15]
 
 But look at this code. What's the problem?
 
-Three strategies injected. You can SWAP them. But you can't OPT OUT.
+Three strategies injected. You can SWAP implementations. But the feature set is invisible in the template.
 
-Every consumer gets all three. Can't say "I don't need sorting on this page."
+Yes, Angular has optional injection. But then your component is riddled with `if (this.sorter)` checks. You're checking if behaviors exist instead of composing them.
 
 [Click for meme]
 
-See the signal? When you're injecting strategies and half should be optional? Wrong tool.
+DI strategy is not the cleanest expression of opt-in composition. You end up with nullable dependencies or no-op defaults, and the feature set is no longer visible in the template.
 
-We need behaviors that ACCUMULATE. Add what you want, skip what you don't.
+We need behaviors that ACCUMULATE. Add what you want, skip what you don't. Visible in the template.
 
 That's tool four.
 
@@ -581,24 +733,28 @@ layout: section
 
 # Tool 4: Directives
 
-**A** and **B** and **C**
+What's **left** after the right extractions.
 
-Behaviors accumulate.
+The smallest unit of reusable behavior.
 
 <!--
-[12:30 - 13:00]
+[14:15 - 15:00]
 
 Tool four. Directives.
 
-A AND B AND C. Behaviors stack.
+Look back at Month 2. We handled showHeader - that's content projection now. We handled persistState and its bundle - that's a strategy now.
 
-Strategies: pick one. Directives: as many as you want. Sorting AND filtering AND persistence. Or just sorting. Your choice.
+What's left? sortable.
 
-Each behavior lives in its own directive. Attach to the same element, each adds functionality.
+It doesn't control structure. It's not a bundle of dependent inputs and services. It's just... a behavior. Either the list is sortable, or it's not.
 
-Component stays minimal. Directives add superpowers.
+No branching. No context questions. Present or absent.
 
-[Quick - show the code]
+That's a directive. The smallest unit of reusable behavior that survived extraction.
+
+Directives aren't "yet another tool." They're what's LEFT when you've done the other extractions right.
+
+[Reframe - directives are inevitable, not arbitrary]
 -->
 
 ---
@@ -607,13 +763,16 @@ layout: default
 
 # Directive: Sortable
 
-```typescript
+```ts [sortable.ts]
 @Directive({ selector: 'app-list[sortable]' })
-export class SortableDirective {
+export class Sortable {
   #list = inject(ListComponent);
 
   constructor() {
-    effect(() => this.#list.sort());
+    effect(() => {
+      const items = this.#list.items(); // signal read
+      this.#list.sort(items);
+    });
   }
 }
 ```
@@ -621,13 +780,13 @@ export class SortableDirective {
 Only activates with the sortable attribute.
 
 <!--
-[13:00 - 13:30]
+[15:00 - 15:30]
 
 SortableDirective. Selector targets app-list with sortable attribute.
 
 No attribute? Directive doesn't exist. Zero overhead.
 
-Injects the component, adds behavior.
+Injects the component, adds behavior. Note: in a real app, sort state (direction, column) would also be a signal - the effect reacts to both items AND sort config changes.
 
 [Quick - show the pattern]
 -->
@@ -638,14 +797,18 @@ layout: default
 
 # Directive: Persist
 
-```typescript
-@Directive({ selector: 'app-list[persist]' })
-export class PersistDirective {
+```ts [persistable.ts]
+@Directive({ selector: 'app-list[persistable]' })
+export class Persistable {
   #list = inject(ListComponent);
   #storage = inject(STORAGE_STRATEGY);
 
   constructor() {
-    effect(() => this.#storage.save('state', this.#list.state()));
+    effect(() => {
+      const state = this.#list.state(); // signal read
+      if (!state.dirty) return;         // don't spam saves
+      this.#storage.save('state', state);
+    });
   }
 }
 ```
@@ -653,7 +816,7 @@ export class PersistDirective {
 Notice: injects STORAGE_STRATEGY. **Tools layer together.**
 
 <!--
-[13:30 - 14:00]
+[15:30 - 16:00]
 
 PersistDirective. Same pattern.
 
@@ -670,18 +833,18 @@ layout: default
 
 # Directives: Usage
 
-```html
+```html [app.html]
 <!-- Simple -->
 <app-list sortable [items]="data" />
 
 <!-- Full-featured -->
-<app-list sortable filterable persist [items]="data" />
+<app-list sortable filterable persistable [items]="data" />
 ```
 
 Add sortable, filterable, persist as needed.
 
 <!--
-[14:00 - 14:30]
+[16:00 - 16:30]
 
 In the template.
 
@@ -698,15 +861,15 @@ layout: default
 
 # The Sign
 
-```html
+```html [scattered across pages]
 <!-- Page A -->
-<app-list sortable filterable persist [items]="a" />
+<app-list sortable filterable persistable [items]="a" />
 
 <!-- Page B -->
-<app-list sortable filterable persist [items]="b" />
+<app-list sortable filterable persistable [items]="b" />
 
 <!-- Page C -->
-<app-list sortable filterable persist [items]="c" />
+<app-list sortable filterable persistable [items]="c" />
 ```
 
 Same combo. Three times.
@@ -716,13 +879,13 @@ Same combo. Three times.
 </v-click>
 
 <!--
-[14:30 - 15:15]
+[16:30 - 17:15]
 
 But look at this code. What do you see?
 
-Three pages. Same four directives. Copy-pasted.
+Three pages. Same three directives. Copy-pasted.
 
-The coupling is hidden in REPETITION. "We always use these four together."
+The coupling is hidden in REPETITION. "We always use these three together."
 
 What happens when we add a fifth? Hunt down every page. Update all of them. Miss one? Now they drift apart.
 
@@ -746,7 +909,7 @@ Two times is coincidence.
 ## Name it.
 
 <!--
-[15:15 - 16:00]
+[17:15 - 18:00]
 
 The promotion rule.
 
@@ -754,11 +917,13 @@ Once: just code.
 Twice: maybe coincidence.
 Three times: that's a concept. Give it a name.
 
+Important caveat: three times with the SAME meaning and the SAME reason. If the reasons differ, don't bundle. That's false duplication.
+
 When you name something, you can talk about it. Document it. Test it. Evolve it in ONE place.
 
-Unnamed patterns drift. We had three "full-featured grids." One had filtering disabled "temporarily." Six months later? Nobody knew why.
+Unnamed patterns drift. We had three "full-featured lists." One had filtering disabled "temporarily." Six months later? Nobody knew why.
 
-See it three times? Name it.
+See it three times with the same meaning? Name it.
 
 [Deliver with conviction - this is memorable]
 -->
@@ -769,22 +934,22 @@ layout: default
 
 # hostDirectives
 
-```typescript
+```ts [power-list.ts]
 @Directive({
   selector: '[powerList]',
   hostDirectives: [
-    SortableDirective,
-    FilterableDirective,
-    PersistDirective,
+    Sortable,
+    Filterable,
+    Persistable,
   ],
 })
-export class PowerListDirective {}
+export class PowerList {}
 ```
 
 One attribute. Three behaviors.
 
 <!--
-[16:00 - 16:45]
+[18:00 - 18:45]
 
 Angular gives us hostDirectives.
 
@@ -803,9 +968,9 @@ layout: default
 
 # Before/After
 
-```html
+```html [app.html]
 <!-- Before: 3 attributes -->
-<app-list sortable filterable persist [items]="data" />
+<app-list sortable filterable persistable [items]="data" />
 
 <!-- After: 1 named concept -->
 <app-list powerList [items]="data" />
@@ -816,7 +981,7 @@ layout: default
 </v-click>
 
 <!--
-[16:45 - 17:15]
+[18:45 - 19:15]
 
 Before: three attributes. After: one word. powerList.
 
@@ -837,14 +1002,14 @@ layout: default
 
 # Coordinator Directive
 
-```typescript
+```ts [auto-saveable.ts]
 @Directive({
-  selector: '[autoSave]',
-  hostDirectives: [DirtyTrackingDirective, DebounceDirective],
+  selector: '[autoSaveable]',
+  hostDirectives: [DirtyTrackable, Debounceable],
 })
-export class AutoSaveDirective {
-  #dirty = inject(DirtyTrackingDirective);
-  #debounce = inject(DebounceDirective);
+export class AutoSaveable {
+  #dirty = inject(DirtyTrackable);
+  #debounce = inject(Debounceable);
 
   constructor() {
     effect(() => {
@@ -863,7 +1028,7 @@ When A and B **must** work together.
 </v-click>
 
 <!--
-[17:15 - 18:00]
+[19:15 - 20:00]
 
 One more pattern. Coordinator directive.
 
@@ -889,7 +1054,7 @@ layout: section
 Each tool has limits.
 
 <!--
-[18:00 - 18:15]
+[20:00 - 20:15]
 
 Quick guardrails. When NOT to use each tool.
 
@@ -911,9 +1076,13 @@ layout: default
 | hostDirectives     | Behaviors are truly independent         |
 
 <!--
-[18:15 - 18:45]
+[20:15 - 20:45]
 
 Quick summary.
+
+Important mental model: Inputs are CHEAP - easy to read and debug. DI and Directives are EXPENSIVE - logic spread across multiple files.
+
+Don't reach for Tool 4 when Tool 1 still works. Complexity should earn its keep.
 
 Inputs: stop when you're asking WHO, not WHAT.
 Content projection: structure only, not behavior.
@@ -930,9 +1099,9 @@ layout: default
 
 # Testing Impact
 
-```typescript
+```ts [list.spec.ts]
 // Inputs: Easy isolation
-const fixture = TestBed.createComponent(DataGrid);
+const fixture = TestBed.createComponent(List);
 fixture.componentRef.setInput('data', mockData);
 
 // Strategy: Mock the interface
@@ -944,12 +1113,12 @@ TestBed.configureTestingModule({
 
 // Directives: Test with and without
 const withSorting =
-  '<app-data-grid sortable [data]="items" />';
-const withoutSorting = '<app-data-grid [data]="items" />';
+  '<app-list sortable [data]="items" />';
+const withoutSorting = '<app-list [data]="items" />';
 ```
 
 <!--
-[18:45 - 19:15]
+[20:45 - 21:15]
 
 Testing impact - quick note.
 
@@ -970,7 +1139,7 @@ layout: default
 
 # Migration Path
 
-From Month 6 mess to clean architecture:
+From Month 2 mess to clean architecture:
 
 1. **Extract** - Pull behaviors out of the god component
 2. **Interface** - Define contracts for swappable behaviors
@@ -978,9 +1147,9 @@ From Month 6 mess to clean architecture:
 4. **Name** - Bundle common patterns with hostDirectives
 
 <!--
-[19:15 - 20:00]
+[21:15 - 22:00]
 
-So you've got a Month 6 mess. How do you fix it?
+So you've got a Month 2 mess. How do you fix it?
 
 One: Extract. Pull behaviors out. Don't worry about perfection. Just get them out of the god component.
 
@@ -1010,25 +1179,27 @@ What is the code telling you?
 | Signal                  | Tool               |
 | ----------------------- | ------------------ |
 | Parent configures child | Inputs/Outputs     |
-| Boolean flags           | Time to graduate   |
-| Structure varies        | Content Projection |
-| A or B                  | Strategy via DI    |
-| A and B and C           | Directives         |
+| Structural flags        | Content Projection |
+| Behavioral bundles      | Strategy via DI    |
+| Optional behaviors      | Directives         |
 | Same combo 3x           | hostDirectives     |
 
 <!--
-[20:00 - 20:45]
+[22:00 - 22:45]
 
 Here's everything together.
 
 What is the code telling you?
 
 Parent configures child? Inputs. Stay here as long as you can.
-Boolean flags creeping in? Time to graduate.
-Structure varies? Content projection.
-A OR B? Strategy.
-A AND B AND C? Directives.
-Same combo three times? Name it.
+
+Flags that control structure - what DOM exists? Extract the @if, use content projection.
+
+Flags that bring dependent inputs and services? That's a behavioral bundle - extract it to a strategy.
+
+Clean, optional behaviors that just exist or don't? Directives.
+
+Same combo three times? Name it with hostDirectives.
 
 Each row is a response to a signal. Your job: notice the signal. Pick the tool.
 
@@ -1046,7 +1217,7 @@ Good abstractions aren't chosen.
 ## They're discovered.
 
 <!--
-[20:45 - 21:30]
+[22:45 - 23:30]
 
 Final thought.
 
@@ -1078,7 +1249,7 @@ Software Engineer @ Coralogix
 Questions?
 
 <!--
-[21:30 - 22:00]
+[23:30 - 24:00]
 
 That's it. Thank you.
 
