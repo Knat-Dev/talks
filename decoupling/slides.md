@@ -6,7 +6,7 @@ info: |
   Letting the Code Tell You What It Needs
 
   Dor Peled · @Knat-Dev
-layout: center
+layout: a-main-cover-2
 highlighter: shiki
 transition: slide-left
 mdc: true
@@ -19,6 +19,8 @@ mdc: true
 
 Software Engineer @ Coralogix
 
+---
+layout: section
 ---
 
 # About Me
@@ -46,6 +48,8 @@ I'm gonna give you a mental model. Four tools, and the cues that tell you when t
 -->
 
 ---
+layout: default
+---
 
 # The Universal Story
 
@@ -64,6 +68,8 @@ Month one, you build a component. It's clean. Two inputs, maybe an output. Life 
 Month six, product wants a variation. And you realize... this thing is stuck. Every change breaks something else.
 -->
 
+---
+layout: default
 ---
 
 # Our Example: DataGrid
@@ -85,6 +91,9 @@ Month one - three inputs. Data, columns, loading state. That's it. Clean.
 -->
 
 ---
+layout: image-right
+image: ./assets/this-is-fine.jpg
+---
 
 # Month 6
 
@@ -104,20 +113,14 @@ export class DataGridComponent<T> {
 }
 ```
 
-<v-click>
-
-<img src="./assets/this-is-fine.jpg" class="absolute bottom-10 right-10 w-80 rounded-lg shadow-xl" />
-
-</v-click>
-
 <!--
 Month six. Sortable, filterable, editable, persist columns, context menu...
 
 And here's the thing - we didn't inherit this mess. We built it. One reasonable feature at a time.
-
-[click] Show the "this is fine" meme
 -->
 
+---
+layout: section
 ---
 
 # The Real Problem
@@ -134,6 +137,8 @@ Coupling isn't bad. Every system has coupling. The problem is when coupling is h
 Today I'll show you four tools Angular gives us, and the tells that show you when to reach for each one.
 -->
 
+---
+layout: default
 ---
 
 # The Four Tools
@@ -152,6 +157,8 @@ The trick isn't knowing the tools - you probably know all of these. The trick is
 -->
 
 ---
+layout: section
+---
 
 # Tool 1: Inputs/Outputs
 
@@ -167,6 +174,8 @@ Inputs and outputs. Everyone's first tool.
 Parent passes data down, child emits events up. Simple. This is where you start, and honestly, it's where you should stay as long as possible.
 -->
 
+---
+layout: default
 ---
 
 # Inputs: The Code
@@ -198,6 +207,8 @@ This is the right abstraction for simple cases.
 -->
 
 ---
+layout: default
+---
 
 # The Smell: Boolean Flags
 
@@ -225,6 +236,8 @@ When you see if-branches based on context flags, inputs have outgrown their welc
 -->
 
 ---
+layout: section
+---
 
 # Tool 2: Content Projection
 
@@ -238,6 +251,8 @@ Content projection. The parent passes structure in, not configuration down.
 Use this when the variation is about WHAT goes WHERE. Headers, footers, custom templates.
 -->
 
+---
+layout: default
 ---
 
 # Content Projection: The Code
@@ -271,14 +286,16 @@ Different consumers can put different things in, but the card doesn't need to kn
 -->
 
 ---
+layout: default
+---
 
 # The Tell: Behavior, Not Structure
 
 <v-clicks>
 
-- ✓ Headers and footers
-- ✓ Custom row templates
-- ✓ Action buttons
+- Headers and footers
+- Custom row templates
+- Action buttons
 
 </v-clicks>
 
@@ -286,9 +303,9 @@ Different consumers can put different things in, but the card doesn't need to kn
 
 **Doesn't work for:**
 
-- ✗ *"Save to localStorage vs server"*
-- ✗ *"Sort ascending vs descending by default"*
-- ✗ *"Fetch data this way vs that way"*
+- *"Save to localStorage vs server"*
+- *"Sort ascending vs descending by default"*
+- *"Fetch data this way vs that way"*
 
 </v-click>
 
@@ -300,6 +317,8 @@ You need different BEHAVIOR, not different structure. Content projection can't h
 If you're trying to ng-content a function... you've gone too far.
 -->
 
+---
+layout: section
 ---
 
 # Tool 3: Strategy via DI
@@ -314,6 +333,8 @@ Strategy pattern via dependency injection.
 This is for mutually exclusive behavior. Exactly one implementation wins at runtime.
 -->
 
+---
+layout: default
 ---
 
 # Strategy: The Problem
@@ -334,6 +355,8 @@ But where it saves depends on who's using it. Server for admins, localStorage fo
 Three different behaviors. The grid shouldn't know which one.
 -->
 
+---
+layout: default
 ---
 
 # Strategy: The Interface
@@ -356,6 +379,8 @@ Step one - define the contract. Save and load. That's it.
 The token lets Angular swap implementations.
 -->
 
+---
+layout: default
 ---
 
 # Strategy: The Implementations
@@ -387,6 +412,8 @@ Two implementations. Same interface. The grid doesn't know which one it's using.
 -->
 
 ---
+layout: default
+---
 
 # Strategy: The Provider
 
@@ -414,6 +441,8 @@ The decision lives in the provider. Same grid component, different storage behav
 Zero if-statements in the grid. The context decides, not the component.
 -->
 
+---
+layout: default
 ---
 
 # Provider Functions
@@ -449,6 +478,9 @@ DI hierarchy does the rest. Closest parent wins.
 -->
 
 ---
+layout: image-right
+image: ./assets/one-does-not-simply.jpg
+---
 
 # The Cue: God Component
 
@@ -464,12 +496,6 @@ export class DataGridComponent {
 }
 ```
 
-<v-click>
-
-<img src="./assets/one-does-not-simply.jpg" class="absolute bottom-10 right-10 w-80 rounded-lg shadow-xl" />
-
-</v-click>
-
 <!--
 But here's the cue that something's wrong.
 
@@ -478,10 +504,10 @@ The component is injecting four strategies. Six. Ten. It's becoming a god compon
 Even with provider functions, you can't opt out. Every grid has storage, sorting, filtering, selection - whether you want them or not.
 
 The component is doing too much. It owns behaviors that should be optional.
-
-[click] One does not simply inject 6 strategies
 -->
 
+---
+layout: section
 ---
 
 # Tool 4: Directive Composition
@@ -496,6 +522,8 @@ Directive composition.
 Each behavior is a directive. They don't replace each other - they stack. They compose by addition.
 -->
 
+---
+layout: default
 ---
 
 # Directives: The Code
@@ -523,6 +551,8 @@ The directive is composable - you add it or you don't. The strategy inside is ex
 -->
 
 ---
+layout: default
+---
 
 # Directives: Override When Needed
 
@@ -549,6 +579,8 @@ But when you need different behavior, override the token in your component. The 
 -->
 
 ---
+layout: default
+---
 
 # Directives: The Usage
 
@@ -572,6 +604,8 @@ Compose what you need. Skip what you don't.
 Simple view gets one directive. Power user view gets four. Same component.
 -->
 
+---
+layout: default
 ---
 
 # Directive Communication
@@ -601,25 +635,25 @@ No special events. No services between them. Just signals.
 -->
 
 ---
+layout: image-right
+image: ./assets/distracted-boyfriend.jpg
+---
 
 # The Sign: Repeated Patterns
 
 ```html
 <!-- Page A -->
-<app-data-grid sortable filterable persistColumns contextMenu />
+<app-data-grid sortable filterable
+  persistColumns contextMenu />
 
 <!-- Page B -->
-<app-data-grid sortable filterable persistColumns contextMenu />
+<app-data-grid sortable filterable
+  persistColumns contextMenu />
 
 <!-- Page C -->
-<app-data-grid sortable filterable persistColumns contextMenu />
+<app-data-grid sortable filterable
+  persistColumns contextMenu />
 ```
-
-<v-click>
-
-<img src="./assets/distracted-boyfriend.jpg" class="absolute bottom-10 right-10 w-72 rounded-lg shadow-xl" />
-
-</v-click>
 
 <!--
 But here's the sign that directives need one more step.
@@ -627,10 +661,10 @@ But here's the sign that directives need one more step.
 Same four directives. Copy-pasted three times. That's implicit coupling through repetition.
 
 If this pattern appears three times, it's not a coincidence. It's a concept that needs a name.
-
-[click] Distracted by the pattern
 -->
 
+---
+layout: section
 ---
 
 # The Promotion Rule
@@ -649,6 +683,8 @@ Two times might be coincidence. Three times? That's a concept hiding in plain si
 When you see the same pattern three times, the code is telling you something's missing from your vocabulary.
 -->
 
+---
+layout: default
 ---
 
 # hostDirectives
@@ -682,6 +718,9 @@ Simple grid, power grid. One attribute instead of four. And now you can talk abo
 -->
 
 ---
+layout: image-right
+image: ./assets/pam-theyre-different.jpg
+---
 
 # Before/After
 
@@ -702,20 +741,15 @@ Simple grid, power grid. One attribute instead of four. And now you can talk abo
 />
 ```
 
-<v-click>
-
-<img src="./assets/pam-theyre-different.jpg" class="absolute bottom-10 right-10 w-80 rounded-lg shadow-xl" />
-
-</v-click>
-
 <!--
 Four attributes become one.
 
 But more importantly - the pattern has a name now. 'Power grid' is a thing in your codebase. It's not just 'grid with these four directives'.
-
-[click] They're the same picture... or are they?
 -->
 
+---
+layout: image-right
+image: ./assets/galaxy-brain.jpg
 ---
 
 # Coordinator Directive
@@ -727,7 +761,10 @@ But more importantly - the pattern has a name now. 'Power grid' is a thing in yo
 
 @Directive({
   selector: 'app-data-grid[persistedSort]',
-  hostDirectives: [SortableDirective, PersistColumnsDirective],
+  hostDirectives: [
+    SortableDirective,
+    PersistColumnsDirective
+  ],
 })
 export class PersistedSortDirective {
   #sortable = inject(SortableDirective);
@@ -743,12 +780,6 @@ export class PersistedSortDirective {
 }
 ```
 
-<v-click>
-
-<img src="./assets/galaxy-brain.jpg" class="absolute bottom-10 right-10 w-72 rounded-lg shadow-xl" />
-
-</v-click>
-
 <!--
 Here's a powerful pattern. Sometimes directives A and B need to be coupled - by product spec.
 
@@ -757,10 +788,10 @@ When sorting changes, persist it. On load, restore it. These two need to talk.
 Instead of coupling them inside the grid, create a COORDINATOR directive. It hosts both directives and manages their interaction.
 
 The grid stays dumb. The coupling is explicit and testable.
-
-[click] Galaxy brain moment
 -->
 
+---
+layout: default
 ---
 
 # The Decision Framework
@@ -785,6 +816,8 @@ It's not 'which pattern is best'. It's 'what is the code telling me right now?'
 Each row is a response to a cue. You don't pick upfront. You listen.
 -->
 
+---
+layout: section
 ---
 
 # Your Monday Morning
@@ -814,6 +847,8 @@ You might not refactor it. But you'll see it differently.
 -->
 
 ---
+layout: section
+---
 
 # The Takeaway
 
@@ -832,8 +867,7 @@ Good abstractions aren't chosen. They're discovered.
 -->
 
 ---
-layout: center
-class: text-center
+layout: end
 ---
 
 # Thank You
