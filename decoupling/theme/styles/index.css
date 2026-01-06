@@ -1,255 +1,91 @@
-/* ==========================================================================
-   CORALOGIX SLIDEV THEME
-   Based on official Coralogix presentation style
-   ========================================================================== */
+/* Coralogix Slidev Theme - Minimal Reset */
 
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
-
-/* ==========================================================================
-   CSS RESET - Consistent base across all layouts
-   ========================================================================== */
-
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-h1, h2, h3, h4, h5, h6, p, ul, ol, pre, blockquote, figure, hr {
-  margin: 0;
-  padding: 0;
-}
-
-img, video, svg {
-  display: block;
-  max-width: 100%;
-}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 
 :root {
-  /* =======================================================================
-     CORALOGIX BRAND COLORS - Extracted from slides
-     ======================================================================= */
-
-  /* Primary Green */
-  --cx-green: #00c853;
-  --cx-green-dark: #059669;
-
-  /* Gradient colors from slides */
-  --cx-mint-dark: #34d399;
-  --cx-mint: #6ee7b7;
-  --cx-mint-light: #a7f3d0;
-  --cx-mint-lighter: #d1fae5;
-
-  /* Text colors */
-  --cx-text-dark: #111827;
-  --cx-text-dark-secondary: #374151;
-  --cx-text-light: #ffffff;
-  --cx-text-light-secondary: rgba(255, 255, 255, 0.85);
-
-  /* Backgrounds */
-  --cx-bg-white: #ffffff;
-  --cx-bg-light: #f9fafb;
-
-  /* The main gradient (mint green, left-to-right) */
-  --cx-gradient-primary: linear-gradient(135deg, #34d399 0%, #6ee7b7 50%, #a7f3d0 100%);
-  --cx-gradient-light: linear-gradient(180deg, #d1fae5 0%, #f0fdf4 50%, #ffffff 100%);
-
-  /* Code block colors (dark) */
+  --cx-green: #059669;
   --cx-code-bg: #1a1a2e;
   --cx-code-border: #2d2d44;
-
-  /* Typography */
-  --font-sans: 'Nunito Sans', system-ui, -apple-system, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --font-sans: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
 }
 
-/* ==========================================================================
-   GLOBAL RESETS & BASE
-   ========================================================================== */
-
-html, body, .slidev-layout, .slidev-page {
-  font-family: var(--font-sans) !important;
+* {
+  box-sizing: border-box;
 }
 
-h1, h2, h3, h4, h5, h6, p, li, td, th, span, div {
-  font-family: var(--font-sans) !important;
+body, .slidev-layout {
+  font-family: var(--font-sans);
 }
 
 code, pre, .shiki {
-  font-family: var(--font-mono) !important;
+  font-family: var(--font-mono);
 }
 
-/* ==========================================================================
-   TYPOGRAPHY - Consistent margins across all layouts
-   ========================================================================== */
-
-h1 {
-  font-weight: 800 !important;
-  font-size: 2.5rem !important;
-  line-height: 1.2 !important;
-  margin: 0 !important;
-  margin-bottom: 1rem !important;
-  letter-spacing: -0.02em;
-}
-
-h2 {
-  font-weight: 600 !important;
-  font-size: 1.5rem !important;
-  line-height: 1.3 !important;
-  margin: 0 !important;
-  margin-bottom: 0.75rem !important;
-}
-
-h3 {
-  font-weight: 600 !important;
-  font-size: 1.25rem !important;
-  margin: 0 !important;
-  margin-bottom: 0.5rem !important;
-}
-
-p {
-  font-size: 1.125rem !important;
-  line-height: 1.6 !important;
-  margin: 0 !important;
-  margin-bottom: 0.5rem !important;
-}
-
-strong, b {
-  font-weight: 700;
-}
-
-/* ==========================================================================
-   CODE BLOCKS - Dark style with consistent margins and full width
-   ========================================================================== */
-
-.slidev-code-wrapper {
-  background: var(--cx-code-bg) !important;
-  border-radius: 12px !important;
-  border: 1px solid var(--cx-code-border) !important;
-  overflow: hidden !important;
-  margin: 0 !important;
-  margin-top: 0.75rem !important;
-  width: 100% !important;
-  max-width: 100% !important;
-}
-
-/* First code block after heading gets more space */
-h1 + .slidev-code-wrapper,
-h2 + .slidev-code-wrapper {
-  margin-top: 1rem !important;
-}
-
-.shiki {
-  background: var(--cx-code-bg) !important;
-  padding: 1rem 1.25rem !important;
-  font-size: 0.875rem !important;
-  line-height: 1.5 !important;
-  margin: 0 !important;
-  width: 100% !important;
-}
-
-.shiki code {
-  padding: 0 !important;
-}
-
-pre {
-  background: var(--cx-code-bg) !important;
-  border-radius: 12px !important;
-  padding: 1rem 1.25rem !important;
-  border: 1px solid var(--cx-code-border) !important;
-  margin: 0 !important;
-  margin-top: 0.75rem !important;
-  color: #e2e8f0 !important;
-  width: 100% !important;
-  max-width: 100% !important;
-}
-
-code:not(.shiki *):not(pre code) {
-  background: rgba(0, 0, 0, 0.1) !important;
-  padding: 0.15rem 0.4rem !important;
-  border-radius: 4px !important;
-  font-size: 0.9em !important;
-}
-
-/* ==========================================================================
-   TABLES
-   ========================================================================== */
-
+/* Tables - Coralogix Design System */
 table {
-  width: auto;
-  border-collapse: separate;
-  border-spacing: 0;
-  font-size: 1rem;
-  margin: 1.5rem 0;
-  border-radius: 12px;
-  overflow: hidden;
-  background: var(--cx-bg-white);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-collapse: collapse;
+  border: none;
+  width: auto !important;
+  table-layout: auto;
+  margin-top: auto;
+}
+
+th:first-child, td:first-child {
+  width: 1%;
+  white-space: nowrap;
 }
 
 th {
-  background: var(--cx-bg-light);
-  color: var(--cx-text-dark);
-  padding: 0.875rem 1.5rem;
+  color: #111827;
+  font-weight: 500;
+  font-size: 1.1rem;
   text-align: left;
-  font-weight: 600;
+  padding: 0.75rem 1.5rem;
   border-bottom: 1px solid #e5e7eb;
+  border-right: 1px solid #e5e7eb;
+}
+
+th:last-child {
+  border-right: none;
 }
 
 td {
-  padding: 0.875rem 1.5rem;
-  border-bottom: 1px solid #f3f4f6;
-  color: var(--cx-text-dark);
+  color: #374151;
+  font-size: 0.95rem;
+  padding: 0.75rem 1.5rem;
+  vertical-align: top;
+  line-height: 1.6;
+  border-bottom: 1px solid #e5e7eb;
+  border-right: 1px solid #e5e7eb;
+}
+
+td:last-child {
+  border-right: none;
 }
 
 tr:last-child td {
   border-bottom: none;
 }
 
-/* ==========================================================================
-   LISTS - Consistent margins
-   ========================================================================== */
-
-ul, ol {
-  margin: 0 !important;
-  margin-top: 0.75rem !important;
-  padding-left: 1.5rem !important;
+/* Diamond bullet points for lists */
+ul li {
+  list-style: none;
+  position: relative;
+  padding-left: 1.25rem;
+  margin-bottom: 0.4rem;
 }
 
-li {
-  margin: 0 !important;
-  margin-bottom: 0.25rem !important;
-  line-height: 1.5 !important;
+ul li::before {
+  content: '◆';
+  position: absolute;
+  left: 0;
+  color: #374151;
+  font-size: 0.45rem;
+  top: 0.45rem;
 }
 
-li::marker {
-  color: var(--cx-green);
-}
-
-/* ==========================================================================
-   v-click ANIMATIONS
-   ========================================================================== */
-
-.slidev-vclick-target {
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.slidev-vclick-hidden {
-  opacity: 0;
-  transform: translateY(8px);
-  pointer-events: none;
-}
-
-/* ==========================================================================
-   PRESENTER NOTES
-   ========================================================================== */
-
-.slidev-layout-presenter-note,
-.prose,
-.slidev-note,
-[class*="presenter"] .prose,
-[class*="note"] {
-  color: #9ca3af !important;
-  font-size: 1rem !important;
-  line-height: 1.7 !important;
+ul {
+  padding: 0;
+  margin: 0.5rem 0;
 }

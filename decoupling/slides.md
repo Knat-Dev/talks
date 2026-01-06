@@ -91,9 +91,6 @@ Month one - three inputs. Data, columns, loading state. That's it. Clean.
 -->
 
 ---
-layout: image-right
-image: ./assets/this-is-fine.jpg
----
 
 # Month 6
 
@@ -112,6 +109,10 @@ export class DataGridComponent<T> {
   // ... and it keeps growing
 }
 ```
+
+<v-click>
+<img src="/assets/this-is-fine.jpg" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-120 rounded-lg shadow-xl" />
+</v-click>
 
 <!--
 Month six. Sortable, filterable, editable, persist columns, context menu...
@@ -478,9 +479,6 @@ DI hierarchy does the rest. Closest parent wins.
 -->
 
 ---
-layout: image-right
-image: ./assets/one-does-not-simply.jpg
----
 
 # The Cue: God Component
 
@@ -495,6 +493,10 @@ export class DataGridComponent {
   // Can't opt out of any of these
 }
 ```
+
+<v-click>
+<img src="/assets/one-does-not-simply.jpg" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-120 rounded-lg shadow-xl" />
+</v-click>
 
 <!--
 But here's the cue that something's wrong.
@@ -635,9 +637,6 @@ No special events. No services between them. Just signals.
 -->
 
 ---
-layout: image-right
-image: ./assets/distracted-boyfriend.jpg
----
 
 # The Sign: Repeated Patterns
 
@@ -654,6 +653,10 @@ image: ./assets/distracted-boyfriend.jpg
 <app-data-grid sortable filterable
   persistColumns contextMenu />
 ```
+
+<v-click>
+<img src="/assets/distracted-boyfriend.jpg" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-120 rounded-lg shadow-xl" />
+</v-click>
 
 <!--
 But here's the sign that directives need one more step.
@@ -718,9 +721,6 @@ Simple grid, power grid. One attribute instead of four. And now you can talk abo
 -->
 
 ---
-layout: image-right
-image: ./assets/pam-theyre-different.jpg
----
 
 # Before/After
 
@@ -741,15 +741,16 @@ image: ./assets/pam-theyre-different.jpg
 />
 ```
 
+<v-click>
+<img src="/assets/pam-theyre-different.jpg" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-120 rounded-lg shadow-xl" />
+</v-click>
+
 <!--
 Four attributes become one.
 
 But more importantly - the pattern has a name now. 'Power grid' is a thing in your codebase. It's not just 'grid with these four directives'.
 -->
 
----
-layout: image-right
-image: ./assets/galaxy-brain.jpg
 ---
 
 # Coordinator Directive
@@ -779,6 +780,10 @@ export class PersistedSortDirective {
   }
 }
 ```
+
+<v-click>
+<img src="/assets/galaxy-brain.jpg" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-120 rounded-lg shadow-xl" />
+</v-click>
 
 <!--
 Here's a powerful pattern. Sometimes directives A and B need to be coupled - by product spec.
