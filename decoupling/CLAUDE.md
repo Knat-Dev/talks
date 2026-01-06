@@ -1,32 +1,126 @@
 # Coralogix Slidev Presentation Assistant
 
-You are helping create presentation slides using Slidev for Coralogix.
+You are helping create presentation slides using Slidev with the Coralogix theme.
 
 ## Project Structure
 
 ```
 ├── slides.md              # Main presentation file
 ├── theme/                 # Coralogix brand theme
-│   ├── styles/index.css   # Brand colors & styling
-│   └── setup/shiki.ts     # Tokyo Night syntax highlighting
+│   ├── layouts/           # Vue layout components
+│   └── styles/index.css   # Global styles
 ├── assets/                # Images, logos, memes
-├── SCRIPT.md              # Full speaker script (optional)
-└── SLIDEV-REFERENCE.md    # Slidev syntax reference
+└── package.json           # Scripts: dev, build, export
 ```
 
-## Slidev Syntax Rules
+## Available Layouts
 
-### Slide Separator
+### `a-main-cover-2` - Opening slide
+Green gradient background, logo top-left, content centered-left.
 ```markdown
 ---
+layout: a-main-cover-2
+---
+
+# Talk Title
+
+**Speaker Name** · @handle
 ```
+
+### `section` - Section dividers
+Light gradient, large text, for introducing new sections.
+```markdown
+---
+layout: section
+---
+
+# Section Title
+
+## Optional subtitle
+
+**Bold text** renders in green.
+```
+
+### `default` - Content slides
+Light gradient background, logo top-left, page number bottom-right.
+```markdown
+---
+layout: default
+---
+
+# Slide Title
+
+Content, code blocks, lists, etc.
+```
+
+### `image-right` - Split layout
+30% green panel left (title), 70% white panel right (content/table).
+```markdown
+---
+layout: image-right
+---
+
+::left::
+
+# Left Title
+
+Optional subtitle
+
+::default::
+
+| Column 1 | Column 2 |
+|----------|----------|
+| Data     | Data     |
+```
+
+### `two-cols` - Two columns
+Equal width columns on light background.
+```markdown
+---
+layout: two-cols
+---
+
+# Left content
+
+::right::
+
+# Right content
+```
+
+### `quote` - Quote slide
+Styled blockquote with optional attribution.
+```markdown
+---
+layout: quote
+author: Author Name
+role: Title/Company
+---
+
+Quote text goes here as the slot content.
+```
+
+### `end` - Closing slide
+Green gradient, centered content, for "Thank You" slides.
+```markdown
+---
+layout: end
+---
+
+# Thank You
+
+**Speaker Name** · @handle
+
+Questions?
+```
+
+## Slide Syntax
 
 ### Frontmatter (first slide only)
 ```markdown
 ---
 theme: ./theme
 title: Your Talk Title
-layout: center
+layout: a-main-cover-2
 highlighter: shiki
 transition: slide-left
 mdc: true
@@ -34,7 +128,7 @@ mdc: true
 ```
 
 ### Speaker Notes
-Put notes in HTML comments at the END of each slide:
+HTML comments at the END of each slide:
 ```markdown
 # Slide Title
 
@@ -42,22 +136,23 @@ Content here.
 
 <!--
 Speaker notes go here.
-These appear in presenter mode (press P).
+Visible in presenter mode (press P).
+Aim for 1-2 minutes of speaking per slide for timing.
 -->
 ```
 
-### Click-to-Reveal (v-click)
-For elements that appear on click:
+### Click Animations
+Single element reveal:
 ```markdown
 <v-click>
 
-![meme](./assets/meme.jpg)
+Content that appears on click
 
 </v-click>
 ```
 
-For sequential list items:
-```html
+Sequential list items:
+```markdown
 <v-clicks>
 
 - First point
@@ -67,19 +162,16 @@ For sequential list items:
 </v-clicks>
 ```
 
-### Layouts
+### Images with Overlay
+For memes that appear over content:
 ```markdown
----
-layout: center
----
-
-# Centered content
+<v-click>
+<img src="/assets/meme.jpg" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-120 rounded-lg shadow-xl" />
+</v-click>
 ```
 
-Available layouts: `default`, `center`, `cover`, `two-cols`, `image-right`, `image-left`
-
 ### Code Blocks
-Use TypeScript/Angular syntax highlighting:
+Keep code SHORT to avoid line wrapping. Use `typescript` or `html` language tags:
 ```typescript
 @Component({ selector: 'app-example' })
 export class ExampleComponent {
@@ -87,56 +179,57 @@ export class ExampleComponent {
 }
 ```
 
-### Images with Click Reveal
-```markdown
-<v-click>
+## Formatting Rules
 
-<img src="./assets/meme.jpg" class="absolute bottom-10 right-10 w-80 rounded-lg shadow-xl" />
+1. **Code blocks must not wrap** - If a line is too long, shorten variable names or split across lines
+2. **One concept per slide** - Details go in speaker notes
+3. **Tables for comparisons** - Decision frameworks work well as tables
+4. **Memes use v-click** - Let the speaker trigger them
+5. **Bold text (`**text**`) renders green** in most layouts
 
-</v-click>
-```
+## Timing Guidelines
 
-## Coralogix Brand Guidelines
+- Target: ~1-1.5 minutes speaking per slide
+- Speaker notes should be conversational, not bullet points
+- For a 30-minute talk: ~20-25 slides
+- Expand notes to hit timing targets, don't add more slides
 
-### Colors (already in theme)
-- Primary: `#00c853` (Coralogix green)
-- Background: `#0c0c0c` (near black)
-- Surface: `#1a1a1a` (dark gray)
-- Text: `#e8e8e8` (light gray)
+## AI Workflow
 
-### Tone
-- Technical but approachable
-- Use code examples liberally
-- Memes are encouraged for engagement
-- Keep slides concise - details go in speaker notes
+### Creating a new presentation
+1. Start with topic/abstract
+2. Generate outline with section headers
+3. Create slide structure with layouts
+4. Add code examples (keep short!)
+5. Expand speaker notes to target duration
+6. Review for formatting issues (line wrapping, overflow)
 
-### Structure
-1. Hook / Problem statement
-2. Context / Why this matters
-3. Solution / Tools / Patterns
-4. Examples with code
-5. Summary / Decision framework
-6. Call to action
+### Expanding speaker notes
+When asked to expand notes for timing:
+- Write conversationally (how you'd actually speak)
+- Add context, examples, transitions
+- Include [click for meme] cues where relevant
+- Aim for 100-200 words per slide
 
-## When Generating Slides
-
-1. **Keep slides minimal** - one concept per slide
-2. **Code should be readable** - not too long, highlight key parts
-3. **Speaker notes are detailed** - full talking points go there
-4. **Use v-click for reveals** - especially for memes and punchlines
-5. **Tables for comparisons** - decision frameworks work well as tables
+### Reviewing a presentation
+Check for:
+- Code block line wrapping
+- Consistent layout usage
+- Speaker notes timing (read aloud)
+- Slide count vs target duration
+- Missing transitions between sections
 
 ## Commands
 
 ```bash
-pnpm dev          # Start dev server with hot reload
+pnpm dev          # Start dev server (http://localhost:3030)
 pnpm build        # Build static site to dist/
-pnpm export:pdf   # Export to PDF
+pnpm export       # Export to PDF
 ```
 
 ## Presenter Mode
 
-- Press `P` to open presenter view
-- Press `O` for slide overview
-- Arrow keys / Space to navigate
-- Clicks trigger v-click animations
+- `P` - Open presenter view (see notes + next slide)
+- `O` - Slide overview
+- Arrow keys / Space - Navigate
+- Click triggers v-click animations

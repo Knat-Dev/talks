@@ -36,7 +36,7 @@ layout: section
 
 Software Engineer @ Coralogix
 
-*I tend to stay with hard things longer than is comfortable*
+_I tend to stay with hard things longer than is comfortable_
 
 <!--
 Quick bit about me before we dive in.
@@ -156,12 +156,12 @@ The trick is knowing **when**.
 
 ::default::
 
-| Tool | When |
-|------|------|
-| Inputs/Outputs | Parent configures child |
-| Content Projection | Structure varies |
-| Strategy via DI | A **or** B |
-| Directives | A **and** B **and** C |
+| Tool               | When                    |
+| ------------------ | ----------------------- |
+| Inputs/Outputs     | Parent configures child |
+| Content Projection | Structure varies        |
+| Strategy via DI    | A **or** B              |
+| Directives         | A **and** B **and** C   |
 
 <!--
 Here's the mental model I want to share with you. Four tools. You already know all of them. But the trick isn't knowing what they are - it's recognizing WHEN each one is the right choice.
@@ -215,7 +215,7 @@ if (this.isAdmin()) { /* show delete */ }
 if (this.isCompactMode()) { /* hide columns */ }
 ```
 
-Component asking *"who's using me?"*
+Component asking _"who's using me?"_
 
 <!--
 Here's the smell. This is the signal that tells you inputs have reached their limit.
@@ -263,11 +263,11 @@ layout: default
 
 # Content Projection
 
-```html
-<div class="header">
-  <ng-content select="[header]" />
-</div>
-<ng-content />
+```typescript
+template: `
+  <div class="header"><ng-content select="[header]" /></div>
+  <ng-content />
+`;
 ```
 
 Card owns layout. Consumer owns content.
@@ -292,8 +292,8 @@ layout: default
 
 Doesn't work for:
 
-- *"Save to localStorage vs server"*
-- *"Sort ascending vs descending"*
+- _"Save to localStorage vs server"_
+- _"Sort ascending vs descending"_
 
 You need different **behavior**, not structure.
 
@@ -347,11 +347,11 @@ Grid persists column state. But **where**?
 
 ::default::
 
-| Context | Storage |
-|---------|---------|
-| Admin | Server |
-| Public | localStorage |
-| Preview | Don't save |
+| Context | Storage      |
+| ------- | ------------ |
+| Admin   | Server       |
+| Public  | localStorage |
+| Preview | Don't save   |
 
 <!--
 Let me give you a concrete example.
@@ -408,13 +408,17 @@ layout: default
 # Strategy: Implementations
 
 ```typescript
-export class LocalStorageStrategy implements StorageStrategy {
+export class LocalStorageStrategy
+  implements StorageStrategy
+{
   save(key: string, data: unknown) {
     localStorage.setItem(key, JSON.stringify(data));
   }
 }
 
-export class ServerStorageStrategy implements StorageStrategy {
+export class ServerStorageStrategy
+  implements StorageStrategy
+{
   save(key: string, data: unknown) {
     this.http.post('/api/preferences', { key, data });
   }
@@ -446,8 +450,11 @@ layout: default
 ```typescript
 @Component({
   providers: [
-    { provide: STORAGE_STRATEGY, useClass: ServerStorageStrategy }
-  ]
+    {
+      provide: STORAGE_STRATEGY,
+      useClass: ServerStorageStrategy,
+    },
+  ],
 })
 export class AdminDashboard {}
 ```
@@ -574,7 +581,12 @@ layout: default
 <app-data-grid sortable [data]="items" />
 
 <!-- Full-featured -->
-<app-data-grid sortable filterable persistColumns [data]="items" />
+<app-data-grid
+  sortable
+  filterable
+  persistColumns
+  [data]="items"
+/>
 ```
 
 Compose what you need. Skip what you don't.
@@ -601,9 +613,24 @@ layout: default
 
 ```html
 <!-- Page A, B, C... -->
-<app-data-grid sortable filterable persistColumns contextMenu />
-<app-data-grid sortable filterable persistColumns contextMenu />
-<app-data-grid sortable filterable persistColumns contextMenu />
+<app-data-grid
+  sortable
+  filterable
+  persistColumns
+  contextMenu
+/>
+<app-data-grid
+  sortable
+  filterable
+  persistColumns
+  contextMenu
+/>
+<app-data-grid
+  sortable
+  filterable
+  persistColumns
+  contextMenu
+/>
 ```
 
 Same combo. Three times.
@@ -699,11 +726,17 @@ layout: default
 # Before/After
 
 ```html
-<!-- Before -->
-<app-data-grid sortable filterable persistColumns contextMenu />
+<!-- Before: 4 attributes -->
+<app-data-grid
+  sortable
+  filterable
+  persistColumns
+  contextMenu
+  [data]="items"
+/>
 
-<!-- After -->
-<app-data-grid powerGrid />
+<!-- After: 1 named concept -->
+<app-data-grid powerGrid [data]="items" />
 ```
 
 <v-click>
@@ -737,11 +770,19 @@ layout: default
 ```typescript
 @Directive({
   selector: '[persistedSort]',
-  hostDirectives: [SortableDirective, PersistColumnsDirective],
+  hostDirectives: [
+    SortableDirective,
+    PersistColumnsDirective,
+  ],
 })
 export class PersistedSortDirective {
   constructor() {
-    effect(() => this.#persist.save('sort', this.#sortable.currentSort()));
+    effect(() =>
+      this.#persist.save(
+        'sort',
+        this.#sortable.currentSort()
+      )
+    );
   }
 }
 ```
@@ -784,14 +825,14 @@ What is the code telling you?
 
 ::default::
 
-| Signal | Tool |
-|--------|------|
-| Parent configures child | Inputs/Outputs |
-| Boolean flags | Time to graduate |
-| Structure varies | Content Projection |
-| A or B | Strategy via DI |
-| A and B and C | Directives |
-| Same combo 3x | hostDirectives |
+| Signal                  | Tool               |
+| ----------------------- | ------------------ |
+| Parent configures child | Inputs/Outputs     |
+| Boolean flags           | Time to graduate   |
+| Structure varies        | Content Projection |
+| A or B                  | Strategy via DI    |
+| A and B and C           | Directives         |
+| Same combo 3x           | hostDirectives     |
 
 <!--
 Let's bring it all together. Here's your decision framework.
