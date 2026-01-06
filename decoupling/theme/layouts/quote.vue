@@ -76,7 +76,7 @@ defineProps<{
   top: -2rem;
   left: -1rem;
   font-size: 6rem;
-  font-weight: 800;
+  font-weight: 500;
   color: #059669;
   opacity: 0.2;
   line-height: 1;
@@ -112,7 +112,7 @@ defineProps<{
 }
 
 .quote-author {
-  font-weight: 600;
+  font-weight: 500;
   color: #111827;
   font-size: 1.1rem;
 }

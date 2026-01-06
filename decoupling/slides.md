@@ -26,7 +26,40 @@ Today I want to share a mental model for when to use different decoupling tools 
 layout: section
 ---
 
+# About Me
+
+**Dor Peled** · @Knat-Dev
+
+Software Engineer @ Coralogix
+
+*I tend to stay with hard things longer than is comfortable*
+
+<!--
+Hey everyone, I'm Dor. I'm a software engineer at Coralogix.
+
+I've noticed something about myself over the years. When something gets complicated or messy, I usually don't bounce right away. I tend to sit with it and try to understand what's actually going on.
+
+That shows up in different places. In music, I play technical metal. In reading, I gravitate toward long, dense series like Malazan Book of the Fallen and The Wheel of Time.
+
+And large Angular codebases behave the same way. They don't fail immediately. They accumulate complexity quietly. And if you don't stay with them long enough, you miss the signals that tell you what they actually need.
+
+So this talk isn't about best practices or patterns. It's about what I learned by staying with components that were under pressure.
+-->
+
+---
+layout: default
+---
+
 # Month 1
+
+```typescript
+@Component({ selector: 'app-data-grid' })
+export class DataGridComponent<T> {
+  data = input<T[]>([]);
+  columns = input<ColumnDef<T>[]>([]);
+  loading = input(false);
+}
+```
 
 Clean. Simple. Works great.
 
@@ -35,12 +68,27 @@ We've all been here. Month one, you build a component. Three inputs, maybe an ou
 -->
 
 ---
-layout: section
+layout: default
 ---
 
 # Month 6
 
-*"Why is this so hard to change?"*
+```typescript
+@Component({ selector: 'app-data-grid' })
+export class DataGridComponent<T> {
+  data = input<T[]>([]);
+  columns = input<ColumnDef<T>[]>([]);
+  loading = input(false);
+  sortable = input(false);
+  filterable = input(false);
+  persistColumns = input(false);
+  // ... and it keeps growing
+}
+```
+
+<v-click>
+<img src="/assets/this-is-fine.jpg" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-120 rounded-lg shadow-xl" />
+</v-click>
 
 <!--
 Month six. Product wants a variation. And you realize... this thing is stuck. Every change breaks something else.
@@ -63,10 +111,16 @@ Coupling isn't bad. Every system has coupling. The problem is when coupling is H
 -->
 
 ---
-layout: default
+layout: image-right
 ---
 
+::left::
+
 # Four Tools
+
+The trick is knowing **when**.
+
+::default::
 
 | Tool | When |
 |------|------|
@@ -180,12 +234,16 @@ Strategy pattern via dependency injection. For mutually exclusive behavior. Exac
 -->
 
 ---
-layout: default
+layout: image-right
 ---
+
+::left::
 
 # Strategy: The Problem
 
 Grid persists column state. But **where**?
+
+::default::
 
 | Context | Storage |
 |---------|---------|
@@ -215,6 +273,30 @@ export const STORAGE_STRATEGY =
 
 <!--
 Define the contract. Save and load. The token lets Angular swap implementations.
+-->
+
+---
+layout: default
+---
+
+# Strategy: Implementations
+
+```typescript
+export class LocalStorageStrategy implements StorageStrategy {
+  save(key: string, data: unknown) {
+    localStorage.setItem(key, JSON.stringify(data));
+  }
+}
+
+export class ServerStorageStrategy implements StorageStrategy {
+  save(key: string, data: unknown) {
+    this.http.post('/api/preferences', { key, data });
+  }
+}
+```
+
+<!--
+Two implementations. Same interface. The grid doesn't know which one it's using.
 -->
 
 ---
@@ -254,6 +336,10 @@ export class DataGridComponent {
 ```
 
 Can't opt out of any of these.
+
+<v-click>
+<img src="/assets/one-does-not-simply.jpg" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-120 rounded-lg shadow-xl" />
+</v-click>
 
 <!--
 God component. Injecting four strategies. Six. Ten. Even with providers, you can't opt out.
@@ -332,6 +418,10 @@ layout: default
 
 Same combo. Three times.
 
+<v-click>
+<img src="/assets/distracted-boyfriend.jpg" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-120 rounded-lg shadow-xl" />
+</v-click>
+
 <!--
 Same four directives. Copy-pasted. That's implicit coupling through repetition.
 -->
@@ -380,6 +470,29 @@ Bundle directives into a named concept. Now you can talk about it, test it, docu
 layout: default
 ---
 
+# Before/After
+
+```html
+<!-- Before: 4 attributes -->
+<app-data-grid sortable filterable
+  persistColumns contextMenu [data]="items" />
+
+<!-- After: 1 named concept -->
+<app-data-grid powerGrid [data]="items" />
+```
+
+<v-click>
+<img src="/assets/pam-theyre-different.jpg" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-120 rounded-lg shadow-xl" />
+</v-click>
+
+<!--
+Four attributes become one. The pattern has a name now.
+-->
+
+---
+layout: default
+---
+
 # Coordinator Directive
 
 ```typescript
@@ -396,15 +509,25 @@ export class PersistedSortDirective {
 
 When A and B **must** work together.
 
+<v-click>
+<img src="/assets/galaxy-brain.jpg" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-120 rounded-lg shadow-xl" />
+</v-click>
+
 <!--
 Sometimes directives need to be coupled - by product spec. Create a coordinator. The grid stays dumb. The coupling is explicit.
 -->
 
 ---
-layout: default
+layout: image-right
 ---
 
+::left::
+
 # Decision Framework
+
+What is the code telling you?
+
+::default::
 
 | Signal | Tool |
 |--------|------|
@@ -442,6 +565,8 @@ layout: end
 # Thank You
 
 **Dor Peled** · @Knat-Dev
+
+Software Engineer @ Coralogix
 
 Questions?
 
