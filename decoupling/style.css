@@ -1,0 +1,8 @@
+/* Root styles - loaded into all Slidev contexts including presenter view */
+
+/* Presenter view notes - higher contrast */
+.slidev-note,
+.slidev-note p,
+.slidev-note div {
+  color: #9ca3af !important;
+}
