@@ -126,3 +126,13 @@ h3 {
   margin: 1rem 0 0.5rem 0;
 }
 
+/* Inline code styling */
+:not(pre) > code {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  padding: 0.15rem 0.4rem;
+  border-radius: 0.25rem;
+  font-size: 0.9em;
+  font-weight: 500;
+}
+
