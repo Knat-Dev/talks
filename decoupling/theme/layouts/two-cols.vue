@@ -77,14 +77,14 @@
 .layout :deep(h1) {
   color: #111827 !important;
   font-size: 2.25rem !important;
-  font-weight: 700 !important;
+  font-weight: 500 !important;
   margin-bottom: 1rem !important;
 }
 
 .layout :deep(h2) {
   color: #059669 !important;
   font-size: 1.25rem !important;
-  font-weight: 600 !important;
+  font-weight: 500 !important;
   margin-bottom: 0.75rem !important;
 }
 
@@ -96,6 +96,6 @@
 
 .layout :deep(strong) {
   color: #059669;
-  font-weight: 700;
+  font-weight: 500;
 }
 </style>

@@ -1,8 +1,10 @@
-<script setup lang="ts">
+<script setup>
 /**
  * Coralogix Default Layout
  * Light gradient background with dark text - for content slides
  */
+import { useSlideContext } from '@slidev/client'
+const { $page } = useSlideContext()
 </script>
 
 <template>
@@ -14,6 +16,9 @@
     <div class="content">
       <slot />
     </div>
+
+    <!-- Page number -->
+    <div class="page-number">{{ $page }}</div>
   </div>
 </template>
 
@@ -25,6 +30,10 @@
   padding: 4.5rem 4rem 3rem 4rem;
   box-sizing: border-box;
   overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .logo {
@@ -37,9 +46,15 @@
 
 .content {
   width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+}
+
+.page-number {
+  position: absolute;
+  bottom: 1.5rem;
+  right: 4rem;
+  color: #9ca3af;
+  font-size: 0.875rem;
+  font-weight: 500;
 }
 
 /* Ensure code blocks fill the content width */
@@ -53,21 +68,21 @@
 .default :deep(h1) {
   color: #111827 !important;
   font-size: 2.5rem !important;
-  font-weight: 700 !important;
+  font-weight: 500 !important;
   margin: 0 0 1rem 0 !important;
 }
 
 .default :deep(h2) {
   color: #059669 !important;
   font-size: 1.5rem !important;
-  font-weight: 600 !important;
+  font-weight: 500 !important;
   margin-bottom: 0.75rem !important;
 }
 
 .default :deep(h3) {
   color: #374151 !important;
   font-size: 1.25rem !important;
-  font-weight: 600 !important;
+  font-weight: 500 !important;
 }
 
 .default :deep(p) {
@@ -78,7 +93,7 @@
 
 .default :deep(strong) {
   color: #059669;
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .default :deep(li) {

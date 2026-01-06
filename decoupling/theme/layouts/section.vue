@@ -1,8 +1,10 @@
-<script setup lang="ts">
+<script setup>
 /**
  * Coralogix Section Layout
  * For section dividers and key statement slides
  */
+import { useSlideContext } from '@slidev/client'
+const { $page } = useSlideContext()
 </script>
 
 <template>
@@ -16,6 +18,9 @@
     <div class="section-content">
       <slot />
     </div>
+
+    <!-- Page number -->
+    <div class="page-number">{{ $page }}</div>
   </div>
 </template>
 
@@ -47,11 +52,20 @@
   max-width: 70%;
 }
 
+.page-number {
+  position: absolute;
+  bottom: 1.5rem;
+  right: 4rem;
+  color: #9ca3af;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
 /* Typography */
 .section :deep(h1) {
   color: #111827 !important;
   font-size: 3rem !important;
-  font-weight: 800 !important;
+  font-weight: 500 !important;
   line-height: 1.2 !important;
   margin-bottom: 1rem !important;
 }
@@ -59,7 +73,7 @@
 .section :deep(h2) {
   color: #059669 !important;
   font-size: 2rem !important;
-  font-weight: 600 !important;
+  font-weight: 500 !important;
   margin-bottom: 0.75rem !important;
 }
 
@@ -71,6 +85,6 @@
 
 .section :deep(strong) {
   color: #059669;
-  font-weight: 700;
+  font-weight: 500;
 }
 </style>

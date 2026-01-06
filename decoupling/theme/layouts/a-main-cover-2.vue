@@ -56,7 +56,7 @@
 .cover :deep(h1) {
   color: #ffffff !important;
   font-size: 4.5rem !important;
-  font-weight: 800 !important;
+  font-weight: 500 !important;
   line-height: 1.05 !important;
   margin: 0 0 1rem 0 !important;
   letter-spacing: -0.02em;
@@ -80,6 +80,6 @@
 }
 
 .cover :deep(strong) {
-  font-weight: 700;
+  font-weight: 500;
 }
 </style>

@@ -13,111 +13,39 @@ mdc: true
 ---
 
 # Decoupling in Angular
-## Letting the Code Tell You What It Needs
 
 **Dor Peled** · @Knat-Dev
 
-Software Engineer @ Coralogix
+<!--
+Hey everyone, I'm Dor. Software engineer at Coralogix.
+
+Today I want to share a mental model for when to use different decoupling tools in Angular.
+-->
 
 ---
 layout: section
 ---
 
-# About Me
+# Month 1
 
-**Dor Peled** · @Knat-Dev
-
-Software Engineer @ Coralogix
-
-*I tend to stay with hard things longer than is comfortable*
+Clean. Simple. Works great.
 
 <!--
-Hey everyone, I'm Dor. I'm a software engineer at Coralogix.
-
-I've noticed something about myself over the years. When something gets complicated or messy, I usually don't bounce right away. I tend to sit with it and try to understand what's actually going on.
-
-That shows up in different places. In music, I play technical metal. In reading, I gravitate toward long, dense series like Malazan Book of the Fallen and The Wheel of Time.
-
-And large Angular codebases behave the same way. They don't fail immediately. They accumulate complexity quietly. And if you don't stay with them long enough, you miss the signals that tell you what they actually need.
-
-So this talk isn't about best practices or patterns. It's about what I learned by staying with components that were under pressure.
-
-How do you know when a component needs to be split up? And more importantly, how do you split it without guessing?
-
-I'm gonna give you a mental model. Four tools, and the cues that tell you when to use each one.
+We've all been here. Month one, you build a component. Three inputs, maybe an output. Life is good.
 -->
 
 ---
-layout: default
----
-
-# The Universal Story
-
-Every Angular dev has written this component:
-
-| Month | Reality |
-|-------|---------|
-| Month 1 | Clean, simple, works great |
-| Month 6 | *"Why is this so hard to change?"* |
-
-<!--
-So here's a story you've probably lived.
-
-Month one, you build a component. It's clean. Two inputs, maybe an output. Life is good.
-
-Month six, product wants a variation. And you realize... this thing is stuck. Every change breaks something else.
--->
-
----
-layout: default
----
-
-# Our Example: DataGrid
-
-```typescript
-// Month 1
-@Component({ selector: 'app-data-grid' })
-export class DataGridComponent<T> {
-  data = input<T[]>([]);
-  columns = input<ColumnDef<T>[]>([]);
-  loading = input(false);
-}
-```
-
-<!--
-Let's use a data grid as our example. Everyone's built one of these, right?
-
-Month one - three inputs. Data, columns, loading state. That's it. Clean.
--->
-
+layout: section
 ---
 
 # Month 6
 
-```typescript
-// Month 6
-@Component({ selector: 'app-data-grid' })
-export class DataGridComponent<T> {
-  data = input<T[]>([]);
-  columns = input<ColumnDef<T>[]>([]);
-  loading = input(false);
-  sortable = input(false);
-  filterable = input(false);
-  editable = input(false);
-  persistColumns = input(false);
-  showContextMenu = input(false);
-  // ... and it keeps growing
-}
-```
-
-<v-click>
-<img src="/assets/this-is-fine.jpg" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-120 rounded-lg shadow-xl" />
-</v-click>
+*"Why is this so hard to change?"*
 
 <!--
-Month six. Sortable, filterable, editable, persist columns, context menu...
+Month six. Product wants a variation. And you realize... this thing is stuck. Every change breaks something else.
 
-And here's the thing - we didn't inherit this mess. We built it. One reasonable feature at a time.
+We didn't inherit this mess. We built it. One reasonable feature at a time.
 -->
 
 ---
@@ -126,35 +54,29 @@ layout: section
 
 # The Real Problem
 
-Coupling isn't the problem.
+Coupling isn't bad.
 
 ## Hidden coupling is.
 
 <!--
-But here's what I want you to understand.
-
-Coupling isn't bad. Every system has coupling. The problem is when coupling is hidden. When you can't see it, you can't manage it.
-
-Today I'll show you four tools Angular gives us, and the tells that show you when to reach for each one.
+Coupling isn't bad. Every system has coupling. The problem is when coupling is HIDDEN. When you can't see it, you can't manage it.
 -->
 
 ---
 layout: default
 ---
 
-# The Four Tools
+# Four Tools
 
-| Tool | When to Use |
-|------|-------------|
-| **Inputs/Outputs** | Parent configures child |
-| **Content Projection** | Structure varies |
-| **Strategy via DI** | Behavior A **or** B |
-| **Directives** | Behavior A **and** B **and** C |
+| Tool | When |
+|------|------|
+| Inputs/Outputs | Parent configures child |
+| Content Projection | Structure varies |
+| Strategy via DI | A **or** B |
+| Directives | A **and** B **and** C |
 
 <!--
-These are our four tools. Each one solves a different problem.
-
-The trick isn't knowing the tools - you probably know all of these. The trick is recognizing WHEN to use each one.
+Four tools. Each solves a different problem. The trick is recognizing WHEN to use each one.
 -->
 
 ---
@@ -163,74 +85,31 @@ layout: section
 
 # Tool 1: Inputs/Outputs
 
-## The Baseline
+**Parent** decides WHAT
 
-**Parent** decides WHAT.
-
-**Child** decides HOW.
+**Child** decides HOW
 
 <!--
-Inputs and outputs. Everyone's first tool.
-
-Parent passes data down, child emits events up. Simple. This is where you start, and honestly, it's where you should stay as long as possible.
+Everyone's first tool. Parent passes data down, child emits events up. Stay here as long as possible.
 -->
 
 ---
 layout: default
 ---
 
-# Inputs: The Code
+# The Smell
 
 ```typescript
-@Component({ selector: 'app-data-grid' })
-export class DataGridComponent<T> {
-  data = input<T[]>([]);
-  columns = input<ColumnDef<T>[]>([]);
-  loading = input(false);
-
-  rowClicked = output<T>();
-}
-```
-
-```html
-<app-data-grid
-  [data]="items"
-  [columns]="columns"
-  [loading]="isLoading"
-  (rowClicked)="onSelect($event)"
-/>
-```
-
-<!--
-Clean contract. Parent owns the data, child owns the rendering. They can evolve independently.
-
-This is the right abstraction for simple cases.
--->
-
----
-layout: default
----
-
-# The Smell: Boolean Flags
-
-```typescript
-// The smell:
 readonly isAdmin = input(false);
-readonly isReadOnly = input(false);
 readonly isCompactMode = input(false);
 
-// Component checking who's using it:
-if (this.isAdmin()) {
-  // show delete button
-}
-if (this.isCompactMode()) {
-  // hide some columns
-}
+if (this.isAdmin()) { /* show delete */ }
+if (this.isCompactMode()) { /* hide columns */ }
 ```
 
-<!--
-But here's the smell that inputs are breaking down.
+Component asking *"who's using me?"*
 
+<!--
 Boolean flags. The component is asking 'who's using me?' and changing behavior based on the answer.
 
 When you see if-branches based on context flags, inputs have outgrown their welcome.
@@ -242,79 +121,47 @@ layout: section
 
 # Tool 2: Content Projection
 
-## When STRUCTURE varies.
+When **structure** varies
 
-Not behavior. **Structure.**
+Not behavior. Structure.
 
 <!--
-Content projection. The parent passes structure in, not configuration down.
-
-Use this when the variation is about WHAT goes WHERE. Headers, footers, custom templates.
+The parent passes structure in, not configuration down. Use this when the variation is about WHAT goes WHERE.
 -->
 
 ---
 layout: default
 ---
 
-# Content Projection: The Code
+# Content Projection
 
 ```typescript
-@Component({
-  selector: 'app-card',
-  template: `
-    <div class="card">
-      <div class="header">
-        <ng-content select="[header]" />
-      </div>
-      <ng-content />
-    </div>
-  `,
-})
-export class CardComponent {}
+template: `
+  <div class="header"><ng-content select="[header]" /></div>
+  <ng-content />
+`
 ```
 
-```html
-<app-card>
-  <h2 header>My Title</h2>
-  <p>Card content here</p>
-</app-card>
-```
+Card owns layout. Consumer owns content.
 
 <!--
-The card owns layout. The consumer owns content.
-
-Different consumers can put different things in, but the card doesn't need to know or care.
+The card owns layout. The consumer owns content. Different consumers can put different things in.
 -->
 
 ---
 layout: default
 ---
 
-# The Tell: Behavior, Not Structure
+# The Tell
 
-<v-clicks>
-
-- Headers and footers
-- Custom row templates
-- Action buttons
-
-</v-clicks>
-
-<v-click>
-
-**Doesn't work for:**
+Doesn't work for:
 
 - *"Save to localStorage vs server"*
-- *"Sort ascending vs descending by default"*
-- *"Fetch data this way vs that way"*
+- *"Sort ascending vs descending"*
 
-</v-click>
+You need different **behavior**, not structure.
 
 <!--
-But here's the tell it's breaking down.
-
-You need different BEHAVIOR, not different structure. Content projection can't help you there.
-
 If you're trying to ng-content a function... you've gone too far.
 -->
 
@@ -324,14 +171,12 @@ layout: section
 
 # Tool 3: Strategy via DI
 
-## When behavior is exclusive.
+**A** or **B**
 
-**A** or **B**. Never both.
+Never both.
 
 <!--
-Strategy pattern via dependency injection.
-
-This is for mutually exclusive behavior. Exactly one implementation wins at runtime.
+Strategy pattern via dependency injection. For mutually exclusive behavior. Exactly one implementation wins.
 -->
 
 ---
@@ -340,19 +185,15 @@ layout: default
 
 # Strategy: The Problem
 
-The grid needs to persist column state. But **where**?
+Grid persists column state. But **where**?
 
 | Context | Storage |
 |---------|---------|
-| Admin dashboard | Server API |
-| Public view | localStorage |
-| Preview mode | Don't save |
+| Admin | Server |
+| Public | localStorage |
+| Preview | Don't save |
 
 <!--
-Let's say our grid persists column state. Width, order, visibility.
-
-But where it saves depends on who's using it. Server for admins, localStorage for regular users, nowhere for previews.
-
 Three different behaviors. The grid shouldn't know which one.
 -->
 
@@ -363,53 +204,17 @@ layout: default
 # Strategy: The Interface
 
 ```typescript
-// Define WHAT, not HOW
 export interface StorageStrategy {
   save(key: string, data: unknown): void;
   load(key: string): unknown | null;
 }
 
-// Create a token
 export const STORAGE_STRATEGY =
   new InjectionToken<StorageStrategy>('StorageStrategy');
 ```
 
 <!--
-Step one - define the contract. Save and load. That's it.
-
-The token lets Angular swap implementations.
--->
-
----
-layout: default
----
-
-# Strategy: The Implementations
-
-```typescript
-// Implementation A: localStorage
-export class LocalStorageStrategy implements StorageStrategy {
-  save(key: string, data: unknown) {
-    localStorage.setItem(key, JSON.stringify(data));
-  }
-  load(key: string) {
-    return JSON.parse(localStorage.getItem(key) ?? 'null');
-  }
-}
-
-// Implementation B: Server
-export class ServerStorageStrategy implements StorageStrategy {
-  save(key: string, data: unknown) {
-    this.http.post('/api/preferences', { key, data });
-  }
-  load(key: string) {
-    return this.http.get(`/api/preferences/${key}`);
-  }
-}
-```
-
-<!--
-Two implementations. Same interface. The grid doesn't know which one it's using.
+Define the contract. Save and load. The token lets Angular swap implementations.
 -->
 
 ---
@@ -419,109 +224,55 @@ layout: default
 # Strategy: The Provider
 
 ```typescript
-// Context A: Admin dashboard
 @Component({
   providers: [
     { provide: STORAGE_STRATEGY, useClass: ServerStorageStrategy }
   ]
 })
 export class AdminDashboard {}
-
-// Context B: Public view
-@Component({
-  providers: [
-    { provide: STORAGE_STRATEGY, useClass: LocalStorageStrategy }
-  ]
-})
-export class PublicView {}
 ```
+
+**Zero if-statements.** Context decides, not component.
 
 <!--
 The decision lives in the provider. Same grid component, different storage behavior.
-
-Zero if-statements in the grid. The context decides, not the component.
 -->
 
 ---
 layout: default
 ---
 
-# Provider Functions
+# The Cue
 
 ```typescript
-// Bundle defaults into a reusable function
-export function provideStorageDefaults(): Provider[] {
-  return [
-    { provide: STORAGE_STRATEGY, useClass: LocalStorageStrategy }
-  ];
-}
-
-// Provide once at app or feature level
-bootstrapApplication(AppComponent, {
-  providers: [provideStorageDefaults()]
-});
-
-// Override only where needed
-@Component({
-  providers: [
-    { provide: STORAGE_STRATEGY, useClass: ServerStorageStrategy }
-  ]
-})
-export class AdminDashboard {}
-```
-
-<!--
-Pro tip - bundle your defaults into a provider function.
-
-Call it once at the top. Everything below gets the default. Override only where you need something different.
-
-DI hierarchy does the rest. Closest parent wins.
--->
-
----
-
-# The Cue: God Component
-
-```typescript
-// The grid owns ALL the behaviors:
-@Component(...)
 export class DataGridComponent {
   #storage = inject(STORAGE_STRATEGY);
   #sorter = inject(SORT_STRATEGY);
   #filter = inject(FILTER_STRATEGY);
   #selection = inject(SELECTION_STRATEGY);
-  // Can't opt out of any of these
 }
 ```
 
-<v-click>
-<img src="/assets/one-does-not-simply.jpg" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-120 rounded-lg shadow-xl" />
-</v-click>
+Can't opt out of any of these.
 
 <!--
-But here's the cue that something's wrong.
+God component. Injecting four strategies. Six. Ten. Even with providers, you can't opt out.
 
-The component is injecting four strategies. Six. Ten. It's becoming a god component.
-
-Even with provider functions, you can't opt out. Every grid has storage, sorting, filtering, selection - whether you want them or not.
-
-The component is doing too much. It owns behaviors that should be optional.
+The component owns behaviors that should be optional.
 -->
 
 ---
 layout: section
 ---
 
-# Tool 4: Directive Composition
+# Tool 4: Directives
 
-## When behaviors ACCUMULATE.
+**A** and **B** and **C**
 
-**A** and **B** and **C**.
+Behaviors accumulate.
 
 <!--
-Directive composition.
-
-Each behavior is a directive. They don't replace each other - they stack. They compose by addition.
+Directive composition. Each behavior is a directive. They don't replace each other - they stack.
 -->
 
 ---
@@ -531,78 +282,38 @@ layout: default
 # Directives: The Code
 
 ```typescript
-@Directive({ selector: 'app-data-grid[persistColumns]' })
-export class PersistColumnsDirective {
-  #storage = inject(STORAGE_STRATEGY);
-  // Uses whatever strategy is provided above in the tree
-}
-
 @Directive({ selector: 'app-data-grid[sortable]' })
 export class SortableDirective {
   #grid = inject(DataGridComponent);
-  // Adds sorting behavior
+}
+
+@Directive({ selector: 'app-data-grid[persistColumns]' })
+export class PersistColumnsDirective {
+  #storage = inject(STORAGE_STRATEGY);
 }
 ```
 
 <!--
-Each directive owns one behavior.
-
-The directive can use a strategy internally. It picks up whatever's provided in the DI tree - from the provider function we set up earlier.
-
-The directive is composable - you add it or you don't. The strategy inside is exclusive - localStorage OR server, never both.
+Each directive owns one behavior. The directive can use a strategy internally.
 -->
 
 ---
 layout: default
 ---
 
-# Directives: Override When Needed
-
-```typescript
-// Most consumers: just add the directive, default works
-<app-data-grid persistColumns [data]="items" />
-
-// Admin dashboard needs server storage:
-@Component({
-  providers: [
-    { provide: STORAGE_STRATEGY, useClass: ServerStorageStrategy }
-  ]
-})
-export class AdminDashboard {}
-
-// Template is identical - directive picks up the override
-<app-data-grid persistColumns [data]="items" />
-```
-
-<!--
-Most consumers just add the directive. The default works.
-
-But when you need different behavior, override the token in your component. The directive picks it up through DI hierarchy. Zero changes to the template.
--->
-
----
-layout: default
----
-
-# Directives: The Usage
+# Directives: Usage
 
 ```html
-<!-- Simple grid: just sorting -->
+<!-- Simple -->
 <app-data-grid sortable [data]="items" />
 
-<!-- Full-featured: everything -->
-<app-data-grid
-  sortable
-  filterable
-  persistColumns
-  contextMenu
-  [data]="items"
-/>
+<!-- Full-featured -->
+<app-data-grid sortable filterable persistColumns [data]="items" />
 ```
 
-<!--
 Compose what you need. Skip what you don't.
 
+<!--
 Simple view gets one directive. Power user view gets four. Same component.
 -->
 
@@ -610,60 +321,19 @@ Simple view gets one directive. Power user view gets four. Same component.
 layout: default
 ---
 
-# Directive Communication
-
-```typescript
-@Directive({ selector: 'app-data-grid[sortable]' })
-export class SortableDirective {
-  // Inject the host component
-  #grid = inject(DataGridComponent);
-
-  constructor() {
-    // React to grid state via signals
-    effect(() => {
-      const data = this.#grid.data();
-      // Apply sorting...
-    });
-  }
-}
-```
-
-<!--
-How do directives talk to the component? They inject it.
-
-The component exposes signals. Directives read them, react to them, modify behavior.
-
-No special events. No services between them. Just signals.
--->
-
----
-
-# The Sign: Repeated Patterns
+# The Sign
 
 ```html
-<!-- Page A -->
-<app-data-grid sortable filterable
-  persistColumns contextMenu />
-
-<!-- Page B -->
-<app-data-grid sortable filterable
-  persistColumns contextMenu />
-
-<!-- Page C -->
-<app-data-grid sortable filterable
-  persistColumns contextMenu />
+<!-- Page A, B, C... -->
+<app-data-grid sortable filterable persistColumns contextMenu />
+<app-data-grid sortable filterable persistColumns contextMenu />
+<app-data-grid sortable filterable persistColumns contextMenu />
 ```
 
-<v-click>
-<img src="/assets/distracted-boyfriend.jpg" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-120 rounded-lg shadow-xl" />
-</v-click>
+Same combo. Three times.
 
 <!--
-But here's the sign that directives need one more step.
-
-Same four directives. Copy-pasted three times. That's implicit coupling through repetition.
-
-If this pattern appears three times, it's not a coincidence. It's a concept that needs a name.
+Same four directives. Copy-pasted. That's implicit coupling through repetition.
 -->
 
 ---
@@ -679,10 +349,6 @@ Two times is coincidence.
 ## Name it.
 
 <!--
-This is the core insight.
-
-Two times might be coincidence. Three times? That's a concept hiding in plain sight.
-
 When you see the same pattern three times, the code is telling you something's missing from your vocabulary.
 -->
 
@@ -694,161 +360,63 @@ layout: default
 
 ```typescript
 @Directive({
-  selector: '[simpleGrid]',
-  hostDirectives: [
-    SortableDirective,
-    FilterableDirective,
-  ],
-})
-export class SimpleGridDirective {}
-
-@Directive({
   selector: '[powerGrid]',
   hostDirectives: [
     SortableDirective,
     FilterableDirective,
     PersistColumnsDirective,
-    ContextMenuDirective,
   ],
 })
 export class PowerGridDirective {}
 ```
 
-<!--
-Host directives let you bundle directives into a named concept.
-
-Simple grid, power grid. One attribute instead of four. And now you can talk about it, test it, document it.
--->
-
----
-
-# Before/After
-
-```html
-<!-- Before: 4 attributes everywhere -->
-<app-data-grid
-  sortable
-  filterable
-  persistColumns
-  contextMenu
-  [data]="items"
-/>
-
-<!-- After: 1 named concept -->
-<app-data-grid
-  powerGrid
-  [data]="items"
-/>
-```
-
-<v-click>
-<img src="/assets/pam-theyre-different.jpg" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-120 rounded-lg shadow-xl" />
-</v-click>
+One attribute instead of four.
 
 <!--
-Four attributes become one.
-
-But more importantly - the pattern has a name now. 'Power grid' is a thing in your codebase. It's not just 'grid with these four directives'.
--->
-
----
-
-# Coordinator Directive
-
-```typescript
-// Sorting and persistence need to work together:
-// When sort changes → persist the new sort
-// On init → restore persisted sort
-
-@Directive({
-  selector: 'app-data-grid[persistedSort]',
-  hostDirectives: [
-    SortableDirective,
-    PersistColumnsDirective
-  ],
-})
-export class PersistedSortDirective {
-  #sortable = inject(SortableDirective);
-  #persist = inject(PersistColumnsDirective);
-
-  constructor() {
-    // Coordinate the coupling
-    effect(() => {
-      const sort = this.#sortable.currentSort();
-      this.#persist.save('sort', sort);
-    });
-  }
-}
-```
-
-<v-click>
-<img src="/assets/galaxy-brain.jpg" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-120 rounded-lg shadow-xl" />
-</v-click>
-
-<!--
-Here's a powerful pattern. Sometimes directives A and B need to be coupled - by product spec.
-
-When sorting changes, persist it. On load, restore it. These two need to talk.
-
-Instead of coupling them inside the grid, create a COORDINATOR directive. It hosts both directives and manages their interaction.
-
-The grid stays dumb. The coupling is explicit and testable.
+Bundle directives into a named concept. Now you can talk about it, test it, document it.
 -->
 
 ---
 layout: default
 ---
 
-# The Decision Framework
+# Coordinator Directive
 
-| Cue | Tool |
-|-----|------|
-| Parent configures child | Inputs/Outputs |
-| Boolean flags, if-branches | Time to graduate |
-| Structure varies | Content Projection |
-| Behavior A or B | Strategy via DI |
-| Repeated provider setup | Provider functions |
-| Behaviors A and B and C | Directives |
-| Directive needs flexibility | Strategy inside directive |
-| Same combo 3x | hostDirectives |
-| A and B must be coupled | Coordinator directive |
+```typescript
+@Directive({
+  selector: '[persistedSort]',
+  hostDirectives: [SortableDirective, PersistColumnsDirective],
+})
+export class PersistedSortDirective {
+  constructor() {
+    effect(() => this.#persist.save('sort', this.#sortable.currentSort()));
+  }
+}
+```
+
+When A and B **must** work together.
 
 <!--
-Here's the mental model on one slide.
-
-It's not 'which pattern is best'. It's 'what is the code telling me right now?'
-
-Each row is a response to a cue. You don't pick upfront. You listen.
+Sometimes directives need to be coupled - by product spec. Create a coordinator. The grid stays dumb. The coupling is explicit.
 -->
 
 ---
-layout: section
+layout: default
 ---
 
-# Your Monday Morning
+# Decision Framework
 
-<v-clicks>
-
-1. Find your biggest component
-2. Count the inputs
-3. Find the if-branches
-
-</v-clicks>
-
-<v-click>
-
-### Ask: *"What is this telling me?"*
-
-</v-click>
+| Signal | Tool |
+|--------|------|
+| Parent configures child | Inputs/Outputs |
+| Boolean flags | Time to graduate |
+| Structure varies | Content Projection |
+| A or B | Strategy via DI |
+| A and B and C | Directives |
+| Same combo 3x | hostDirectives |
 
 <!--
-Here's your homework.
-
-Monday morning. Find the scariest component in your codebase. Count the inputs. Find the if-statements that check context.
-
-Ask yourself: what is this telling me? What tool does it point to?
-
-You might not refactor it. But you'll see it differently.
+What is the code telling you right now? Each row is a response to a signal.
 -->
 
 ---
@@ -862,10 +430,6 @@ Good abstractions aren't chosen.
 ## They're discovered.
 
 <!--
-Angular gives us the tools. Inputs, content projection, DI, directives, host directives.
-
-Our job isn't to pick our favorite and force it everywhere.
-
 Our job is to listen to the code. Notice the repetition. Recognize the patterns.
 
 Good abstractions aren't chosen. They're discovered.
@@ -877,16 +441,10 @@ layout: end
 
 # Thank You
 
-**Dor Peled**
-
-@Knat-Dev
+**Dor Peled** · @Knat-Dev
 
 Questions?
 
 <!--
-Thanks for listening. I'm Dor, Knat-Dev online.
-
 Come find me if you wanna talk about Angular, decoupling, or why your component has 47 inputs.
-
-Questions?
 -->
