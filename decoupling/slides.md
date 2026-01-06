@@ -66,11 +66,10 @@ layout: default
 
 # Month 1
 
-```typescript {2-5}
-@Component({ selector: 'app-data-grid' })
-export class DataGridComponent<T> {
-  data = input<T[]>([]);
-  columns = input<ColumnDef<T>[]>([]);
+```typescript
+@Component({ selector: 'app-list' })
+export class ListComponent {
+  items = input<Item[]>([]);
   loading = input(false);
 }
 ```
@@ -80,13 +79,13 @@ Clean. Simple. Works great.
 <!--
 [2:00 - 2:45]
 
-Alright, let's build something. Data grid. We've all built one.
+Alright, let's build something. A list component. Simple.
 
-Month one. Three inputs - data, columns, loading. Look at this code. What do you think?
+Month one. Two inputs - items, loading. Look at this code. What do you think?
 
 Clean, right? Simple. Easy to test. This is good code.
 
-And it IS good code. Right now, this is exactly the right abstraction. Nothing over-engineered. Does one thing well.
+And it IS good code. Right now, this is exactly the right abstraction.
 
 Enjoy this moment. It won't last.
 
@@ -99,15 +98,13 @@ layout: default
 
 # Month 6
 
-```typescript {6-9}
-@Component({ selector: 'app-data-grid' })
-export class DataGridComponent<T> {
-  data = input<T[]>([]);
-  columns = input<ColumnDef<T>[]>([]);
-  loading = input(false);
+```typescript {4-7}
+@Component({ selector: 'app-list' })
+export class ListComponent {
+  items = input<Item[]>([]);
   sortable = input(false);
   filterable = input(false);
-  persistColumns = input(false);
+  persistState = input(false);
   // ... and it keeps growing
 }
 ```
@@ -119,13 +116,11 @@ export class DataGridComponent<T> {
 <!--
 [2:45 - 4:00]
 
-Month six. Product shows up. "Can we add sorting?" Sure. "Column resizing?" Okay. "Remember column preferences?" Fine.
-
-Then: "Compact mode for mobile. Oh, and admins need a delete button but regular users shouldn't see it."
+Month six. Product shows up. "Can we add sorting?" Sure. "Filtering?" Okay. "Remember state?" Fine.
 
 Now look at this code. What do you see?
 
-Boolean flags. sortable, filterable, persistColumns. And somewhere in the template, there's an ngIf for each one.
+Boolean flags. sortable, filterable, persistState. And somewhere in the template, there's an ngIf for each one.
 
 We didn't inherit this mess. We built it. One reasonable feature request at a time.
 
@@ -377,7 +372,7 @@ layout: image-right
 
 # Strategy: The Problem
 
-Grid persists column state. But **where**?
+Component persists state. But **where**?
 
 ::default::
 
@@ -390,15 +385,13 @@ Grid persists column state. But **where**?
 <!--
 [9:30 - 10:00]
 
-Back to our grid. It needs to persist column preferences. But WHERE depends on context.
+Back to our component. It needs to persist state. But WHERE depends on context.
 
-Admin dashboard? Server. Sync across devices.
-Public page? localStorage. No user account.
-Preview mode? Don't save at all.
+Admin? Server. Public? localStorage. Preview? Don't save.
 
-Old way: storageMode input. If-statements everywhere. Grid knows about all three modes.
+Old way: storageMode input. If-statements everywhere.
 
-New way: Grid says "I need to persist this." Doesn't care where.
+New way: Component says "I need to save." Doesn't care where.
 
 [Quick - set up the solution]
 -->
@@ -549,15 +542,14 @@ layout: default
 # The Cue
 
 ```typescript
-export class DataGridComponent {
+export class ListComponent {
   #storage = inject(STORAGE_STRATEGY);
   #sorter = inject(SORT_STRATEGY);
   #filter = inject(FILTER_STRATEGY);
-  #selection = inject(SELECTION_STRATEGY);
 }
 ```
 
-Can't opt out. All four are injected.
+Can't opt out. All three are injected.
 
 <v-click>
 <img src="/assets/one-does-not-simply.jpg" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-120 rounded-lg shadow-xl" />
@@ -568,15 +560,13 @@ Can't opt out. All four are injected.
 
 But look at this code. What's the problem?
 
-Four strategies injected. Storage, sorting, filtering, selection.
+Three strategies injected. You can SWAP them. But you can't OPT OUT.
 
-You can SWAP them. But you can't OPT OUT. Every consumer gets all four. Can't say "I don't need sorting on this page."
-
-Still a god component. All behaviors mandatory - just abstracted better.
+Every consumer gets all three. Can't say "I don't need sorting on this page."
 
 [Click for meme]
 
-See the signal? When you're injecting five strategies and half should be optional? Wrong tool.
+See the signal? When you're injecting strategies and half should be optional? Wrong tool.
 
 We need behaviors that ACCUMULATE. Add what you want, skip what you don't.
 
@@ -618,15 +608,12 @@ layout: default
 # Directive: Sortable
 
 ```typescript
-@Directive({ selector: 'app-data-grid[sortable]' })
+@Directive({ selector: 'app-list[sortable]' })
 export class SortableDirective {
-  #grid = inject(DataGridComponent);
+  #list = inject(ListComponent);
 
   constructor() {
-    effect(() => {
-      const sorted = this.sortData(this.#grid.data());
-      this.#grid.updateDisplayData(sorted);
-    });
+    effect(() => this.#list.sort());
   }
 }
 ```
@@ -636,11 +623,11 @@ Only activates with the sortable attribute.
 <!--
 [13:00 - 13:30]
 
-SortableDirective. Selector is 'app-data-grid[sortable]'.
+SortableDirective. Selector targets app-list with sortable attribute.
 
-Only activates when you add the attribute. No attribute? Directive doesn't exist.
+No attribute? Directive doesn't exist. Zero overhead.
 
-Injects the grid, watches data, adds sorting behavior.
+Injects the component, adds behavior.
 
 [Quick - show the pattern]
 -->
@@ -652,16 +639,13 @@ layout: default
 # Directive: Persist
 
 ```typescript
-@Directive({ selector: 'app-data-grid[persistColumns]' })
-export class PersistColumnsDirective {
-  #grid = inject(DataGridComponent);
+@Directive({ selector: 'app-list[persist]' })
+export class PersistDirective {
+  #list = inject(ListComponent);
   #storage = inject(STORAGE_STRATEGY);
 
   constructor() {
-    effect(() => {
-      const state = this.#grid.columnState();
-      this.#storage.save('grid-columns', state);
-    });
+    effect(() => this.#storage.save('state', this.#list.state()));
   }
 }
 ```
@@ -671,13 +655,11 @@ Notice: injects STORAGE_STRATEGY. **Tools layer together.**
 <!--
 [13:30 - 14:00]
 
-PersistColumnsDirective. Same pattern.
+PersistDirective. Same pattern.
 
 But notice - it injects STORAGE_STRATEGY. Tools layer together. Directive decides WHEN to save. Strategy decides WHERE.
 
-Each directive: one job. Single-purpose. Easy to test alone.
-
-Grid stays dumb. Directives add behavior.
+Each directive: one job. Easy to test alone.
 
 [Point out strategy injection - tools compose]
 -->
@@ -690,31 +672,22 @@ layout: default
 
 ```html
 <!-- Simple -->
-<app-data-grid sortable [data]="items" />
+<app-list sortable [items]="data" />
 
 <!-- Full-featured -->
-<app-data-grid
-  sortable
-  filterable
-  persistColumns
-  [data]="items"
-/>
+<app-list sortable filterable persist [items]="data" />
 ```
 
-Add sortable, filterable, persistColumns as needed.
+Add sortable, filterable, persist as needed.
 
 <!--
 [14:00 - 14:30]
 
 In the template.
 
-Simple page? Just sortable. Grid renders, one directive adds sorting.
+Simple page? Just sortable. Full-featured? All three.
 
-Power user dashboard? All the directives. Same grid, four behaviors.
-
-Each page picks its combination. Bare grid for read-only. Everything for admin. Just sorting for embedded views.
-
-Opt-in complexity. Start simple, add what you need.
+Each page picks its combination. Opt-in complexity.
 
 [Fast - template speaks for itself]
 -->
@@ -726,25 +699,14 @@ layout: default
 # The Sign
 
 ```html
-<!-- Page A, B, C... -->
-<app-data-grid
-  sortable
-  filterable
-  persistColumns
-  contextMenu
-/>
-<app-data-grid
-  sortable
-  filterable
-  persistColumns
-  contextMenu
-/>
-<app-data-grid
-  sortable
-  filterable
-  persistColumns
-  contextMenu
-/>
+<!-- Page A -->
+<app-list sortable filterable persist [items]="a" />
+
+<!-- Page B -->
+<app-list sortable filterable persist [items]="b" />
+
+<!-- Page C -->
+<app-list sortable filterable persist [items]="c" />
 ```
 
 Same combo. Three times.
@@ -809,30 +771,28 @@ layout: default
 
 ```typescript
 @Directive({
-  selector: '[powerGrid]',
+  selector: '[powerList]',
   hostDirectives: [
     SortableDirective,
     FilterableDirective,
-    PersistColumnsDirective,
+    PersistDirective,
   ],
 })
-export class PowerGridDirective {}
+export class PowerListDirective {}
 ```
 
-One attribute via hostDirectives.
+One attribute. Three behaviors.
 
 <!--
 [16:00 - 16:45]
 
 Angular gives us hostDirectives.
 
-PowerGridDirective bundles three others. One attribute, three behaviors.
+PowerListDirective bundles three others. One attribute, three behaviors.
 
-Look at the directive body. It's empty. No logic. Just composition. It's literally just a name for a pattern.
+Look at the body. Empty. No logic. Just composition. It's a name for a pattern.
 
-Individual directives still work for fine-grained control. But now "power grid" is a concept in your codebase.
-
-Add a fifth behavior? One file. Done.
+Add a fourth behavior? One file. Done.
 
 [Show how naming creates maintainability]
 -->
@@ -844,17 +804,11 @@ layout: default
 # Before/After
 
 ```html
-<!-- Before: 4 attributes -->
-<app-data-grid
-  sortable
-  filterable
-  persistColumns
-  contextMenu
-  [data]="items"
-/>
+<!-- Before: 3 attributes -->
+<app-list sortable filterable persist [items]="data" />
 
 <!-- After: 1 named concept -->
-<app-data-grid powerGrid [data]="items" />
+<app-list powerList [items]="data" />
 ```
 
 <v-click>
@@ -864,15 +818,13 @@ layout: default
 <!--
 [16:45 - 17:15]
 
-Before: four attributes. Remember all, type all, keep them in sync.
-
-After: one word. powerGrid.
+Before: three attributes. After: one word. powerList.
 
 [Click for meme]
 
-Functionally identical. But conceptually? Worlds apart.
+Functionally identical. Conceptually? Worlds apart.
 
-New developer sees "powerGrid" - immediately understands what this grid does.
+New developer sees "powerList" - immediately understands what this list does.
 
 First version is a list of things. Second is a concept.
 
