@@ -25,11 +25,11 @@ Hey everyone, I'm Dor. Software engineer at Coralogix.
 
 Here's what we're going to do today. We're going to build a component together. Well - I'll write the code, but I want you to help me spot when something's off.
 
-You know those moments when you look at code and think "this feels wrong, but I can't explain why"? That's what we're hunting for. The signals.
+You know those moments when you look at code and think "this feels wrong, but I can't explain why"? That's what we're hunting for. The tells.
 
-We all know the tools - inputs, outputs, content projection, DI, directives. The hard part isn't knowing WHAT they are. It's knowing WHEN to reach for each one.
+We all know the tools - inputs, outputs, content projection, DI, directives. Documentation teaches syntax. Pain teaches architecture. I want to show you the pain so you recognize it before it bites you.
 
-So watch the code with me. When you see something that makes you uncomfortable - that's the signal.
+So watch the code with me. When you see something that makes you uncomfortable - that's the tell.
 
 [Scan the room - make it feel like we're about to do this together]
 -->
@@ -53,7 +53,7 @@ Quick bit about me.
 
 I tend to stay with hard problems longer than is comfortable. When code gets messy, I don't bounce. I sit with it. Try to understand what's actually going on.
 
-Angular codebases are the same. They don't fail immediately. They accumulate complexity quietly. One feature at a time. And if you don't stay with them long enough, you miss the signals.
+Angular codebases are the same. They don't fail immediately. They accumulate complexity quietly. One feature at a time. And if you don't stay with them long enough, you miss the tells.
 
 So this talk isn't best practices. It's pattern recognition. I'll show you what I've learned to look for - and you tell me if you see it too.
 
@@ -98,26 +98,22 @@ layout: default
 
 # Month 2
 
-```ts [list.ts] {5-7,9-11,13-14,16-20}
+```ts [list.ts]
 @Component({ selector: 'app-list' })
 export class ListComponent {
   items = input<Item[]>([]);
-  loading = input(false);
-  sortable = input(false);
-  showHeader = input(false);
-  persistState = input(false);
+  // ... loading, error, etc.
+  sortable = input(false);        // flag
+  showHeader = input(false);      // flag  
+  persistState = input(false);    // flag + friends below
 
-  storageKey = input<string>();
+  storageKey = input<string>();   // only if persistState
   initialState = input<ListState>();
-  stateSaved = output<void>();
-
-  #api = inject(ApiService);
   #storage = inject(StorageService);
+  // ... more services
 
   ngOnInit() {
-    if (this.persistState()) {
-      // 30 lines of restoration logic...
-    }
+    if (this.persistState()) { /* 30 lines... */ }
   }
 }
 ```
@@ -173,7 +169,7 @@ But when coupling is buried in boolean flags? Scattered across templates? That's
 
 So the question isn't "how do I remove coupling?" It's "how do I make coupling VISIBLE?"
 
-That's what we're going to do. Four tools. Each one makes a different kind of coupling explicit.
+That's what we're going to do. Inputs are your default - stay there as long as you can. But when inputs go wrong, you have three escape hatches. Each one makes a different kind of coupling explicit.
 
 [Clear and confident - this is the core idea]
 -->
@@ -184,68 +180,45 @@ layout: image-right
 
 ::left::
 
-# Four Tools
+# Three Escape Hatches
 
-The trick is knowing **when**.
+Inputs are your default.
+
+**When they fail, reach for these.**
 
 ::default::
 
-| Tool               | When                    |
-| ------------------ | ----------------------- |
-| Inputs/Outputs     | Parent configures child |
-| Content Projection | Structure varies        |
-| Strategy via DI    | A **or** B              |
-| Directives         | A **and** B **and** C   |
+| The Tell            | Escape Hatch       |
+| ------------------- | ------------------ |
+| Structural flags    | Content Projection |
+| Behavioral bundles  | Strategy via DI    |
+| Composable opt-ins  | Directives         |
 
 <!--
 [5:00 - 6:00]
 
-Four tools. You know all of them. The trick is recognizing WHEN.
+Three escape hatches. You know all of them. The trick is recognizing WHEN to reach for each.
 
-Inputs/outputs - the default. Stay here as long as you can.
+Inputs are your default. They create VISIBLE coupling - you can see what a component needs. Stay there as long as you can.
 
-Content projection - when STRUCTURE varies. Different things in different slots.
+But watch for the tells.
 
-Strategy via DI - A OR B. Pick one. Never both.
+Structural flags - booleans that control what DOM exists? Content projection. Extract the @if.
 
-Directives - A AND B AND C. Mix and match.
+Behavioral bundles - a flag that drags along services and lifecycle code? Strategy via DI. Let the injector decide.
 
-For each tool, I'll show you the code, and we'll spot the signal together. The moment when the code says "I need something different."
+Composable opt-ins - behaviors that should stack? Directives. Visible in the template.
 
-Ready? Let's start with inputs.
+For each escape hatch, I'll show you the code, and we'll spot the tell together.
 
 [Point to each row briefly - then move on]
--->
-
----
-layout: section
----
-
-# Tool 1: Inputs/Outputs
-
-**Parent** decides WHAT
-
-**Child** decides HOW
-
-<!--
-[6:00 - 6:30]
-
-Tool one. Your default. Stay here as long as you can.
-
-Parent decides WHAT to show. Child decides HOW to show it.
-
-Inputs create VISIBLE coupling. You can see what a component needs. That's manageable.
-
-But watch for the moment when inputs start asking the wrong question.
-
-[Quick - they know this]
 -->
 
 ---
 layout: default
 ---
 
-# The Signal
+# The Tell
 
 ```ts [list.ts] {1-3}
 sortable = input(false);
@@ -258,13 +231,13 @@ Boolean flags. The component asking _"what features am I?"_
 But look closer at our Month 2 code...
 
 <!--
-[6:30 - 7:30]
+[6:00 - 7:00]
 
 Look at these. Boolean flags. sortable, showHeader, persistState.
 
 Each one is a feature toggle. The component is asking: "What features am I running today?"
 
-That's the signal. When you see boolean flags accumulating, the component is trying to be too many things.
+That's the tell - like in poker. When you see boolean flags accumulating, the component is trying to be too many things.
 
 But here's the thing - and we'll come back to this - boolean flags are just the surface. Look back at the Month 2 code. Notice how storageKey and initialState only matter when persistState is true? They travel together. The truth is deeper than just flags.
 
@@ -294,7 +267,7 @@ showHeader = input(false);
 Why does the **list** decide whether a header exists?
 
 <!--
-[7:30 - 8:00]
+[7:00 - 7:30]
 
 Let's start with showHeader. This one is different from sortable or persistState.
 
@@ -325,14 +298,14 @@ layout: default
 ```html [after]
 <!-- After: parent decides structure -->
 <app-list>
-  <app-header header />
+  <app-header header></app-header>
 </app-list>
 ```
 
 The `@if` becomes a **slot**. The boolean disappears.
 
 <!--
-[8:00 - 8:30]
+[7:30 - 8:00]
 
 Watch what happens when you extract the conditional.
 
@@ -351,18 +324,18 @@ Content projection isn't a "layout feature". It's what happens when you extract 
 layout: section
 ---
 
-# Tool 2: Content Projection
+# Tool 1: Content Projection
 
 When **structure** varies
 
 Not behavior. Structure.
 
 <!--
-[8:30 - 9:00]
+[8:00 - 8:30]
 
-Tool two. Content projection.
+Tool one. Content projection.
 
-Use this when the STRUCTURE varies. Not behavior - structure. What goes where. What elements in which slots.
+Our first escape hatch. Use this when inputs control STRUCTURE - what DOM exists, not what it does.
 
 Think picture frame. Frame decides shape and size. You choose the picture.
 
@@ -387,7 +360,7 @@ layout: default
 Card owns layout. Consumer owns content via ng-content.
 
 <!--
-[9:00 - 9:30]
+[8:30 - 9:00]
 
 Two ng-content slots. Header and default.
 
@@ -412,7 +385,7 @@ Doesn't work for:
 You need different **behavior**, not structure.
 
 <!--
-[9:30 - 10:00]
+[9:00 - 9:30]
 
 So we handled showHeader. That boolean is gone. One down.
 
@@ -431,16 +404,16 @@ When the variation is about WHAT HAPPENS, not WHAT APPEARS - that's a different 
 layout: section
 ---
 
-# Tool 3: Strategy via DI
+# Tool 2: Strategy via DI
 
 **A** or **B**
 
 Never both.
 
 <!--
-[10:00 - 10:30]
+[9:30 - 10:00]
 
-Tool three. Strategy via DI.
+Tool two. Strategy via DI.
 
 A or B. Pick one. Never both at the same time.
 
@@ -481,7 +454,7 @@ ngOnInit() {
 Remember I said the truth was deeper? **This is it.**
 
 <!--
-[10:30 - 11:15]
+[10:00 - 10:45]
 
 Remember earlier I said the truth is deeper than just boolean flags?
 
@@ -521,7 +494,7 @@ That whole bundle needs to **move**. But where?
 | Preview | Don't save   |
 
 <!--
-[11:15 - 11:45]
+[10:45 - 11:15]
 
 That whole bundle - the flag, the inputs, the services, the lifecycle code - needs to move OUT of the component.
 
@@ -553,11 +526,13 @@ export const STORAGE_STRATEGY =
 ```
 
 <!--
-[11:45 - 12:00]
+[11:15 - 11:30]
 
 Step one: define what we need. save() and load(). Not HOW - just that it CAN.
 
 InjectionToken is our lookup key.
+
+Note: I'm using Promise to keep slides clean. You can model this as Observable too - same pattern, different async primitive.
 
 No implementation yet. Just the contract.
 
@@ -587,7 +562,7 @@ export class LocalStorageStrategy
 Uses localStorage. Works offline.
 
 <!--
-[12:00 - 12:15]
+[11:30 - 11:45]
 
 First implementation. LocalStorageStrategy.
 
@@ -624,7 +599,7 @@ export class ServerStorageStrategy
 Uses HttpClient. Syncs across devices.
 
 <!--
-[12:15 - 12:45]
+[11:45 - 12:15]
 
 Second implementation. ServerStorageStrategy.
 
@@ -658,7 +633,7 @@ export class AdminDashboard {}
 **Zero if-statements.** Context decides, not component.
 
 <!--
-[12:45 - 13:30]
+[12:15 - 13:00]
 
 Here's where the decision lives. In the provider.
 
@@ -681,6 +656,8 @@ export class NoopStorageStrategy implements StorageStrategy {
 ```
 
 The list never changes. New mode? Write new strategy, provide it somewhere. List doesn't know, doesn't care.
+
+Important: Strategy is for mutually exclusive implementations. One active at a time. If you want opt-in feature composition - adding behaviors, not swapping them - don't keep adding tokens. That's what directives are for.
 
 THAT's visible coupling. You can see exactly what behavior each context gets.
 
@@ -708,7 +685,7 @@ Features invisible in template. All three always present.
 </v-click>
 
 <!--
-[13:30 - 14:15]
+[13:00 - 13:45]
 
 But look at this code. What's the problem?
 
@@ -722,7 +699,7 @@ DI strategy is not the cleanest expression of opt-in composition. You end up wit
 
 We need behaviors that ACCUMULATE. Add what you want, skip what you don't. Visible in the template.
 
-That's tool four.
+That's tool three.
 
 [Transition]
 -->
@@ -731,16 +708,16 @@ That's tool four.
 layout: section
 ---
 
-# Tool 4: Directives
+# Tool 3: Directives
 
 What's **left** after the right extractions.
 
 The smallest unit of reusable behavior.
 
 <!--
-[14:15 - 15:00]
+[13:45 - 14:30]
 
-Tool four. Directives.
+Tool three. Directives.
 
 Look back at Month 2. We handled showHeader - that's content projection now. We handled persistState and its bundle - that's a strategy now.
 
@@ -771,7 +748,8 @@ export class Sortable {
   constructor() {
     effect(() => {
       const items = this.#list.items(); // signal read
-      this.#list.sort(items);
+      const sorted = [...items].sort(this.#list.compareFn);
+      this.#list.displayItems.set(sorted);
     });
   }
 }
@@ -780,13 +758,17 @@ export class Sortable {
 Only activates with the sortable attribute.
 
 <!--
-[15:00 - 15:30]
+[14:30 - 15:00]
 
 SortableDirective. Selector targets app-list with sortable attribute.
 
 No attribute? Directive doesn't exist. Zero overhead.
 
-Injects the component, adds behavior. Note: in a real app, sort state (direction, column) would also be a signal - the effect reacts to both items AND sort config changes.
+Injects the component, adds behavior. Same element as app-list → inject(ListComponent) resolves the host instance.
+
+Yes, the directive knows the component's internal API. That's okay - they're a team. The selector `app-list[sortable]` makes this explicit: this directive is designed for this component.
+
+Note: in a real app, sort state (direction, column) would also be a signal - the effect reacts to both items AND sort config changes.
 
 [Quick - show the pattern]
 -->
@@ -805,9 +787,11 @@ export class Persistable {
 
   constructor() {
     effect(() => {
-      const state = this.#list.state(); // signal read
-      if (!state.dirty) return;         // don't spam saves
-      this.#storage.save('state', state);
+      const key = this.#list.storageKey();
+      if (!key) return;
+      const state = this.#list.state();   // internal signal
+      if (!state.dirty) return;
+      this.#storage.save(key, state);
     });
   }
 }
@@ -816,15 +800,20 @@ export class Persistable {
 Notice: injects STORAGE_STRATEGY. **Tools layer together.**
 
 <!--
-[15:30 - 16:00]
+[15:00 - 15:30]
 
 PersistDirective. Same pattern.
 
-But notice - it injects STORAGE_STRATEGY. Tools layer together. Directive decides WHEN to save. Strategy decides WHERE.
+But notice - it injects STORAGE_STRATEGY. This is the key insight: we're decoupling persistence into two axes.
 
-Each directive: one job. Easy to test alone.
+Strategy answers: WHERE and HOW do we store? Server vs localStorage vs noop.
+Directive answers: WHEN do we store? On state changes, only when dirty.
 
-[Point out strategy injection - tools compose]
+Yes, this effect causes I/O. In production I route it through a debounced queue with cancellation. But the decomposition point is what matters here: WHERE lives in strategy, WHEN lives in directive.
+
+Tools layer together. Each one has a single job. Easy to test alone, easy to compose.
+
+[Point out strategy injection - this is the payoff]
 -->
 
 ---
@@ -844,7 +833,7 @@ layout: default
 Add sortable, filterable, persist as needed.
 
 <!--
-[16:00 - 16:30]
+[15:30 - 16:00]
 
 In the template.
 
@@ -879,7 +868,7 @@ Same combo. Three times.
 </v-click>
 
 <!--
-[16:30 - 17:15]
+[16:00 - 16:45]
 
 But look at this code. What do you see?
 
@@ -909,7 +898,7 @@ Two times is coincidence.
 ## Name it.
 
 <!--
-[17:15 - 18:00]
+[16:45 - 17:30]
 
 The promotion rule.
 
@@ -936,7 +925,7 @@ layout: default
 
 ```ts [power-list.ts]
 @Directive({
-  selector: '[powerList]',
+  selector: 'app-list[powerList]',
   hostDirectives: [
     Sortable,
     Filterable,
@@ -949,7 +938,7 @@ export class PowerList {}
 One attribute. Three behaviors.
 
 <!--
-[18:00 - 18:45]
+[17:30 - 18:15]
 
 Angular gives us hostDirectives.
 
@@ -981,7 +970,7 @@ layout: default
 </v-click>
 
 <!--
-[18:45 - 19:15]
+[18:15 - 18:45]
 
 Before: three attributes. After: one word. powerList.
 
@@ -1004,7 +993,7 @@ layout: default
 
 ```ts [auto-saveable.ts]
 @Directive({
-  selector: '[autoSaveable]',
+  selector: 'app-list[autoSaveable]',
   hostDirectives: [DirtyTrackable, Debounceable],
 })
 export class AutoSaveable {
@@ -1028,15 +1017,17 @@ When A and B **must** work together.
 </v-click>
 
 <!--
-[19:15 - 20:00]
+[18:45 - 19:30]
 
 One more pattern. Coordinator directive.
 
-Sometimes two behaviors MUST work together. Product says: "auto-save when dirty, but debounce it."
+Remember the dirty guard in Persistable? That was the simple version. In real code, you also want debouncing, cancellation of in-flight saves, etc.
 
-DirtyTracking and Debounce are independent directives. Neither knows about the other.
+Product says: "auto-save when dirty, but debounce it."
 
-AutoSaveDirective brings both in, coordinates them. When dirty, debounce the save.
+DirtyTrackable and Debounceable are independent directives. Neither knows about the other.
+
+AutoSaveable brings both in, coordinates them. When dirty, debounce the save.
 
 [Click for meme]
 
@@ -1054,9 +1045,9 @@ layout: section
 Each tool has limits.
 
 <!--
-[20:00 - 20:15]
+[19:30 - 19:45]
 
-Quick guardrails. When NOT to use each tool.
+Quick guardrails. When NOT to use each escape hatch.
 
 [Fast section]
 -->
@@ -1067,28 +1058,26 @@ layout: default
 
 # Anti-Patterns
 
-| Tool               | Don't use when...                       |
+| Escape Hatch       | Don't use when...                       |
 | ------------------ | --------------------------------------- |
-| Inputs/Outputs     | Component asks "who's using me?"        |
 | Content Projection | You need behavior, not structure        |
 | Strategy via DI    | Behaviors should be optional/composable |
-| Directives         | Same combo appears 3+ times             |
-| hostDirectives     | Behaviors are truly independent         |
+| Directives         | Same bundle repeated without naming     |
+| hostDirectives     | Bundling unrelated things to save typing|
 
 <!--
-[20:15 - 20:45]
+[19:45 - 20:15]
 
 Quick summary.
 
-Important mental model: Inputs are CHEAP - easy to read and debug. DI and Directives are EXPENSIVE - logic spread across multiple files.
+Important mental model: Inputs are CHEAP - easy to read and debug. Escape hatches are EXPENSIVE - more files, more indirection, debugging jumps across DI boundaries and directive composition.
 
-Don't reach for Tool 4 when Tool 1 still works. Complexity should earn its keep.
+Don't reach for Tool 3 when inputs still work. Complexity should earn its keep.
 
-Inputs: stop when you're asking WHO, not WHAT.
 Content projection: structure only, not behavior.
 Strategies: not when behaviors should be optional.
-Directives: stop when same combo appears 3x.
-hostDirectives: only bundle things that belong together.
+Directives: great, but don't repeat the same bundle across pages - promote it to hostDirectives.
+hostDirectives: don't bundle unrelated things just to reduce typing. Bundle concepts that belong together.
 
 [Crisp - they have the framework]
 -->
@@ -1118,7 +1107,7 @@ const withoutSorting = '<app-list [data]="items" />';
 ```
 
 <!--
-[20:45 - 21:15]
+[20:15 - 20:45]
 
 Testing impact - quick note.
 
@@ -1147,7 +1136,7 @@ From Month 2 mess to clean architecture:
 4. **Name** - Bundle common patterns with hostDirectives
 
 <!--
-[21:15 - 22:00]
+[20:45 - 21:30]
 
 So you've got a Month 2 mess. How do you fix it?
 
@@ -1172,36 +1161,35 @@ layout: image-right
 
 # Decision Framework
 
-What is the code telling you?
+Inputs are your default. When they fail:
 
 ::default::
 
-| Signal                  | Tool               |
-| ----------------------- | ------------------ |
-| Parent configures child | Inputs/Outputs     |
-| Structural flags        | Content Projection |
-| Behavioral bundles      | Strategy via DI    |
-| Optional behaviors      | Directives         |
-| Same combo 3x           | hostDirectives     |
+| The Tell           | Escape Hatch       |
+| ------------------ | ------------------ |
+| Structural flags   | Content Projection |
+| Behavioral bundles | Strategy via DI    |
+| Composable opt-ins | Directives         |
+| Same combo 3x      | hostDirectives     |
 
 <!--
-[22:00 - 22:45]
+[21:30 - 22:15]
 
 Here's everything together.
 
-What is the code telling you?
+Inputs are your default. Stay there as long as you can. They create visible coupling - that's manageable.
 
-Parent configures child? Inputs. Stay here as long as you can.
+But when you see these tells, reach for the escape hatch:
 
-Flags that control structure - what DOM exists? Extract the @if, use content projection.
+Structural flags - booleans that control what DOM exists? Content projection. Extract the @if.
 
-Flags that bring dependent inputs and services? That's a behavioral bundle - extract it to a strategy.
+Behavioral bundles - a flag that drags services and lifecycle code? Strategy via DI. Let the injector decide.
 
-Clean, optional behaviors that just exist or don't? Directives.
+Composable opt-ins - behaviors that should stack, present or absent? Directives. Visible in template.
 
-Same combo three times? Name it with hostDirectives.
+Same combo three times with the same meaning? Name it with hostDirectives.
 
-Each row is a response to a signal. Your job: notice the signal. Pick the tool.
+Each row is a response to a tell. Your job: notice the tell. Pick the escape hatch.
 
 [Pause - let them photograph it]
 -->
@@ -1217,9 +1205,11 @@ Good abstractions aren't chosen.
 ## They're discovered.
 
 <!--
-[22:45 - 23:30]
+[22:15 - 23:00]
 
 Final thought.
+
+I told you at the start I stay with hard things longer than is comfortable. That discomfort is where the discovery happens.
 
 We talk about "choosing the right abstraction" like there's a menu at project start. That's not how it works.
 
@@ -1227,9 +1217,9 @@ Good abstractions aren't chosen. They're discovered.
 
 You write code. Watch it evolve. Notice where it struggles. The code tells you - through boolean flags, repetition, god components - what it needs.
 
-Your job isn't to predict the future. It's to listen to the present. Notice the signals.
+Your job isn't to predict the future. It's to listen to the present. Notice the tells.
 
-Next time you see isAdmin or isCompactMode in a component... you'll know what the code is telling you.
+Don't rush to fix the messy component. Listen to it first. Next time you see isAdmin or isCompactMode... you'll know what the code is telling you.
 
 Stay with your components long enough. The patterns reveal themselves.
 
