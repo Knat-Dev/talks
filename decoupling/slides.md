@@ -35,6 +35,22 @@ So watch the code with me. When you see something that makes you uncomfortable -
 -->
 
 ---
+layout: center
+---
+
+<div class="flex flex-col items-center gap-6">
+  <img src="/assets/qr-slides.png" class="w-48 rounded-lg shadow-lg" />
+  <div class="text-center">
+    <div class="text-2xl font-bold">slides.knat.dev</div>
+    <div class="text-gray-400 text-sm mt-2">Follow along on your device</div>
+  </div>
+</div>
+
+<!--
+Quick - scan this if you want to follow along on your phone or laptop.
+-->
+
+---
 layout: section
 ---
 
@@ -96,7 +112,7 @@ Enjoy this moment. It won't last.
 layout: default
 ---
 
-# Month 2
+# Day 60
 
 ```ts [list.ts]
 @Component({ selector: 'app-list' })
@@ -125,13 +141,13 @@ export class ListComponent {
 <!--
 [2:45 - 4:00]
 
-Month two. Product shows up. "Can we add sorting?" Sure. "A header option?" Okay. "Remember state?" Fine.
+Day sixty. Product shows up. "Can we add sorting?" Sure. "A header option?" Okay. "Remember state?" Fine.
 
 Now look at this code. Really look.
 
 Boolean flags - sortable, showHeader, persistState. Dependent inputs - storageKey, initialState. An output. Two injected services. Lifecycle code.
 
-And this is month TWO. Imagine month six. Imagine year two.
+And this is day SIXTY. Imagine six months. Imagine year two.
 
 We didn't inherit this mess. We built it. One reasonable feature request at a time.
 
@@ -228,7 +244,7 @@ persistState = input(false);
 
 Boolean flags. The component asking _"what features am I?"_
 
-But look closer at our Month 2 code...
+But look closer at our Day 60 code...
 
 <!--
 [6:00 - 7:00]
@@ -239,7 +255,7 @@ Each one is a feature toggle. The component is asking: "What features am I runni
 
 That's the tell - like in poker. When you see boolean flags accumulating, the component is trying to be too many things.
 
-But here's the thing - and we'll come back to this - boolean flags are just the surface. Look back at the Month 2 code. Notice how storageKey and initialState only matter when persistState is true? They travel together. The truth is deeper than just flags.
+But here's the thing - and we'll come back to this - boolean flags are just the surface. Look back at the Day 60 code. Notice how storageKey and initialState only matter when persistState is true? They travel together. The truth is deeper than just flags.
 
 For now, let's start with the simplest case. One of these flags isn't like the others.
 
@@ -253,7 +269,7 @@ layout: default
 # The Structural Flag
 
 ```ts [list.ts]
-// From our Month 2 component:
+// From our Day 60 component:
 showHeader = input(false);
 ```
 
@@ -389,7 +405,7 @@ You need different **behavior**, not structure.
 
 So we handled showHeader. That boolean is gone. One down.
 
-But look back at Month 2. What about persistState? And its friends - storageKey, initialState, the services?
+But look back at Day 60. What about persistState? And its friends - storageKey, initialState, the services?
 
 Can we ng-content an HttpClient? Can we put localStorage in a slot?
 
@@ -458,7 +474,7 @@ Remember I said the truth was deeper? **This is it.**
 
 Remember earlier I said the truth is deeper than just boolean flags?
 
-This is it. Look at our Month 2 component again - just the persistence part.
+This is it. Look at our Day 60 component again - just the persistence part.
 
 One flag - persistState. But it's not alone.
 
@@ -719,7 +735,7 @@ The smallest unit of reusable behavior.
 
 Tool three. Directives.
 
-Look back at Month 2. We handled showHeader - that's content projection now. We handled persistState and its bundle - that's a strategy now.
+Look back at Day 60. We handled showHeader - that's content projection now. We handled persistState and its bundle - that's a strategy now.
 
 What's left? sortable.
 
@@ -1128,7 +1144,7 @@ layout: default
 
 # Migration Path
 
-From Month 2 mess to clean architecture:
+From Day 60 mess to clean architecture:
 
 1. **Extract** - Pull behaviors out of the god component
 2. **Interface** - Define contracts for swappable behaviors
@@ -1138,7 +1154,7 @@ From Month 2 mess to clean architecture:
 <!--
 [20:45 - 21:30]
 
-So you've got a Month 2 mess. How do you fix it?
+So you've got a Day 60 mess. How do you fix it?
 
 One: Extract. Pull behaviors out. Don't worry about perfection. Just get them out of the god component.
 
@@ -1203,6 +1219,8 @@ layout: section
 Good abstractions aren't chosen.
 
 ## They're discovered.
+
+<img src="/assets/qr-slides.png" class="absolute bottom-8 right-8 w-28 opacity-80" />
 
 <!--
 [22:15 - 23:00]
