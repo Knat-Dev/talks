@@ -10,6 +10,8 @@ layout: a-main-cover-2
 highlighter: shiki
 transition: slide-left
 mdc: true
+# Hebrew branch - speaker notes are RTL (see style.css)
+lang: he
 ---
 
 # Decoupling in Angular
@@ -21,17 +23,17 @@ mdc: true
 <!--
 [0:00 - 1:00]
 
-Hey everyone, I'm Dor. Software engineer at Coralogix.
+היי לכולם, אני דור. Software engineer ב-Coralogix.
 
-Here's what we're going to do today. We're going to build a component together. Well - I'll write the code, but I want you to help me spot when something's off.
+אז ככה, היום אנחנו הולכים לבנות קומפוננטה ביחד. טוב - אני אכתוב את הקוד, אבל אני רוצה שתעזרו לי לזהות כשמשהו לא בסדר.
 
-You know those moments when you look at code and think "this feels wrong, but I can't explain why"? That's what we're hunting for. The tells.
+אתם מכירים את הרגעים האלה שמסתכלים על קוד וחושבים "משהו פה לא מרגיש נכון, אבל אני לא יכול להסביר למה"? זה מה שאנחנו מחפשים. הסימנים.
 
-We all know the tools - inputs, outputs, content projection, DI, directives. Documentation teaches syntax. Pain teaches architecture. I want to show you the pain so you recognize it before it bites you.
+כולנו מכירים את הכלים - inputs, outputs, content projection, DI, directives. דוקומנטציה מלמדת syntax. כאב מלמד ארכיטקטורה. אני רוצה להראות לכם את הכאב כדי שתזהו אותו לפני שהוא נושך אתכם.
 
-So watch the code with me. When you see something that makes you uncomfortable - that's the tell.
+אז צפו בקוד איתי. כשאתם רואים משהו שגורם לכם לאי-נוחות - זה הסימן.
 
-[Scan the room - make it feel like we're about to do this together]
+[לסרוק את החדר - לגרום להרגשה שאנחנו עושים את זה ביחד]
 -->
 
 ---
@@ -39,15 +41,15 @@ layout: center
 ---
 
 <div class="flex flex-col items-center gap-6">
-  <img src="/assets/qr-slides.png" class="w-48 rounded-lg shadow-lg" />
+  <img src="/assets/qr-slides.png" class="w-64 rounded-lg shadow-lg" />
   <div class="text-center">
-    <div class="text-2xl font-bold">slides.knat.dev</div>
+    <div class="text-xl text-gray-500 font-bold">slides.knat.dev</div>
     <div class="text-gray-400 text-sm mt-2">Follow along on your device</div>
   </div>
 </div>
 
 <!--
-Quick - scan this if you want to follow along on your phone or laptop.
+רגע - סרקו את זה אם אתם רוצים לעקוב על הטלפון או הלפטופ.
 -->
 
 ---
@@ -65,15 +67,15 @@ _I tend to stay with hard things longer than is comfortable_
 <!--
 [1:00 - 2:00]
 
-Quick bit about me.
+קצת עליי.
 
-I tend to stay with hard problems longer than is comfortable. When code gets messy, I don't bounce. I sit with it. Try to understand what's actually going on.
+אני נוטה להישאר עם בעיות קשות יותר זמן ממה שנוח. כשקוד נהיה מבולגן, אני לא בורח. אני יושב עם זה. מנסה להבין מה באמת קורה.
 
-Angular codebases are the same. They don't fail immediately. They accumulate complexity quietly. One feature at a time. And if you don't stay with them long enough, you miss the tells.
+Angular codebases זה אותו דבר. הם לא נכשלים מיד. הם צוברים complexity בשקט. פיצ'ר אחרי פיצ'ר. ואם לא נשארים איתם מספיק זמן, מפספסים את הסימנים.
 
-So this talk isn't best practices. It's pattern recognition. I'll show you what I've learned to look for - and you tell me if you see it too.
+אז ההרצאה הזו היא לא best practices. זה pattern recognition. אני אראה לכם מה למדתי לחפש - ואתם תגידו לי אם אתם רואים את זה גם.
 
-[Keep this tight - 45 seconds]
+[לשמור את זה קצר - 45 שניות]
 -->
 
 ---
@@ -95,17 +97,17 @@ Clean. Simple. Works great.
 <!--
 [2:00 - 2:45]
 
-Alright, let's build something. A list component. Simple.
+יאללה, בואו נבנה משהו. ListComponent. פשוט.
 
-Day one. Two inputs - items, loading. Look at this code. What do you think?
+יום ראשון. שני inputs - items, loading. תסתכלו על הקוד הזה. מה אתם חושבים?
 
-Clean, right? Simple. Easy to test. This is good code.
+נקי, נכון? פשוט. קל ל-test. זה קוד טוב.
 
-And it IS good code. Right now, this is exactly the right abstraction.
+וזה באמת קוד טוב. כרגע, זו בדיוק ה-abstraction הנכונה.
 
-Enjoy this moment. It won't last.
+תהנו מהרגע הזה. הוא לא יחזיק מעמד.
 
-[Brief pause - let them appreciate the calm before the storm]
+[הפסקה קצרה - לתת להם להעריך את השקט לפני הסערה]
 -->
 
 ---
@@ -141,25 +143,25 @@ export class ListComponent {
 <!--
 [2:45 - 4:00]
 
-Day sixty. Product shows up. "Can we add sorting?" Sure. "A header option?" Okay. "Remember state?" Fine.
+יום שישים. Product מגיע. "אפשר להוסיף sorting?" בטח. "אופציה ל-header?" אוקיי. "לזכור state?" סבבה.
 
-Now look at this code. Really look.
+עכשיו תסתכלו על הקוד הזה. באמת תסתכלו.
 
-Boolean flags - sortable, showHeader, persistState. Dependent inputs - storageKey, initialState. An output. Two injected services. Lifecycle code.
+Boolean flags - sortable, showHeader, persistState. Dependent inputs - storageKey, initialState. Output אחד. שני services ש-injected. Lifecycle code.
 
-And this is day SIXTY. Imagine six months. Imagine year two.
+וזה יום שישים. תדמיינו שישה חודשים. תדמיינו שנה שנייה.
 
-We didn't inherit this mess. We built it. One reasonable feature request at a time.
+אנחנו לא ירשנו את הבלאגן הזה. אנחנו בנינו אותו. בקשת פיצ'ר הגיונית אחת בכל פעם.
 
-[Click for meme]
+[קליק למימ]
 
-Show of hands - who's worked on a component like this?
+מי עבד על קומפוננטה כזה? תרימו יד.
 
-[Pause for hands - acknowledge them]
+[לעצור בשביל הידיים - להכיר בהם]
 
-Yeah. Me too. This is where we're starting today. This is what we're going to systematically take apart.
+כן. גם אני. מפה אנחנו מתחילים היום. את זה אנחנו הולכים לפרק בצורה שיטתית.
 
-[Set up the thesis]
+[להגדיר את התזה]
 -->
 
 ---
@@ -175,19 +177,19 @@ Coupling isn't bad.
 <!--
 [4:00 - 5:00]
 
-Here's the thing. Coupling isn't bad. Your components HAVE to talk. Data flows. Events propagate. That's fine.
+אז ככה. Coupling זה לא רע. ה-קומפוננטות חייבים לדבר. Data זורם. Events מתפשטים. זה בסדר.
 
-HIDDEN coupling is the problem.
+HIDDEN coupling זו הבעיה.
 
-When you can see dependencies - in inputs, in constructors, in imports - you can reason about them. Manage them.
+כשאתם יכולים לראות dependencies - ב-inputs, ב-constructors, ב-imports - אתם יכולים לחשוב עליהם. לנהל אותם.
 
-But when coupling is buried in boolean flags? Scattered across templates? That's when you lose control. Change something here, something breaks over there.
+אבל כש-coupling קבור ב-boolean flags? מפוזר על פני templates? אז מאבדים שליטה. משנים משהו פה, משהו נשבר שם.
 
-So the question isn't "how do I remove coupling?" It's "how do I make coupling VISIBLE?"
+אז השאלה היא לא "איך אני מסיר coupling?" אלא "איך אני הופך coupling ל-VISIBLE?"
 
-That's what we're going to do. Inputs are your default - stay there as long as you can. But when inputs go wrong, you have three escape hatches. Each one makes a different kind of coupling explicit.
+זה מה שאנחנו הולכים לעשות. Inputs זה ה-default שלכם - תישארו שם כמה שאפשר. אבל כש-inputs לא עובדים, יש לכם שלושה escape hatches. כל אחד הופך סוג אחר של coupling ל-explicit.
 
-[Clear and confident - this is the core idea]
+[ברור ובטוח - זה הרעיון המרכזי]
 -->
 
 ---
@@ -213,21 +215,21 @@ Inputs are your default.
 <!--
 [5:00 - 6:00]
 
-Three escape hatches. You know all of them. The trick is recognizing WHEN to reach for each.
+שלושה escape hatches. אתם מכירים את כולם. הטריק הוא לזהות מתי להגיע לכל אחד.
 
-Inputs are your default. They create VISIBLE coupling - you can see what a component needs. Stay there as long as you can.
+Inputs זה ה-default שלכם. הם יוצרים VISIBLE coupling - אתם יכולים לראות מה קומפוננטה צריך. תישארו שם כמה שאפשר.
 
-But watch for the tells.
+אבל שימו לב לסימנים.
 
-Structural flags - booleans that control what DOM exists? Content projection. Extract the @if.
+Structural flags - booleans ששולטים באיזה DOM קיים? Content projection. לחלץ את ה-@if.
 
-Behavioral bundles - a flag that drags along services and lifecycle code? Strategy via DI. Let the injector decide.
+Behavioral bundles - flag שגורר איתו services ו-lifecycle code? Strategy via DI. לתת ל-injector להחליט.
 
-Composable opt-ins - behaviors that should stack? Directives. Visible in the template.
+Composable opt-ins - behaviors שצריכים להיערם? Directives. גלויים ב-template.
 
-For each escape hatch, I'll show you the code, and we'll spot the tell together.
+לכל escape hatch, אני אראה לכם את הקוד, ונזהה את הסימן ביחד.
 
-[Point to each row briefly - then move on]
+[להצביע על כל שורה בקצרה - ואז להמשיך]
 -->
 
 ---
@@ -249,17 +251,17 @@ But look closer at our Day 60 code...
 <!--
 [6:00 - 7:00]
 
-Look at these. Boolean flags. sortable, showHeader, persistState.
+תסתכלו על אלה. Boolean flags. sortable, showHeader, persistState.
 
-Each one is a feature toggle. The component is asking: "What features am I running today?"
+כל אחד הוא feature toggle. ה-קומפוננטה שואל: "איזה פיצ'רים אני מריץ היום?"
 
-That's the tell - like in poker. When you see boolean flags accumulating, the component is trying to be too many things.
+זה הסימן - כמו בפוקר. כשאתם רואים boolean flags מצטברים, ה-קומפוננטה מנסה להיות יותר מדי דברים.
 
-But here's the thing - and we'll come back to this - boolean flags are just the surface. Look back at the Day 60 code. Notice how storageKey and initialState only matter when persistState is true? They travel together. The truth is deeper than just flags.
+אבל הנה העניין - ונחזור לזה - boolean flags זה רק פני השטח. תסתכלו אחורה על קוד יום 60. שימו לב איך storageKey ו-initialState רלוונטיים רק כש-persistState הוא true? הם נוסעים ביחד. האמת עמוקה יותר מסתם flags.
 
-For now, let's start with the simplest case. One of these flags isn't like the others.
+בינתיים, בואו נתחיל עם המקרה הכי פשוט. אחד מה-flags האלה לא כמו האחרים.
 
-[Pause - plant the seed, don't explain yet]
+[לעצור - לשתול את הזרע, לא להסביר עדיין]
 -->
 
 ---
@@ -285,19 +287,19 @@ Why does the **list** decide whether a header exists?
 <!--
 [7:00 - 7:30]
 
-Let's start with showHeader. This one is different from sortable or persistState.
+בואו נתחיל עם showHeader. הזה שונה מ-sortable או persistState.
 
-It doesn't change behavior - it controls structure. What DOM elements exist.
+הוא לא משנה behavior - הוא שולט ב-structure. אילו DOM elements קיימים.
 
-Look at this. showHeader. And somewhere in the template, an @if that renders a header.
+תסתכלו על זה. showHeader. ואיפשהו ב-template, @if שמרנדר header.
 
-Why does the LIST decide whether a header exists? That's not data. That's not behavior. That's the parent's concern.
+למה ה-LIST מחליט אם header קיים? זה לא data. זה לא behavior. זה עניין של ה-parent.
 
-Bonus: if the parent projects, the list doesn't need to import the header component. Cleaner dependency graph - the list doesn't need to know about the header's type at all.
+בונוס: אם ה-parent עושה project, ה-list לא צריך לעשות import ל-header קומפוננטה. Dependency graph נקי יותר - ה-list לא צריך לדעת על ה-type של ה-header בכלל.
 
-This is the simplest extraction we can make.
+זו ה-extraction הכי פשוטה שאנחנו יכולים לעשות.
 
-[Let them feel the discomfort]
+[לתת להם להרגיש את אי-הנוחות]
 -->
 
 ---
@@ -323,17 +325,17 @@ The `@if` becomes a **slot**. The boolean disappears.
 <!--
 [7:30 - 8:00]
 
-Watch what happens when you extract the conditional.
+תראו מה קורה כשמחלצים את ה-conditional.
 
-Before: showHeader equals true. Component renders the header internally.
+לפני: showHeader שווה true. Component מרנדר את ה-header פנימית.
 
-After: No boolean. Parent just... puts the header there. Or doesn't.
+אחרי: בלי boolean. ה-parent פשוט... שם את ה-header שם. או לא.
 
-The @if block becomes an ng-content slot. The boolean vanishes.
+בלוק ה-@if הופך ל-ng-content slot. ה-boolean נעלם.
 
-Content projection isn't a "layout feature". It's what happens when you extract structural decisions from components.
+Content projection זה לא "layout feature". זה מה שקורה כשמחלצים החלטות structural מ-קומפוננטות.
 
-[This is the "aha" moment - content projection is removal of conditionals]
+[זה רגע ה-"אהה" - content projection זה הסרה של conditionals]
 -->
 
 ---
@@ -349,15 +351,15 @@ Not behavior. Structure.
 <!--
 [8:00 - 8:30]
 
-Tool one. Content projection.
+כלי ראשון. Content projection.
 
-Our first escape hatch. Use this when inputs control STRUCTURE - what DOM exists, not what it does.
+ה-escape hatch הראשון שלנו. להשתמש בזה כש-inputs שולטים ב-STRUCTURE - איזה DOM קיים, לא מה הוא עושה.
 
-Think picture frame. Frame decides shape and size. You choose the picture.
+תחשבו על מסגרת תמונה. המסגרת מחליטה על צורה וגודל. אתם בוחרים את התמונה.
 
-Component owns layout. You own content.
+Component מחזיק את ה-layout. אתם מחזיקים את ה-content.
 
-[Quick - set up the code]
+[מהיר - להגדיר את הקוד]
 -->
 
 ---
@@ -378,13 +380,13 @@ Card owns layout. Consumer owns content via ng-content.
 <!--
 [8:30 - 9:00]
 
-Two ng-content slots. Header and default.
+שני ng-content slots. Header ו-default.
 
-Component says: "I'll handle the wrapper. You decide what goes inside."
+Component אומר: "אני אטפל ב-wrapper. אתם תחליטו מה נכנס פנימה."
 
-Cards, modals, panels. Shell is consistent, contents vary.
+Cards, modals, panels. Shell עקבי, תכנים משתנים.
 
-[Quick - code speaks for itself]
+[מהיר - הקוד מדבר בעד עצמו]
 -->
 
 ---
@@ -403,17 +405,17 @@ You need different **behavior**, not structure.
 <!--
 [9:00 - 9:30]
 
-So we handled showHeader. That boolean is gone. One down.
+אז טיפלנו ב-showHeader. ה-boolean הזה נעלם. אחד למטה.
 
-But look back at Day 60. What about persistState? And its friends - storageKey, initialState, the services?
+אבל תסתכלו אחורה על יום 60. מה עם persistState? והחברים שלו - storageKey, initialState, ה-services?
 
-Can we ng-content an HttpClient? Can we put localStorage in a slot?
+אפשר לעשות ng-content ל-HttpClient? אפשר לשים localStorage ב-slot?
 
-No. Content projection is for DOM nodes. Visual stuff.
+לא. Content projection זה ל-DOM nodes. דברים ויזואליים.
 
-When the variation is about WHAT HAPPENS, not WHAT APPEARS - that's a different tool.
+כשה-variation היא על מה שקורה, לא מה שנראה - זה כלי אחר.
 
-[Transition to strategy]
+[מעבר ל-strategy]
 -->
 
 ---
@@ -429,19 +431,19 @@ Never both.
 <!--
 [9:30 - 10:00]
 
-Tool two. Strategy via DI.
+כלי שני. Strategy via DI.
 
-A or B. Pick one. Never both at the same time.
+A או B. בחרו אחד. אף פעם לא שניהם באותו זמן.
 
-Server OR localStorage. Real API OR mock. One implementation active.
+Server או localStorage. Real API או mock. Implementation אחד פעיל.
 
-Component doesn't know which. It just says "I need something that can save." DI provides the right one.
+Component לא יודע איזה. הוא רק אומר "אני צריך משהו שיכול לשמור." DI מספק את הנכון.
 
-No if-statements in the component. The decision lives elsewhere.
+בלי if-statements ב-קומפוננטה. ההחלטה חיה במקום אחר.
 
-Let me show you what this looks like.
+בואו אראה לכם איך זה נראה.
 
-[Set up the example]
+[להגדיר את הדוגמה]
 -->
 
 ---
@@ -472,23 +474,23 @@ Remember I said the truth was deeper? **This is it.**
 <!--
 [10:00 - 10:45]
 
-Remember earlier I said the truth is deeper than just boolean flags?
+זוכרים שאמרתי קודם שהאמת עמוקה יותר מסתם boolean flags?
 
-This is it. Look at our Day 60 component again - just the persistence part.
+זהו. תסתכלו על ה-Day 60 קומפוננטה שלנו שוב - רק החלק של persistence.
 
-One flag - persistState. But it's not alone.
+Flag אחד - persistState. אבל הוא לא לבד.
 
-storageKey - WHERE to save. initialState - what to restore. stateSaved - notify when done.
+storageKey - איפה לשמור. initialState - מה לשחזר. stateSaved - להודיע כשסיים.
 
-Then the services. ApiService for server. StorageService for browser. And the lifecycle code.
+ואז ה-services. ApiService לשרת. StorageService לדפדפן. וה-lifecycle code.
 
-All of this only matters if persistState is true. These things travel together. They're a behavioral unit.
+כל זה רלוונטי רק אם persistState הוא true. הדברים האלה נוסעים ביחד. הם יחידה התנהגותית.
 
-And here's the key insight: you can't content-project behavior. You can't put a service in an ng-content slot.
+והנה ה-insight המפתח: אי אפשר לעשות content-project ל-behavior. אי אפשר לשים service ב-ng-content slot.
 
-So what do we do when a whole bundle of behavior needs to move?
+אז מה עושים כשחבילה שלמה של behavior צריכה לזוז?
 
-[This is the reveal - set up Strategy]
+[זה ה-reveal - להגדיר את Strategy]
 -->
 
 ---
@@ -512,17 +514,17 @@ That whole bundle needs to **move**. But where?
 <!--
 [10:45 - 11:15]
 
-That whole bundle - the flag, the inputs, the services, the lifecycle code - needs to move OUT of the component.
+כל החבילה הזו - ה-flag, ה-inputs, ה-services, ה-lifecycle code - צריכה לזוז החוצה מה-קומפוננטה.
 
-But WHERE it goes depends on context.
+אבל לאן זה הולך תלוי ב-context.
 
-Admin dashboard? Save to server. Public view? localStorage. Preview mode? Don't save at all.
+Admin dashboard? לשמור לשרת. Public view? localStorage. Preview mode? לא לשמור בכלל.
 
-Same component, different storage behavior.
+אותו קומפוננטה, behavior שונה של storage.
 
-Old way: another boolean flag, another if-statement. New way: the component doesn't know. Doesn't care.
+הדרך הישנה: עוד boolean flag, עוד if-statement. הדרך החדשה: ה-קומפוננטה לא יודע. לא אכפת לו.
 
-[Quick - set up the solution]
+[מהיר - להגדיר את הפתרון]
 -->
 
 ---
@@ -544,15 +546,15 @@ export const STORAGE_STRATEGY =
 <!--
 [11:15 - 11:30]
 
-Step one: define what we need. save() and load(). Not HOW - just that it CAN.
+שלב ראשון: להגדיר מה אנחנו צריכים. save() ו-load(). לא איך - רק שזה יכול.
 
-InjectionToken is our lookup key.
+InjectionToken הוא ה-lookup key שלנו.
 
-Note: I'm using Promise to keep slides clean. You can model this as Observable too - same pattern, different async primitive.
+הערה: אני משתמש ב-Promise כדי לשמור על slides נקיים. אפשר למדל את זה גם כ-Observable - אותו pattern, async primitive שונה.
 
-No implementation yet. Just the contract.
+עדיין בלי implementation. רק ה-contract.
 
-[Fast - setup code]
+[מהיר - קוד setup]
 -->
 
 ---
@@ -580,11 +582,11 @@ Uses localStorage. Works offline.
 <!--
 [11:30 - 11:45]
 
-First implementation. LocalStorageStrategy.
+Implementation ראשון. LocalStorageStrategy.
 
-Browser storage. Synchronous. Works offline.
+Browser storage. סינכרוני. עובד offline.
 
-[Quick - move to next]
+[מהיר - להמשיך לבא]
 -->
 
 ---
@@ -617,15 +619,15 @@ Uses HttpClient. Syncs across devices.
 <!--
 [11:45 - 12:15]
 
-Second implementation. ServerStorageStrategy.
+Implementation שני. ServerStorageStrategy.
 
-API call. Syncs across devices.
+API call. מסנכרן בין devices.
 
-From the outside? Identical. List calls save() and load(). Doesn't know which one it got.
+מבחוץ? זהה. List קורא ל-save() ו-load(). לא יודע איזה הוא קיבל.
 
-Could add NoopStrategy for preview. Same interface, does nothing.
+אפשר להוסיף NoopStrategy ל-preview. אותו interface, לא עושה כלום.
 
-[Keep moving]
+[להמשיך לזוז]
 -->
 
 ---
@@ -651,17 +653,17 @@ export class AdminDashboard {}
 <!--
 [12:15 - 13:00]
 
-Here's where the decision lives. In the provider.
+פה ההחלטה חיה. ב-provider.
 
-AdminDashboard says: "In my subtree, use ServerStorageStrategy."
+AdminDashboard אומר: "ב-subtree שלי, תשתמשו ב-ServerStorageStrategy."
 
-Key insight: this provider is scoped to the AdminDashboard component subtree - not global. That's the magic of hierarchical injection.
+Key insight: ה-provider הזה scoped ל-AdminDashboard קומפוננטה subtree - לא global. זה הקסם של hierarchical injection.
 
-List injects STORAGE_STRATEGY. Gets the server version. Zero if-statements.
+List עושה inject ל-STORAGE_STRATEGY. מקבל את גרסת השרת. אפס if-statements.
 
-Different page? Provides LocalStorageStrategy. Same list, different behavior.
+דף אחר? מספק LocalStorageStrategy. אותו list, behavior שונה.
 
-Pro tip: provide a NoopStorageStrategy at root, override where needed. Safe by default, customized per context.
+Pro tip: לספק NoopStorageStrategy ב-root, לדרוס איפה שצריך. Safe by default, מותאם אישית per context.
 
 ```ts
 // The third implementation - does nothing, safely
@@ -671,13 +673,13 @@ export class NoopStorageStrategy implements StorageStrategy {
 }
 ```
 
-The list never changes. New mode? Write new strategy, provide it somewhere. List doesn't know, doesn't care.
+ה-list אף פעם לא משתנה. Mode חדש? לכתוב strategy חדש, לספק אותו איפשהו. List לא יודע, לא אכפת לו.
 
-Important: Strategy is for mutually exclusive implementations. One active at a time. If you want opt-in feature composition - adding behaviors, not swapping them - don't keep adding tokens. That's what directives are for.
+חשוב: Strategy זה ל-implementations שמבטלים זה את זה. אחד פעיל בכל פעם. אם אתם רוצים opt-in feature composition - להוסיף behaviors, לא להחליף אותם - אל תמשיכו להוסיף tokens. לזה יש directives.
 
-THAT's visible coupling. You can see exactly what behavior each context gets.
+זה visible coupling. אתם יכולים לראות בדיוק איזה behavior כל context מקבל.
 
-[Emphasize: scoped providers, zero if-statements, visible coupling]
+[להדגיש: scoped providers, אפס if-statements, visible coupling]
 -->
 
 ---
@@ -703,21 +705,21 @@ Features invisible in template. All three always present.
 <!--
 [13:00 - 13:45]
 
-But look at this code. What's the problem?
+אבל תסתכלו על הקוד הזה. מה הבעיה?
 
-Three strategies injected. You can SWAP implementations. But the feature set is invisible in the template.
+שלושה strategies שעשו להם inject. אתם יכולים להחליף implementations. אבל ה-feature set בלתי נראה ב-template.
 
-Yes, Angular has optional injection. But then your component is riddled with `if (this.sorter)` checks. You're checking if behaviors exist instead of composing them.
+כן, ל-Angular יש optional injection. אבל אז ה-קומפוננטה שלכם מלא בבדיקות `if (this.sorter)`. אתם בודקים אם behaviors קיימים במקום להרכיב אותם.
 
-[Click for meme]
+[קליק למימ]
 
-DI strategy is not the cleanest expression of opt-in composition. You end up with nullable dependencies or no-op defaults, and the feature set is no longer visible in the template.
+DI strategy זה לא הביטוי הכי נקי של opt-in composition. אתם מסיימים עם nullable dependencies או no-op defaults, וה-feature set כבר לא גלוי ב-template.
 
-We need behaviors that ACCUMULATE. Add what you want, skip what you don't. Visible in the template.
+אנחנו צריכים behaviors שמצטברים. להוסיף מה שאתם רוצים, לדלג על מה שלא. גלוי ב-template.
 
-That's tool three.
+זה כלי שלוש.
 
-[Transition]
+[מעבר]
 -->
 
 ---
@@ -733,21 +735,21 @@ The smallest unit of reusable behavior.
 <!--
 [13:45 - 14:30]
 
-Tool three. Directives.
+כלי שלוש. Directives.
 
-Look back at Day 60. We handled showHeader - that's content projection now. We handled persistState and its bundle - that's a strategy now.
+תסתכלו אחורה על יום 60. טיפלנו ב-showHeader - זה content projection עכשיו. טיפלנו ב-persistState והחבילה שלו - זה strategy עכשיו.
 
-What's left? sortable.
+מה נשאר? sortable.
 
-It doesn't control structure. It's not a bundle of dependent inputs and services. It's just... a behavior. Either the list is sortable, or it's not.
+זה לא שולט ב-structure. זה לא חבילה של dependent inputs ו-services. זה פשוט... behavior. או שה-list הוא sortable, או שלא.
 
-No branching. No context questions. Present or absent.
+בלי branching. בלי שאלות context. נוכח או נעדר.
 
-That's a directive. The smallest unit of reusable behavior that survived extraction.
+זה directive. היחידה הכי קטנה של behavior שניתן לשימוש חוזר ששרדה extraction.
 
-Directives aren't "yet another tool." They're what's LEFT when you've done the other extractions right.
+Directives זה לא "עוד כלי אחד." זה מה שנשאר כשעשיתם את ה-extractions האחרים נכון.
 
-[Reframe - directives are inevitable, not arbitrary]
+[למסגר מחדש - directives הם בלתי נמנעים, לא שרירותיים]
 -->
 
 ---
@@ -776,17 +778,17 @@ Only activates with the sortable attribute.
 <!--
 [14:30 - 15:00]
 
-SortableDirective. Selector targets app-list with sortable attribute.
+SortableDirective. Selector מכוון ל-app-list עם sortable attribute.
 
-No attribute? Directive doesn't exist. Zero overhead.
+בלי attribute? Directive לא קיים. אפס overhead.
 
-Injects the component, adds behavior. Same element as app-list → inject(ListComponent) resolves the host instance.
+עושה inject ל-קומפוננטה, מוסיף behavior. אותו element כמו app-list → inject(ListComponent) מפענח את ה-host instance.
 
-Yes, the directive knows the component's internal API. That's okay - they're a team. The selector `app-list[sortable]` makes this explicit: this directive is designed for this component.
+כן, ה-directive מכיר את ה-internal API של ה-קומפוננטה. זה בסדר - הם צוות. ה-selector `app-list[sortable]` עושה את זה explicit: ה-directive הזה מעוצב ל-קומפוננטה הזה.
 
-Note: in a real app, sort state (direction, column) would also be a signal - the effect reacts to both items AND sort config changes.
+הערה: באפליקציה אמיתית, sort state (direction, column) יהיה גם signal - ה-effect מגיב גם לשינויי items וגם לשינויי sort config.
 
-[Quick - show the pattern]
+[מהיר - להראות את ה-pattern]
 -->
 
 ---
@@ -818,18 +820,18 @@ Notice: injects STORAGE_STRATEGY. **Tools layer together.**
 <!--
 [15:00 - 15:30]
 
-PersistDirective. Same pattern.
+PersistDirective. אותו pattern.
 
-But notice - it injects STORAGE_STRATEGY. This is the key insight: we're decoupling persistence into two axes.
+אבל שימו לב - הוא עושה inject ל-STORAGE_STRATEGY. זה ה-key insight: אנחנו עושים decouple ל-persistence לשני צירים.
 
-Strategy answers: WHERE and HOW do we store? Server vs localStorage vs noop.
-Directive answers: WHEN do we store? On state changes, only when dirty.
+Strategy עונה: איפה ואיך אנחנו שומרים? Server מול localStorage מול noop.
+Directive עונה: מתי אנחנו שומרים? בשינויי state, רק כש-dirty.
 
-Yes, this effect causes I/O. In production I route it through a debounced queue with cancellation. But the decomposition point is what matters here: WHERE lives in strategy, WHEN lives in directive.
+כן, ה-effect הזה גורם ל-I/O. ב-production אני מעביר את זה דרך debounced queue עם cancellation. אבל נקודת ה-decomposition היא מה שחשוב פה: איפה חי ב-strategy, מתי חי ב-directive.
 
-Tools layer together. Each one has a single job. Easy to test alone, easy to compose.
+כלים נערמים ביחד. לכל אחד עבודה אחת. קל לבדוק לבד, קל להרכיב.
 
-[Point out strategy injection - this is the payoff]
+[להצביע על strategy injection - זה ה-payoff]
 -->
 
 ---
@@ -851,13 +853,13 @@ Add sortable, filterable, persist as needed.
 <!--
 [15:30 - 16:00]
 
-In the template.
+ב-template.
 
-Simple page? Just sortable. Full-featured? All three.
+דף פשוט? רק sortable. Full-featured? כל השלושה.
 
-Each page picks its combination. Opt-in complexity.
+כל דף בוחר את השילוב שלו. Opt-in complexity.
 
-[Fast - template speaks for itself]
+[מהיר - ה-template מדבר בעד עצמו]
 -->
 
 ---
@@ -886,19 +888,19 @@ Same combo. Three times.
 <!--
 [16:00 - 16:45]
 
-But look at this code. What do you see?
+אבל תסתכלו על הקוד הזה. מה אתם רואים?
 
-Three pages. Same three directives. Copy-pasted.
+שלושה דפים. אותם שלושה directives. Copy-paste.
 
-The coupling is hidden in REPETITION. "We always use these three together."
+ה-coupling מוסתר בחזרתיות. "אנחנו תמיד משתמשים בשלושת אלה ביחד."
 
-What happens when we add a fifth? Hunt down every page. Update all of them. Miss one? Now they drift apart.
+מה קורה כשמוסיפים חמישי? לצוד כל דף. לעדכן את כולם. פספסתם אחד? עכשיו הם נסחפים לכיוונים שונים.
 
-[Click for meme]
+[קליק למימ]
 
-Same combination three times. That's not coincidence. That's a concept without a name.
+אותו שילוב שלוש פעמים. זה לא צירוף מקרים. זה concept בלי שם.
 
-[Set up the promotion rule]
+[להגדיר את כלל ה-promotion]
 -->
 
 ---
@@ -916,21 +918,21 @@ Two times is coincidence.
 <!--
 [16:45 - 17:30]
 
-The promotion rule.
+כלל ה-promotion.
 
-Once: just code.
-Twice: maybe coincidence.
-Three times: that's a concept. Give it a name.
+פעם אחת: סתם קוד.
+פעמיים: אולי צירוף מקרים.
+שלוש פעמים: זה concept. תנו לו שם.
 
-Important caveat: three times with the SAME meaning and the SAME reason. If the reasons differ, don't bundle. That's false duplication.
+הסתייגות חשובה: שלוש פעמים עם אותו משמעות ואותה סיבה. אם הסיבות שונות, אל תאגדו. זה false duplication.
 
-When you name something, you can talk about it. Document it. Test it. Evolve it in ONE place.
+כשנותנים למשהו שם, אפשר לדבר עליו. לתעד אותו. לבדוק אותו. לפתח אותו במקום אחד.
 
-Unnamed patterns drift. We had three "full-featured lists." One had filtering disabled "temporarily." Six months later? Nobody knew why.
+Patterns ללא שם נסחפים. היו לנו שלושה "full-featured lists." לאחד היה filtering מבוטל "זמנית." שישה חודשים אחר כך? אף אחד לא ידע למה.
 
-See it three times with the same meaning? Name it.
+רואים את זה שלוש פעמים עם אותה משמעות? תנו לו שם.
 
-[Deliver with conviction - this is memorable]
+[להעביר עם ביטחון - זה זכיר]
 -->
 
 ---
@@ -956,15 +958,15 @@ One attribute. Three behaviors.
 <!--
 [17:30 - 18:15]
 
-Angular gives us hostDirectives.
+Angular נותן לנו hostDirectives.
 
-PowerListDirective bundles three others. One attribute, three behaviors.
+PowerListDirective מאגד שלושה אחרים. Attribute אחד, שלושה behaviors.
 
-Look at the body. Empty. No logic. Just composition. It's a name for a pattern.
+תסתכלו על ה-body. ריק. בלי logic. רק composition. זה שם ל-pattern.
 
-Add a fourth behavior? One file. Done.
+להוסיף behavior רביעי? קובץ אחד. סיימנו.
 
-[Show how naming creates maintainability]
+[להראות איך naming יוצר maintainability]
 -->
 
 ---
@@ -988,17 +990,17 @@ layout: default
 <!--
 [18:15 - 18:45]
 
-Before: three attributes. After: one word. powerList.
+לפני: שלושה attributes. אחרי: מילה אחת. powerList.
 
-[Click for meme]
+[קליק למימ]
 
-Functionally identical. Conceptually? Worlds apart.
+פונקציונלית זהה. קונספטואלית? עולמות נפרדים.
 
-New developer sees "powerList" - immediately understands what this list does.
+מפתח חדש רואה "powerList" - מבין מיד מה ה-list הזה עושה.
 
-First version is a list of things. Second is a concept.
+גרסה ראשונה היא רשימה של דברים. שנייה היא concept.
 
-[Brief - slide is clear]
+[קצר - ה-slide ברור]
 -->
 
 ---
@@ -1035,21 +1037,21 @@ When A and B **must** work together.
 <!--
 [18:45 - 19:30]
 
-One more pattern. Coordinator directive.
+עוד pattern אחד. Coordinator directive.
 
-Remember the dirty guard in Persistable? That was the simple version. In real code, you also want debouncing, cancellation of in-flight saves, etc.
+זוכרים את ה-dirty guard ב-Persistable? זו הייתה הגרסה הפשוטה. בקוד אמיתי, אתם גם רוצים debouncing, ביטול של saves שבדרך, וכו'.
 
-Product says: "auto-save when dirty, but debounce it."
+Product אומר: "auto-save כש-dirty, אבל עם debounce."
 
-DirtyTrackable and Debounceable are independent directives. Neither knows about the other.
+DirtyTrackable ו-Debounceable הם directives עצמאיים. אף אחד לא מכיר את השני.
 
-AutoSaveable brings both in, coordinates them. When dirty, debounce the save.
+AutoSaveable מביא את שניהם, מתאם ביניהם. כש-dirty, לעשות debounce ל-save.
 
-[Click for meme]
+[קליק למימ]
 
-Intentional coupling? Give it a home. One place. Named. Testable.
+Coupling מכוון? תנו לו בית. מקום אחד. עם שם. Testable.
 
-[Keep it brief - they get it]
+[לשמור את זה קצר - הם מבינים]
 -->
 
 ---
@@ -1063,9 +1065,9 @@ Each tool has limits.
 <!--
 [19:30 - 19:45]
 
-Quick guardrails. When NOT to use each escape hatch.
+גארדריילס מהירים. מתי לא להשתמש בכל escape hatch.
 
-[Fast section]
+[חלק מהיר]
 -->
 
 ---
@@ -1084,18 +1086,18 @@ layout: default
 <!--
 [19:45 - 20:15]
 
-Quick summary.
+סיכום מהיר.
 
-Important mental model: Inputs are CHEAP - easy to read and debug. Escape hatches are EXPENSIVE - more files, more indirection, debugging jumps across DI boundaries and directive composition.
+Mental model חשוב: Inputs הם זולים - קל לקרוא ולדבג. Escape hatches הם יקרים - יותר קבצים, יותר indirection, debugging קופץ בין DI boundaries ו-directive composition.
 
-Don't reach for Tool 3 when inputs still work. Complexity should earn its keep.
+אל תגיעו לכלי 3 כש-inputs עדיין עובדים. Complexity צריך להרוויח את מקומו.
 
-Content projection: structure only, not behavior.
-Strategies: not when behaviors should be optional.
-Directives: great, but don't repeat the same bundle across pages - promote it to hostDirectives.
-hostDirectives: don't bundle unrelated things just to reduce typing. Bundle concepts that belong together.
+Content projection: structure בלבד, לא behavior.
+Strategies: לא כש-behaviors צריכים להיות optional.
+Directives: מצוין, אבל אל תחזרו על אותה חבילה לאורך דפים - לקדם את זה ל-hostDirectives.
+hostDirectives: אל תאגדו דברים לא קשורים רק כדי להקליד פחות. לאגד concepts ששייכים ביחד.
 
-[Crisp - they have the framework]
+[חד - יש להם את ה-framework]
 -->
 
 ---
@@ -1125,17 +1127,17 @@ const withoutSorting = '<app-list [data]="items" />';
 <!--
 [20:15 - 20:45]
 
-Testing impact - quick note.
+השפעה על testing - הערה מהירה.
 
-Inputs: easiest. Set inputs, check outputs.
+Inputs: הכי קל. להגדיר inputs, לבדוק outputs.
 
-Strategies: mock the interface. Test component and implementations separately.
+Strategies: לעשות mock ל-interface. לבדוק קומפוננטה ו-implementations בנפרד.
 
-Directives: test base component alone, each directive alone, then combinations.
+Directives: לבדוק base קומפוננטה לבד, כל directive לבד, ואז combinations.
 
-Pattern choice affects how you test. Composability extends to your test suite.
+בחירת pattern משפיעה על איך אתם בודקים. Composability מתפרשת גם ל-test suite שלכם.
 
-[Brief - practical but not the focus]
+[קצר - פרקטי אבל לא הפוקוס]
 -->
 
 ---
@@ -1154,19 +1156,19 @@ From Day 60 mess to clean architecture:
 <!--
 [20:45 - 21:30]
 
-So you've got a Day 60 mess. How do you fix it?
+אז יש לכם בלאגן של יום 60. איך מתקנים?
 
-One: Extract. Pull behaviors out. Don't worry about perfection. Just get them out of the god component.
+אחת: Extract. לשלוף behaviors החוצה. לא לדאוג לשלמות. רק להוציא אותם מה-god קומפוננטה.
 
-Two: Interface. Which behaviors are mutually exclusive? Those become strategies.
+שתיים: Interface. אילו behaviors הם mutually exclusive? אלה הופכים ל-strategies.
 
-Three: Compose. Remaining behaviors become optional directives.
+שלוש: Compose. Behaviors שנשארו הופכים ל-optional directives.
 
-Four: Name. See it three times? hostDirectives.
+ארבע: Name. רואים את זה שלוש פעמים? hostDirectives.
 
-Don't do it all at once. One behavior at a time. Each extraction makes the component lighter.
+לא לעשות הכל בבת אחת. Behavior אחד בכל פעם. כל extraction מקלה על ה-קומפוננטה.
 
-[Practical - this is Monday morning advice]
+[פרקטי - זו עצה ליום ראשון בבוקר]
 -->
 
 ---
@@ -1191,23 +1193,23 @@ Inputs are your default. When they fail:
 <!--
 [21:30 - 22:15]
 
-Here's everything together.
+הנה הכל ביחד.
 
-Inputs are your default. Stay there as long as you can. They create visible coupling - that's manageable.
+Inputs זה ה-default שלכם. תישארו שם כמה שאפשר. הם יוצרים visible coupling - זה ניתן לניהול.
 
-But when you see these tells, reach for the escape hatch:
+אבל כשאתם רואים את הסימנים האלה, תגיעו ל-escape hatch:
 
-Structural flags - booleans that control what DOM exists? Content projection. Extract the @if.
+Structural flags - booleans ששולטים באיזה DOM קיים? Content projection. לחלץ את ה-@if.
 
-Behavioral bundles - a flag that drags services and lifecycle code? Strategy via DI. Let the injector decide.
+Behavioral bundles - flag שגורר services ו-lifecycle code? Strategy via DI. לתת ל-injector להחליט.
 
-Composable opt-ins - behaviors that should stack, present or absent? Directives. Visible in template.
+Composable opt-ins - behaviors שצריכים להיערם, נוכחים או נעדרים? Directives. גלויים ב-template.
 
-Same combo three times with the same meaning? Name it with hostDirectives.
+אותו combo שלוש פעמים עם אותה משמעות? לתת לו שם עם hostDirectives.
 
-Each row is a response to a tell. Your job: notice the tell. Pick the escape hatch.
+כל שורה היא תגובה לסימן. התפקיד שלכם: לזהות את הסימן. לבחור את ה-escape hatch.
 
-[Pause - let them photograph it]
+[לעצור - לתת להם לצלם]
 -->
 
 ---
@@ -1220,28 +1222,28 @@ Good abstractions aren't chosen.
 
 ## They're discovered.
 
-<img src="/assets/qr-slides.png" class="absolute bottom-8 right-8 w-28 opacity-80" />
+<img src="/assets/qr-slides.png" class="absolute bottom-8 right-8 w-40 opacity-80" />
 
 <!--
 [22:15 - 23:00]
 
-Final thought.
+מחשבה אחרונה.
 
-I told you at the start I stay with hard things longer than is comfortable. That discomfort is where the discovery happens.
+אמרתי לכם בהתחלה שאני נשאר עם דברים קשים יותר זמן ממה שנוח. אי-הנוחות הזו היא איפה שה-discovery קורה.
 
-We talk about "choosing the right abstraction" like there's a menu at project start. That's not how it works.
+אנחנו מדברים על "לבחור את ה-abstraction הנכונה" כאילו יש תפריט בהתחלת פרויקט. זה לא ככה עובד.
 
-Good abstractions aren't chosen. They're discovered.
+Abstractions טובות לא נבחרות. הן מתגלות.
 
-You write code. Watch it evolve. Notice where it struggles. The code tells you - through boolean flags, repetition, god components - what it needs.
+אתם כותבים קוד. צופים בו מתפתח. שמים לב איפה הוא נאבק. הקוד מספר לכם - דרך boolean flags, חזרתיות, god קומפוננטות - מה הוא צריך.
 
-Your job isn't to predict the future. It's to listen to the present. Notice the tells.
+התפקיד שלכם הוא לא לנבא את העתיד. זה להקשיב להווה. לשים לב לסימנים.
 
-Don't rush to fix the messy component. Listen to it first. Next time you see isAdmin or isCompactMode... you'll know what the code is telling you.
+אל תמהרו לתקן את ה-messy קומפוננטה. תקשיבו לו קודם. בפעם הבאה שתראו isAdmin או isCompactMode... תדעו מה הקוד מספר לכם.
 
-Stay with your components long enough. The patterns reveal themselves.
+תישארו עם ה-קומפוננטות שלכם מספיק זמן. ה-patterns מתגלים מעצמם.
 
-[Eye contact - let this land]
+[קשר עין - לתת לזה לנחות]
 -->
 
 ---
@@ -1259,11 +1261,11 @@ Questions?
 <!--
 [23:30 - 24:00]
 
-That's it. Thank you.
+זהו. תודה רבה.
 
-If you've got a component that's fighting back - come find me. Or if you just want to talk Angular, decoupling, or why your component has 47 inputs... I'm around.
+אם יש לכם קומפוננטה שנלחם בכם - תבואו תמצאו אותי. או אם אתם רוצים לדבר על Angular, decoupling, או למה ל-קומפוננטה שלכם יש 47 inputs... אני פה.
 
-Questions?
+שאלות?
 
-[Open, approachable - real learning happens now]
+[פתוח, נגיש - למידה אמיתית קורה עכשיו]
 -->

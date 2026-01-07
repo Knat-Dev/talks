@@ -1,8 +1,10 @@
 /* Root styles - loaded into all Slidev contexts including presenter view */
 
-/* Presenter view notes - higher contrast */
+/* Presenter view notes - higher contrast + RTL for Hebrew branch */
 .slidev-note,
 .slidev-note p,
 .slidev-note div {
   color: #9ca3af !important;
+  direction: rtl;
+  text-align: right;
 }
