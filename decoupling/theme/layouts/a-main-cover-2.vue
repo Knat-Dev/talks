@@ -10,7 +10,10 @@
     <!-- Content block with logo -->
     <div class="cover-block">
       <div class="cover-logo">
-        <img src="/assets/coralogix-logo.png" alt="Coralogix" />
+        <img
+          src="/assets/coralogix-logo.png"
+          alt="Coralogix"
+        />
       </div>
       <div class="cover-content">
         <slot />
@@ -23,7 +26,7 @@
 .cover {
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #34d399 0%, #6ee7b7 50%, #a7f3d0 100%);
+  background: var(--cx-green-gradient);
   padding: 0;
   display: flex;
   flex-direction: column;
@@ -54,7 +57,7 @@
 
 /* Typography for cover slides */
 .cover :deep(h1) {
-  color: #ffffff !important;
+  color: var(--cx-white) !important;
   font-size: 4.5rem !important;
   font-weight: 500 !important;
   line-height: 1.05 !important;
@@ -63,7 +66,7 @@
 }
 
 .cover :deep(h2) {
-  color: #ffffff !important;
+  color: var(--cx-white) !important;
   font-size: 1.35rem !important;
   font-weight: 400 !important;
   opacity: 0.95;
@@ -72,7 +75,7 @@
 }
 
 .cover :deep(p) {
-  color: #ffffff;
+  color: var(--cx-white);
   font-size: 1rem;
   opacity: 0.9;
   margin: 0.2rem 0;

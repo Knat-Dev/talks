@@ -3,14 +3,18 @@
  * Coralogix Default Layout
  * Light gradient background with dark text - for content slides
  */
-import { useSlideContext } from '@slidev/client'
-const { $page } = useSlideContext()
+import { useSlideContext } from '@slidev/client';
+const { $page } = useSlideContext();
 </script>
 
 <template>
   <div class="slidev-layout default">
     <!-- Logo top-left -->
-    <img class="logo" src="/assets/coralogix-logo-dark.png" alt="Coralogix" />
+    <img
+      class="logo"
+      src="/assets/coralogix-logo-dark.png"
+      alt="Coralogix"
+    />
 
     <!-- Content -->
     <div class="content">
@@ -26,7 +30,7 @@ const { $page } = useSlideContext()
 .default {
   width: 100%;
   height: 100%;
-  background: linear-gradient(180deg, #d1fae5 0%, #ecfdf5 40%, #ffffff 100%);
+  background: var(--cx-light-gradient);
   padding: 4.5rem 4rem 3rem 4rem;
   box-sizing: border-box;
   overflow: hidden;
@@ -52,7 +56,7 @@ const { $page } = useSlideContext()
   position: absolute;
   bottom: 1.5rem;
   right: 4rem;
-  color: #9ca3af;
+  color: var(--cx-text-muted);
   font-size: 0.875rem;
   font-weight: 500;
 }
@@ -66,37 +70,37 @@ const { $page } = useSlideContext()
 
 /* Typography */
 .default :deep(h1) {
-  color: #111827 !important;
+  color: var(--cx-text-dark) !important;
   font-size: 2.5rem !important;
   font-weight: 500 !important;
   margin: 0 0 1rem 0 !important;
 }
 
 .default :deep(h2) {
-  color: #059669 !important;
+  color: var(--cx-green-dark) !important;
   font-size: 1.5rem !important;
   font-weight: 500 !important;
   margin-bottom: 0.75rem !important;
 }
 
 .default :deep(h3) {
-  color: #374151 !important;
+  color: var(--cx-text) !important;
   font-size: 1.25rem !important;
   font-weight: 500 !important;
 }
 
 .default :deep(p) {
-  color: #374151;
+  color: var(--cx-text);
   font-size: 1.125rem;
   line-height: 1.6;
 }
 
 .default :deep(strong) {
-  color: #059669;
+  color: var(--cx-green-dark);
   font-weight: 500;
 }
 
 .default :deep(li) {
-  color: #374151;
+  color: var(--cx-text);
 }
 </style>

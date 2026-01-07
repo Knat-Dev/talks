@@ -4,7 +4,17 @@
 .slidev-note,
 .slidev-note p,
 .slidev-note div {
-  color: #9ca3af !important;
+  color: var(--cx-text-muted) !important;
   direction: rtl;
   text-align: right;
+}
+
+/* Slidev progress bar - Coralogix green */
+.progress-bar {
+  height: 3px !important;
+}
+
+.progress-bar .progress {
+  height: 100% !important;
+  background: var(--slidev-theme-primary) !important;
 }

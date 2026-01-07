@@ -12,6 +12,8 @@ transition: slide-left
 mdc: true
 # Hebrew branch - speaker notes are RTL (see style.css)
 lang: he
+# UI options
+progress: true
 ---
 
 # Decoupling in Angular
@@ -23,9 +25,9 @@ lang: he
 <!--
 [0:00 - 1:00]
 
-היי לכולם, אני דור. Software engineer ב-Coralogix.
+היי לכולם, אני דור. עובד פה ב-Coralogix כ-Software Engineer.
 
-אז ככה, היום אנחנו הולכים לבנות קומפוננטה ביחד. טוב - אני אכתוב את הקוד, אבל אני רוצה שתעזרו לי לזהות כשמשהו לא בסדר.
+אז ככה, היום אנחנו הולכים לעבור על קוד ביחד. אני אראה לכם דוגמאות, ואני רוצה שתעזרו לי לזהות כשמשהו לא בסדר.
 
 אתם מכירים את הרגעים האלה שמסתכלים על קוד וחושבים "משהו פה לא מרגיש נכון, אבל אני לא יכול להסביר למה"? זה מה שאנחנו מחפשים. הסימנים.
 
@@ -97,13 +99,13 @@ Clean. Simple. Works great.
 <!--
 [2:00 - 2:45]
 
-יאללה, בואו נבנה משהו. ListComponent. פשוט.
+יאללה, בואו נסתכל על קוד. ListComponent. פשוט.
 
 יום ראשון. שני inputs - items, loading. תסתכלו על הקוד הזה. מה אתם חושבים?
 
-נקי, נכון? פשוט. קל ל-test. זה קוד טוב.
+נקי, נכון? פשוט. קל לכתוב לזה טסטים. זה קוד טוב.
 
-וזה באמת קוד טוב. כרגע, זו בדיוק ה-abstraction הנכונה.
+וזה באמת קוד טוב. כרגע, זו בדיוק האבסטרקציה הנכונה.
 
 תהנו מהרגע הזה. הוא לא יחזיק מעמד.
 
@@ -1213,7 +1215,7 @@ Composable opt-ins - behaviors שצריכים להיערם, נוכחים או נ
 -->
 
 ---
-layout: section
+layout: two-cols
 ---
 
 # The Takeaway
@@ -1222,7 +1224,11 @@ Good abstractions aren't chosen.
 
 ## They're discovered.
 
-<img src="/assets/qr-slides.png" class="absolute bottom-8 right-8 w-40 opacity-80" />
+::right::
+
+<div class="h-full flex items-center justify-center">
+  <img src="/assets/qr-slides.png" class="w-40 opacity-80" />
+</div>
 
 <!--
 [22:15 - 23:00]
@@ -1231,9 +1237,9 @@ Good abstractions aren't chosen.
 
 אמרתי לכם בהתחלה שאני נשאר עם דברים קשים יותר זמן ממה שנוח. אי-הנוחות הזו היא איפה שה-discovery קורה.
 
-אנחנו מדברים על "לבחור את ה-abstraction הנכונה" כאילו יש תפריט בהתחלת פרויקט. זה לא ככה עובד.
+אנחנו מדברים על "לבחור את האבסטרקציה הנכונה" כאילו יש תפריט בהתחלת פרויקט. זה לא ככה עובד.
 
-Abstractions טובות לא נבחרות. הן מתגלות.
+אבסטרקציות טובות לא נבחרות. הן מתגלות.
 
 אתם כותבים קוד. צופים בו מתפתח. שמים לב איפה הוא נאבק. הקוד מספר לכם - דרך boolean flags, חזרתיות, god קומפוננטות - מה הוא צריך.
 

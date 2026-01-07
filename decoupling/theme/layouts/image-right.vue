@@ -39,7 +39,7 @@ const { $page } = useSlideContext()
 }
 
 .left-panel {
-  background: linear-gradient(180deg, #34d399 0%, #6ee7b7 50%, #a7f3d0 100%);
+  background: var(--cx-green-gradient-vertical);
   padding: 2rem;
   display: flex;
   flex-direction: column;
@@ -63,7 +63,7 @@ const { $page } = useSlideContext()
 }
 
 .right-panel {
-  background: #ffffff;
+  background: var(--cx-white);
   padding: 3rem;
   display: flex;
   flex-direction: column;
@@ -75,14 +75,14 @@ const { $page } = useSlideContext()
   position: absolute;
   bottom: 1.5rem;
   right: 2rem;
-  color: #9ca3af;
+  color: var(--cx-text-muted);
   font-size: 0.875rem;
   font-weight: 500;
 }
 
 /* Left panel typography - white text */
 .left-panel :deep(h1) {
-  color: #ffffff !important;
+  color: var(--cx-white) !important;
   font-size: 2.5rem !important;
   font-weight: 500 !important;
   line-height: 1.15 !important;
@@ -90,7 +90,7 @@ const { $page } = useSlideContext()
 }
 
 .left-panel :deep(h2) {
-  color: #ffffff !important;
+  color: var(--cx-white) !important;
   font-size: 1.25rem !important;
   font-weight: 500 !important;
   opacity: 0.9;
@@ -98,7 +98,7 @@ const { $page } = useSlideContext()
 }
 
 .left-panel :deep(p) {
-  color: #ffffff;
+  color: var(--cx-white);
   font-size: 1rem;
   opacity: 0.9;
   margin: 0.25rem 0;
@@ -106,20 +106,20 @@ const { $page } = useSlideContext()
 
 /* Right panel typography - dark text */
 .right-panel :deep(h2) {
-  color: #111827 !important;
+  color: var(--cx-text-dark) !important;
   font-size: 1.5rem !important;
   font-weight: 500 !important;
   margin-bottom: 1rem !important;
 }
 
 .right-panel :deep(p) {
-  color: #374151;
+  color: var(--cx-text);
   font-size: 1rem;
   line-height: 1.6;
 }
 
 .right-panel :deep(strong) {
-  color: #059669;
+  color: var(--cx-green-dark);
   font-weight: 500;
 }
 

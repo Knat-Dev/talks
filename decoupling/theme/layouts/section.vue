@@ -28,7 +28,7 @@ const { $page } = useSlideContext()
 .section {
   width: 100%;
   height: 100%;
-  background: linear-gradient(180deg, #d1fae5 0%, #ecfdf5 40%, #ffffff 100%);
+  background: var(--cx-light-gradient);
   padding: 4.5rem 4rem 3rem 4rem;
   display: flex;
   flex-direction: column;
@@ -56,14 +56,14 @@ const { $page } = useSlideContext()
   position: absolute;
   bottom: 1.5rem;
   right: 4rem;
-  color: #9ca3af;
+  color: var(--cx-text-muted);
   font-size: 0.875rem;
   font-weight: 500;
 }
 
 /* Typography */
 .section :deep(h1) {
-  color: #111827 !important;
+  color: var(--cx-text-dark) !important;
   font-size: 3rem !important;
   font-weight: 500 !important;
   line-height: 1.2 !important;
@@ -71,20 +71,20 @@ const { $page } = useSlideContext()
 }
 
 .section :deep(h2) {
-  color: #059669 !important;
+  color: var(--cx-green-dark) !important;
   font-size: 2rem !important;
   font-weight: 500 !important;
   margin-bottom: 0.75rem !important;
 }
 
 .section :deep(p) {
-  color: #374151;
+  color: var(--cx-text);
   font-size: 1.25rem;
   line-height: 1.5;
 }
 
 .section :deep(strong) {
-  color: #059669;
+  color: var(--cx-green-dark);
   font-weight: 500;
 }
 </style>

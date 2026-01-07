@@ -28,7 +28,7 @@
 .layout {
   width: 100%;
   height: 100%;
-  background: linear-gradient(180deg, #d1fae5 0%, #ecfdf5 40%, #ffffff 100%);
+  background: var(--cx-light-gradient);
   padding: 4.5rem 4rem 3rem 4rem;
   display: flex;
   flex-direction: column;
@@ -73,29 +73,30 @@
   max-width: 100% !important;
 }
 
-/* Typography */
+/* Typography - matching section layout */
 .layout :deep(h1) {
-  color: #111827 !important;
-  font-size: 2.25rem !important;
+  color: var(--cx-text-dark) !important;
+  font-size: 3rem !important;
   font-weight: 500 !important;
+  line-height: 1.2 !important;
   margin-bottom: 1rem !important;
 }
 
 .layout :deep(h2) {
-  color: #059669 !important;
-  font-size: 1.25rem !important;
+  color: var(--cx-green-dark) !important;
+  font-size: 2rem !important;
   font-weight: 500 !important;
   margin-bottom: 0.75rem !important;
 }
 
 .layout :deep(p) {
-  color: #374151;
-  font-size: 1rem;
+  color: var(--cx-text);
+  font-size: 1.25rem;
   line-height: 1.5;
 }
 
 .layout :deep(strong) {
-  color: #059669;
+  color: var(--cx-green-dark);
   font-weight: 500;
 }
 </style>

@@ -23,7 +23,7 @@
 .layout {
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #34d399 0%, #6ee7b7 40%, #a7f3d0 100%);
+  background: var(--cx-green-gradient);
   padding: 4.5rem 4rem 3rem 4rem;
   display: flex;
   flex-direction: column;
@@ -50,14 +50,14 @@
 
 /* Typography */
 .layout :deep(h1) {
-  color: #ffffff !important;
+  color: var(--cx-white) !important;
   font-size: 3.5rem !important;
   font-weight: 800 !important;
   margin-bottom: 1.5rem !important;
 }
 
 .layout :deep(p) {
-  color: #ffffff;
+  color: var(--cx-white);
   font-size: 1.5rem;
   opacity: 0.95;
   margin: 0.5rem 0;
