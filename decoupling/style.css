@@ -5,8 +5,8 @@
 .slidev-note p,
 .slidev-note div {
   color: var(--cx-text-muted) !important;
-  /* direction: rtl;
-  text-align: right; */
+  direction: rtl;
+  text-align: right;
 }
 
 /* Slidev progress bar - Coralogix green */

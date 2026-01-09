@@ -8,7 +8,6 @@ info: |
   Dor Peled · @Knat-Dev
 
   Runtime: ~2,900 words in speaker notes.
-  150 wpm (natural pace) = ~19 min.
   120 wpm (with pauses) = ~24 min.
 layout: a-main-cover-2
 highlighter: shiki
@@ -33,25 +32,25 @@ mdc: true
 </div>
 
 <!--
-BEATS:<br>• Intro — Dor, Coralogix<br>• Raise hands: who's added "just one more input"?<br>• That's the start of a God Component<br>• Hunting "tells" — like poker<br>• Docs = syntax, Pain = architecture<br>• Set up the grid story
+BEATS:<br>• פתיחה — דור, Coralogix<br>• הרמת ידיים: מי הוסיף "רק עוד input אחד"?<br>• ככה מתחיל God Component<br>• מחפשים "tells" — כמו בפוקר<br>• Docs = syntax, Pain = architecture<br>• הצגת הסיפור של ה-grid
 
 [0:00 - 1:15]
 
-Hey everyone. I'm Dor — software engineer at Coralogix.
+היי כולם. אני דור — software engineer ב-Coralogix.
 
-Quick show of hands — who's added "just one more input" to a component? One more boolean flag?
+בואו נעשה רגע הרמת ידיים — מי פה הוסיף פעם "רק עוד input אחד" לקומפוננטה? עוד boolean flag אחד?
 
-[Wait for hands]
+[מחכה לידיים]
 
-Yeah. Me too. That's how God Components start. Not with bad intentions — with reasonable feature requests.
+כן. גם אני. ככה God Components מתחילים. לא מתוך כוונות רעות — אלא מתוך feature requests סבירים לגמרי.
 
-Today we're hunting tells. Like poker tells. That moment you look at code and think "something's wrong here" but can't explain what.
+היום אנחנו מחפשים tells. כמו tells בפוקר. הרגע הזה שבו אתם מסתכלים על קוד ומרגישים ש"משהו פה לא בסדר" אבל לא יודעים להסביר בדיוק מה.
 
-Docs teach you syntax. Pain teaches you architecture. I'm gonna show you the pain — so you recognize it before it bites.
+דוקומנטציה מלמדת סינטקס. כאב מלמד ארכיטקטורה. אני הולך להראות לכם את הכאב — כדי שתזהו אותו לפני שהוא יעלה לכם ביוקר.
 
-Let me tell you about a component that taught me everything I know about decoupling.
+בואו נדבר על קומפוננטה שלימדה אותי כל מה שאני יודע על decoupling.
 
-[Scan the room — make eye contact]
+[מבט לקהל — קשר עין]
 -->
 
 ---
@@ -67,9 +66,9 @@ layout: center
 </div>
 
 <!--
-BEATS:<br>• QR code — follow along
+BEATS:<br>• QR code — לעקוב אחרי הסליידים
 
-Quick — scan this if you wanna follow along on your phone or laptop.
+מי שרוצה לעקוב מהטלפון או מהלפטופ — סרקו רגע את ה-QR.
 -->
 
 ---
@@ -87,27 +86,27 @@ Then it didn't.
 </v-click>
 
 <!--
-BEATS:<br>• Real problem — grid wrapper at work<br>• Started simple, features piled up<br>• Context menu forced coupling<br>• Drawer pain, twice<br>• [CLICK MEME] Show of hands<br>• I'll show you how to fix it
+BEATS:<br>• בעיה אמיתית — grid wrapper בעבודה<br>• התחיל פשוט, פיצ'רים נערמו<br>• ה-Context menu גרם לצימוד (coupling)<br>• כאב כפול ב-Drawers<br>• [CLICK MEME] הרמת ידיים<br>• אני אראה לכם איך לתקן את זה
 
 [1:30 - 3:00]
 
-Before I teach you anything, let me show you the real problem.
+לפני שאני מלמד אתכם משהו, בואו נראה את הבעיה האמיתית.
 
-At work, I built a grid component. Day one: client-side fetching, row data, done.
+בעבודה, בניתי grid component. ביום הראשון: client-side fetching, row data, וזהו.
 
-Then features piled up. Cell renderers. Row styles. Expand/collapse. Context menu — and here's where it got bad. The context menu forced coupling. Every consumer had to provide the same things.
+ואז הפיצ'רים התחילו להיערם. Cell renderers, Row styles, Expand/collapse. ואז הגיע ה-context menu — ופה זה נהיה גרוע. ה-context menu הכריח אותנו לייצר coupling. כל צרכן של ה-grid היה חייב לספק את אותם דברים.
 
-We used it in the main page. Fine. Then we added it to a drawer. Messy. Coupled to global state, services everywhere.
+השתמשנו בו בדף הראשי. סבבה. אז הוספנו אותו ל-drawer. זה נהיה מלוכלך. צימוד ל-global state, סרוויסים בכל מקום.
 
-Then we added it to ANOTHER drawer. Same pain.
+ואז הוספנו אותו לעוד drawer... אותו כאב בדיוק.
 
 [Click for meme]
 
-Show of hands — who's worked on a component like this?
+הרמת ידיים — מי פה עבד על קומפוננטה כזו?
 
-[Pause for hands]
+[הפסקה לידיים]
 
-Yeah. This is real. And I'm gonna show you how we fixed it. But first, let me teach you the tools.
+כן. זה קורה באמת. ואני הולך להראות לכם איך תיקנו את זה. אבל קודם, בואו נלמד את הכלים.
 -->
 
 ---
@@ -121,15 +120,15 @@ A <span class="text-emerald-400 font-mono">ListComponent</span> built to fail.
 So we can dissect it.
 
 <!--
-BEATS:<br>• Can't fit grid on a slide<br>• Built a ListComponent with same crimes<br>• Wrote it bad on purpose
+BEATS:<br>• אי אפשר להכניס grid שלם לסלייד אחד<br>• בניתי ListComponent עם אותם "פשעים"<br>• כתבתי קוד גרוע בכוונה
 
 [3:00 - 3:30]
 
-The Grid has too much domain stuff — can't fit it on a slide.
+ה-Grid המקורי עמוס מדי בפרטים מהדומיין — אי אפשר להכניס אותו לסלייד בצורה ברורה.
 
-So I built a ListComponent that commits the exact same architectural crimes. I wrote it bad on purpose.
+אז בניתי ListComponent שמבצע בדיוק את אותם פשעים ארכיטקטוניים. כתבתי אותו גרוע בכוונה.
 
-Let's dissect it.
+בואו ננתח אותו.
 -->
 
 ---
@@ -161,19 +160,19 @@ export class ListComponent {
 _"What features am I today?"_
 
 <!--
-BEATS:<br>• Inputs for data, flags for features<br>• Dependent inputs, services used sometimes<br>• God Component pattern<br>• Asking "what am I today?" instead of just being a list
+BEATS:<br>• Inputs למידע, פלאגים לפיצ'רים<br>• Inputs שתלויים אחד בשני, סרוויסים בשימוש חלקי<br>• תבנית ה-God Component<br>• שואל "מה אני היום?" במקום פשוט להיות רשימה
 
 [3:30 - 4:30]
 
-Here it is. A list component that's trying to do too much.
+הנה זה. List component שמנסה לעשות יותר מדי.
 
-Inputs for data... but also inputs for sorting flags. Inputs for storage keys. Injected services that are only used sometimes.
+Inputs למידע... אבל גם inputs לפלאגים של sorting. פלאגים של storage keys. סרוויסים מוזרקים שמשתמשים בהם רק לפעמים.
 
-Look at persistState. It's a flag. But it drags storageKey, initialState, and a service along with it. They travel together.
+תסתכלו על persistState. זה פלאג. אבל הוא סוחב איתו את storageKey, initialState, וסרוויס. הם "מטיילים" ביחד.
 
-This is the God Component pattern. It's asking "What features am I today?" instead of just being a list.
+זו התבנית של ה-God Component. הוא שואל "אילו פיצ'רים אני היום?" במקום פשוט להיות רשימה.
 
-Same crimes as the grid. Now let's take it apart.
+אותם פשעים כמו ב-grid. עכשיו בואו נפרק אותו.
 -->
 
 ---
@@ -187,23 +186,23 @@ Coupling isn't bad.
 ## Hidden coupling is.
 
 <!--
-BEATS:<br>• Coupling isn't bad — HIDDEN coupling is<br>• Visible deps (inputs, constructors) = manageable<br>• Buried in flags/templates = loss of control<br>• Question: how to make coupling VISIBLE?<br>• Inputs = default, three escape hatches when they fail
+BEATS:<br>• צימוד (Coupling) הוא לא רע — צימוד *נסתר* הוא הבעיה<br>• תלויות גלויות (inputs, constructors) = קל לנהל<br>• קבור בתוך פלאגים/טמפלטים = אובדן שליטה<br>• שאלה: איך הופכים coupling לגלוי?<br>• Inputs הם ברירת המחדל, שלוש תבניות חילוץ כשזה נכשל
 
 [4:30 - 5:15]
 
-Here's the thing. Coupling isn't bad. Your components HAVE to talk. Data flows. Events propagate. That's fine.
+הנה העניין: Coupling זה לא דבר רע. הקומפוננטות שלכם חייבות לדבר ביניהן. דאטה זורם, איוונטים עולים. זה בסדר גמור.
 
-HIDDEN coupling? That's the problem.
+הבעיה היא HIDDEN coupling.
 
-When you can see dependencies — in inputs, constructors, imports — you can reason about them. Manage them.
+כשאפשר לראות דפנדנסיז — ב-inputs, ב-constructors, ב-imports — אפשר להבין אותם. אפשר לנהל אותם.
 
-But when coupling is buried in boolean flags? Scattered across templates? That's when you lose control. Change something here, something breaks over there.
+אבל כש-coupling קבור בתוך boolean flags? פזור בתוך טמפלטים? שם מאבדים שליטה. משנים משהו פה, ומשהו נשבר שם.
 
-So the question isn't "how do I remove coupling?" It's "how do I make coupling VISIBLE?"
+אז השאלה היא לא "איך אני מסיר coupling?", אלא "איך אני הופך את ה-coupling לגלוי (VISIBLE)?"
 
-That's what we're gonna do. Inputs are your default — stay there as long as you can. But when inputs break down, you've got three escape hatches. Each one makes a different kind of coupling explicit.
+זה מה שאנחנו הולכים לעשות. Inputs הם ברירת המחדל — תישארו שם כל עוד אתם יכולים. אבל כש-inputs נכשלים, יש לכם שלוש תבניות חילוץ (extraction patterns). כל אחת הופכת סוג אחר של coupling למפורש (explicit).
 
-[Clear and confident — this is the core idea]
+[טון בטוח וברור — זה הרעיון המרכזי]
 -->
 
 ---
@@ -212,7 +211,7 @@ layout: image-right
 
 ::left::
 
-# Three Escape Hatches
+# Three Extraction Patterns
 
 Inputs are your default.
 
@@ -220,32 +219,32 @@ Inputs are your default.
 
 ::default::
 
-| The Tell            | Escape Hatch       |
+| The Tell            | Pattern            |
 | ------------------- | ------------------ |
 | Structural flags    | Content Projection |
 | Behavioral bundles  | Strategy via DI    |
 | Composable opt-ins  | Directives         |
 
 <!--
-BEATS:<br>• Three escape hatches — you know them, trick is WHEN<br>• Inputs = default, visible coupling<br>• Structural flags → Content Projection<br>• Behavioral bundles → Strategy via DI<br>• Composable opt-ins → Directives<br>• We'll spot the tell together
+BEATS:<br>• שלוש תבניות חילוץ — אתם מכירים אותן, החכמה היא מתי<br>• Inputs = default, visible coupling<br>• Structural flags ← Content Projection<br>• Behavioral bundles ← Strategy via DI<br>• Composable opt-ins ← Directives<br>• נזהה את ה-tell ביחד
 
 [5:15 - 6:15]
 
-Three escape hatches. You know all of them. The trick is knowing WHEN to reach for each.
+שלוש תבניות חילוץ. אתם בטח מכירים את כולן. החכמה היא לדעת מתי לשלוף כל אחת.
 
-Inputs are your default. They create VISIBLE coupling — you can see what a component needs. Stay there as long as you can.
+Inputs הם ברירת המחדל. הם יוצרים VISIBLE coupling — אפשר לראות מה קומפוננטה צריכה. תישארו שם כל עוד אפשר.
 
-But watch for the tells.
+אבל שימו לב ל-tells.
 
-Structural flags — booleans that control what DOM exists? Content projection. Extract the @if.
+Structural flags — בוליאנים ששולטים באיזה DOM קיים? Content projection. לחלץ את ה-@if החוצה.
 
-Behavioral bundles — a flag that drags services and lifecycle code with it? Strategy via DI. Let the injector decide.
+Behavioral bundles — פלאג שסוחב איתו סרוויסים וקוד של lifecycle? Strategy via DI. תנו ל-injector להחליט.
 
-Composable opt-ins — behaviors that should stack? Directives. Visible in the template.
+Composable opt-ins — התנהגויות שצריכות להיערם אחת על השנייה (stack)? Directives. גלוי בתוך הטמפלט.
 
-For each one, I'll show you the code. We'll spot the tell together.
+לכל אחת מהן אני אראה קוד. נזהה את ה-tell ביחד.
 
-[Point to each row briefly — then move on]
+[הצבעה קצרה על כל שורה וממשיכים]
 -->
 
 ---
@@ -265,21 +264,21 @@ Boolean flags. The component asking _"what features am I?"_
 But look closer at **The God List**...
 
 <!--
-BEATS:<br>• Boolean flags = feature toggles, component asking "what am I?"<br>• That's the tell — like poker<br>• But truth is deeper: some inputs travel together (storageKey + persistState)<br>• Start simple: one flag isn't like the others
+BEATS:<br>• Boolean flags = feature toggles, הקומפוננטה שואלת "מה אני?"<br>• זה ה-tell — כמו בפוקר<br>• אבל האמת עמוקה יותר: חלק מה-inputs "מטיילים" ביחד (storageKey + persistState)<br>• נתחיל פשוט: פלאג אחד שלא דומה לאחרים
 
 [6:15 - 7:15]
 
-Look at these. Boolean flags. sortable, showHeader, persistState.
+תסתכלו על אלה. Boolean flags. sortable, showHeader, persistState.
 
-Each one's a feature toggle. The component is asking: "What features am I today?"
+כל אחד הוא feature toggle. הקומפוננטה שואלת: "אילו פיצ'רים אני היום?"
 
-That's the tell — like in poker. Boolean flags piling up? Component's trying to be too many things.
+זה ה-tell — כמו בפוקר. כשיש ערימה של בוליאנים? הקומפוננטה מנסה להיות יותר מדי דברים.
 
-But here's the thing — and we'll come back to this — boolean flags are just the surface. Look at The God List again. See how storageKey and initialState only matter when persistState is true? They travel together. The truth is deeper.
+אבל הנה העניין — ונחזור לזה בהמשך — בוליאנים הם רק פני השטח. תסתכלו שוב על ה-God List. רואים איך storageKey ו-initialState רלוונטיים רק כש-persistState הוא true? הם "מטיילים" ביחד. האמת עמוקה יותר.
 
-For now, let's start simple. One of these flags isn't like the others.
+כרגע, בואו נתחיל פשוט. אחד הפלאגים האלה לא דומה לאחרים.
 
-[Pause — plant the seed, don't explain yet]
+[הפסקה — לזרוע את הזרע, לא להסביר עדיין]
 -->
 
 ---
@@ -303,23 +302,23 @@ showHeader = input(false);
 Why does the **list** decide whether a header exists?
 
 <!--
-BEATS:<br>• showHeader is different — controls STRUCTURE, not behavior<br>• @if in template that renders header<br>• Why does LIST decide? That's parent's job<br>• Bonus: cleaner deps — list doesn't import header<br>• Simplest extraction
+BEATS:<br>• showHeader הוא שונה — הוא שולט ב-STRUCTURE, לא בהתנהגות<br>• @if בטמפלט שמרנדר את ההדר<br>• למה הרשימה מחליטה? זו העבודה של ה-parent<br>• בונוס: תלויות נקיות יותר — הרשימה לא עושה import להדר<br>• החילוץ הכי פשוט
 
 [7:15 - 7:45]
 
-Let's start with showHeader. This one's different from sortable or persistState.
+בואו נתחיל עם showHeader. זה שונה מ-sortable או מ-persistState.
 
-It doesn't change behavior — it controls structure. What DOM exists.
+זה לא משנה התנהגות — זה שולט במבנה (Structure). אילו אלמנטים קיימים ב-DOM.
 
-Look at this. showHeader. And somewhere in the template, an @if that renders a header.
+תסתכלו על זה. showHeader. ואיפשהו בטמפלט, יש @if שמרנדר הדר.
 
-Why does the LIST decide whether a header exists? That's not data. That's not behavior. That's the parent's job.
+למה ה-LIST מחליט אם הדר קיים? זה לא דאטה. זו לא התנהגות. זו האחריות של ה-parent.
 
-Bonus: if the parent projects it, the list doesn't need to import the header component. Cleaner dependency graph — list doesn't need to know about header's type at all.
+בונוס: אם ה-parent מזריק אותו פנימה (projects it), הרשימה לא צריכה לייבא את ה-header component. גרף תלויות נקי יותר — הרשימה לא צריכה להכיר את הטיפוס של ההדר בכלל.
 
-This is the simplest extraction we can make.
+זה החילוץ הכי פשוט שאנחנו יכולים לעשות.
 
-[Let them feel the discomfort]
+[לתת להם להרגיש את ה"אי-נוחות" בקוד]
 -->
 
 ---
@@ -343,21 +342,21 @@ layout: default
 The `@if` becomes a **slot**. The boolean disappears.
 
 <!--
-BEATS:<br>• Before: showHeader=true, component renders internally<br>• After: no boolean, parent projects or doesn't<br>• @if → ng-content slot, boolean vanishes<br>• Content projection = extracting structural decisions
+BEATS:<br>• Before: showHeader=true, קומפוננטה מרנדרת פנימית<br>• After: בלי בוליאני, ה-parent מזריק או לא<br>• @if ← ng-content slot, הבוליאני נעלם<br>• Content projection = חילוץ החלטות מבניות (structural)
 
 [7:45 - 8:15]
 
-Watch what happens when you extract the conditional.
+תראו מה קורה כשמחלצים את התנאי החוצה.
 
-Before: showHeader equals true. Component renders header internally.
+לפני: showHeader שווה ל-true. הקומפוננטה מרנדרת את ההדר פנימית.
 
-After: No boolean. Parent just... puts the header there. Or doesn't.
+אחרי: אין בוליאני. ה-parent פשוט... שם את ההדר שם. או שלא.
 
-The @if becomes an ng-content slot. The boolean vanishes.
+ה-@if הופך ל-ng-content slot. הבוליאני פשוט נעלם.
 
-Content projection isn't a "layout feature." It's what happens when you extract structural decisions from components.
+Content projection הוא לא "פיצ'ר של layout". זה מה שקורה כשמחלצים החלטות מבניות מתוך קומפוננטות.
 
-[This is the "aha" moment — content projection is removal of conditionals]
+[זה רגע ה"אהה!" — content projection הוא הסרה של תנאים]
 -->
 
 ---
@@ -371,19 +370,19 @@ When **structure** varies
 Not behavior. Structure.
 
 <!--
-BEATS:<br>• Tool 1: Content Projection<br>• When inputs control STRUCTURE (what DOM exists)<br>• Picture frame analogy: frame = shape, you = picture<br>• Component owns layout, you own content
+BEATS:<br>• כלי 1: Content Projection<br>• כש-inputs שולטים ב-STRUCTURE (איזה DOM קיים)<br>• אנלוגיה של מסגרת תמונה: מסגרת = צורה, אתם = התמונה<br>• הקומפוננטה בבעלות על ה-layout, אתם בבעלות על ה-content
 
 [8:15 - 8:45]
 
-Tool one. Content projection.
+כלי ראשון. Content projection.
 
-First escape hatch. Use this when inputs control STRUCTURE — what DOM exists, not what it does.
+תבנית החילוץ הראשונה. תשתמשו בה כש-inputs שולטים ב-STRUCTURE — איזה DOM קיים, לא מה הוא עושה.
 
-Think picture frame. Frame decides shape and size. You choose the picture.
+תחשבו על מסגרת לתמונה. המסגרת קובעת את הצורה והגודל. אתם בוחרים את התמונה.
 
-Component owns layout. You own content.
+הקומפוננטה היא הבעלים של ה-layout. אתם הבעלים של התוכן.
 
-[Quick — set up the code]
+[מהר — מכינים את הקוד]
 -->
 
 ---
@@ -402,17 +401,17 @@ layout: default
 Card owns layout. Consumer owns content via ng-content.
 
 <!--
-BEATS:<br>• Two slots: header + default<br>• "I'll handle wrapper, you decide contents"<br>• Cards, modals, panels — shell consistent, contents vary
+BEATS:<br>• שני סלוטים: הדר + ברירת מחדל<br>• "אני אטפל במעטפת, אתם תחליטו על התוכן"<br>• כרטיסים, מודאלים, פאנלים — המעטפת עקבית, התוכן משתנה
 
 [8:45 - 9:15]
 
-Two ng-content slots. Header and default.
+שני ng-content slots. הדר וברירת מחדל.
 
-Component says: "I'll handle the wrapper. You decide what goes inside."
+הקומפוננטה אומרת: "אני אטפל במעטפת (wrapper). אתם תחליטו מה נכנס בפנים."
 
-Cards, modals, panels. Shell stays consistent, contents vary.
+כרטיסים, מודאלים, פאנלים. המעטפת נשארת עקבית, התוכן משתנה.
 
-[Quick — code speaks for itself]
+[מהר — הקוד מדבר בעד עצמו]
 -->
 
 ---
@@ -429,23 +428,23 @@ Doesn't work for:
 You need different **behavior**, not structure.
 
 <!--
-BEATS:<br>• showHeader handled — one down<br>• But persistState + friends (services, inputs)?<br>• Can't ng-content an HttpClient<br>• Content projection = DOM nodes only<br>• WHAT HAPPENS vs WHAT APPEARS → different tool
+BEATS:<br>• showHeader טופל — אחד פחות<br>• אבל מה עם persistState וחברים (סרוויסים, inputs)?<br>• אי אפשר לעשות ng-content ל-HttpClient<br>• Content projection = אלמנטים ב-DOM בלבד<br>• מה קורה vs מה מופיע ← כלי אחר
 
 [9:15 - 9:45]
 
-So we handled showHeader. Boolean's gone. One down.
+אז טיפלנו ב-showHeader. הבוליאני נעלם. אחד פחות.
 
-But look back at The God List. What about persistState? And its friends — storageKey, initialState, the services?
+אבל תסתכלו שוב על ה-God List. מה עם persistState? והחברים שלו — storageKey, initialState, הסרוויסים?
 
-Can we ng-content an HttpClient? Put localStorage in a slot?
+אנחנו יכולים לעשות ng-content ל-HttpClient? לשים localStorage בתוך סלוט?
 
-[Let them laugh]
+[לתת להם לצחוק]
 
-No. Content projection is for DOM nodes. Visual stuff.
+לא. Content projection נועד לאלמנטים ב-DOM. דברים ויזואליים.
 
-When variation is about WHAT HAPPENS, not WHAT APPEARS — that's a different tell. Different escape hatch.
+כשהשינוי הוא סביב "מה קורה" (WHAT HAPPENS), ולא "מה מופיע" (WHAT APPEARS) — זה tell אחר. תבנית חילוץ אחרת.
 
-[Transition to strategy]
+[מעבר ל-strategy]
 -->
 
 ---
@@ -459,23 +458,23 @@ layout: section
 Never both.
 
 <!--
-BEATS:<br>• Tool 2: Strategy via DI<br>• A or B, never both<br>• Server OR localStorage, real OR mock<br>• Component doesn't know which — DI provides<br>• Zero if-statements, decision lives elsewhere
+BEATS:<br>• כלי 2: Strategy via DI<br>• או א' או ב', לעולם לא שניהם<br>• שרת או localStorage, אמיתי או mock<br>• הקומפוננטה לא יודעת מה היא קיבלה — ה-DI מספק<br>• אפס if-statements, ההחלטה חיה במקום אחר
 
 [9:45 - 10:15]
 
-Tool two. Strategy via DI.
+כלי שני. Strategy via DI.
 
-A or B. Pick one. Never both at the same time.
+א' או ב'. בוחרים אחד. לעולם לא שניהם בו זמנית.
 
-Server OR localStorage. Real API OR mock. One implementation active.
+שרת או localStorage. API אמיתי או mock. רק מימוש אחד פעיל.
 
-Component doesn't know which. Just says "I need something that can save." DI provides the right one.
+הקומפוננטה לא יודעת איזה. היא פשוט אומרת "אני צריכה משהו שיכול לשמור". ה-DI מספק את הנכון.
 
-No if-statements in the component. Decision lives elsewhere.
+אין if-statements בתוך הקומפוננטה. ההחלטה חיה במקום אחר.
 
-Let me show you what this looks like.
+בואו נראה איך זה נראה.
 
-[Set up the example]
+[מכינים את הדוגמה]
 -->
 
 ---
@@ -504,27 +503,27 @@ ngOnInit() {
 Remember I said the truth was deeper? **This is it.**
 
 <!--
-BEATS:<br>• Truth deeper than flags — this is it<br>• persistState + storageKey + initialState + services + lifecycle<br>• All only matter if persistState=true — they travel together<br>• Can't content-project behavior<br>• What do we do when a BUNDLE needs to move?
+BEATS:<br>• האמת עמוקה יותר מפלאגים — הנה זה<br>• persistState + storageKey + initialState + סרוויסים + lifecycle<br>• הכל משנה רק אם persistState=true — הם "מטיילים" ביחד<br>• אי אפשר לעשות content-project להתנהגות<br>• מה עושים כשחבילה שלמה (BUNDLE) צריכה לזוז?
 
 [10:15 - 11:00]
 
-Remember earlier I said the truth is deeper than boolean flags?
+זוכרים שאמרתי שהאמת עמוקה יותר מסתם boolean flags?
 
-This is it. Look at the code again — just the persistence part.
+הנה זה. תסתכלו שוב על הקוד — רק על החלק של ה-persistence.
 
-One flag — persistState. But it's not alone.
+פלאג אחד — persistState. אבל הוא לא לבד.
 
-storageKey — WHERE to save. initialState — what to restore. stateSaved — notify when done.
+storageKey — איפה לשמור. initialState — מה לשחזר. stateSaved — להודיע כשסיימנו.
 
-Then the services. ApiService for server. StorageService for browser. And the lifecycle code.
+ואז הסרוויסים. ApiService לשרת. StorageService לדפדפן. וקוד ה-lifecycle.
 
-All of this only matters if persistState is true. They travel together. They're a behavioral unit.
+כל זה רלוונטי רק אם persistState הוא true. הם מטיילים ביחד. הם יחידה התנהגותית אחת.
 
-Key insight: you can't content-project behavior. Can't put a service in an ng-content slot.
+תובנת מפתח: אי אפשר לעשות content-projection להתנהגות. אי אפשר לשים סרוויס בתוך ng-content slot.
 
-So what do we do when a whole bundle of behavior needs to move?
+אז מה עושים כשחבילה שלמה של התנהגות צריכה לזוז?
 
-[This is the reveal — set up Strategy]
+[זו החשיפה — מכינים את ה-Strategy]
 -->
 
 ---
@@ -546,21 +545,21 @@ That whole bundle needs to **move**. But where?
 | Preview | Don't save   |
 
 <!--
-BEATS:<br>• Bundle needs to move OUT<br>• WHERE depends on context: Admin=server, Public=localStorage, Preview=noop<br>• Same component, different behavior<br>• Old: more booleans. New: component doesn't know/care
+BEATS:<br>• החבילה צריכה לזוז החוצה<br>• ה"לאן" תלוי בקונטקסט: אדמין=שרת, ציבורי=localStorage, תצוגה מקדימה=noop<br>• אותה קומפוננטה, התנהגות שונה<br>• פעם: עוד בוליאנים. היום: לקומפוננטה לא אכפת
 
 [11:00 - 11:30]
 
-That whole bundle — flag, inputs, services, lifecycle code — needs to move OUT of the component.
+כל החבילה הזו — הפלאג, ה-inputs, הסרוויסים, קוד ה-lifecycle — צריכה לצאת אל מחוץ לקומפוננטה.
 
-But WHERE it goes? Depends on context.
+אבל לאן היא הולכת? זה תלוי בקונטקסט.
 
-Admin dashboard? Save to server. Public view? localStorage. Preview mode? Don't save at all.
+אדמין דשבורד? שמירה לשרת. תצוגה ציבורית? localStorage. מצב תצוגה מקדימה? לא לשמור בכלל.
 
-Same component. Different storage behavior.
+אותה קומפוננטה. התנהגויות אחסון שונות.
 
-Old way: another boolean, another if-statement. New way: component doesn't know. Doesn't care.
+הדרך הישנה: עוד בוליאני, עוד if-statement. הדרך החדשה: הקומפוננטה לא יודעת. ולא אכפת לה.
 
-[Quick — set up the solution]
+[מהר — מכינים את הפתרון]
 -->
 
 ---
@@ -580,19 +579,19 @@ export const STORAGE_STRATEGY =
 ```
 
 <!--
-BEATS:<br>• Interface: save() and load() — WHAT, not HOW<br>• InjectionToken = lookup key<br>• (Promise for slides, Observable works too)<br>• Just the contract, no implementation yet
+BEATS:<br>• ממשק (Interface): מה (save/load), לא איך<br>• InjectionToken = מפתח לחיפוש<br>• (Promise לסליידים, גם Observable עובד)<br>• רק החוזה, עוד אין מימוש
 
 [11:30 - 11:45]
 
-Step one: define what we need. save() and load(). Not HOW — just that it CAN.
+שלב ראשון: להגדיר מה אנחנו צריכים. save() ו-load(). לא איך — רק שזה "יכול".
 
-InjectionToken is our lookup key.
+InjectionToken הוא מפתח החיפוש שלנו ב-DI.
 
-Note: I'm using Promise to keep slides clean. You can use Observable too — same pattern, different async primitive.
+הערה: אני משתמש ב-Promise כדי לשמור על הסליידים נקיים. אפשר להשתמש גם ב-Observable — אותו דפוס, פרימיטיב אסינכרוני שונה.
 
-No implementation yet. Just the contract.
+עדיין אין מימוש. רק החוזה.
 
-[Fast — setup code]
+[מהר — קוד הגדרה]
 -->
 
 ---
@@ -618,15 +617,15 @@ export class LocalStorageStrategy
 Uses localStorage. Works offline.
 
 <!--
-BEATS:<br>• LocalStorageStrategy — browser storage, works offline
+BEATS:<br>• LocalStorageStrategy — אחסון דפדפן, עובד אופליין
 
 [11:45 - 12:00]
 
-First implementation. LocalStorageStrategy.
+מימוש ראשון. LocalStorageStrategy.
 
-Browser storage. Synchronous. Works offline.
+אחסון דפדפן. סינכרוני. עובד אופליין.
 
-[Quick — move to next]
+[מהר — עוברים לבא]
 -->
 
 ---
@@ -657,19 +656,19 @@ export class ServerStorageStrategy
 Uses HttpClient. Syncs across devices.
 
 <!--
-BEATS:<br>• ServerStorageStrategy — API call, syncs across devices<br>• From outside? Identical. List doesn't know which<br>• Could add NoopStrategy for preview
+BEATS:<br>• ServerStorageStrategy — קריאת API, מסנכרן בין מכשירים<br>• מבחוץ? זהה. הרשימה לא יודעת מה היא קיבלה<br>• אפשר להוסיף NoopStrategy לתצוגה מקדימה
 
 [12:00 - 12:30]
 
-Second implementation. ServerStorageStrategy.
+מימוש שני. ServerStorageStrategy.
 
-API call. Syncs across devices.
+קריאת API. מסנכרן בין מכשירים.
 
-From the outside? Identical. List calls save() and load(). Doesn't know which one it got.
+מבחוץ? זהה. הרשימה קוראת ל-save() ול-load(). היא לא יודעת מה היא קיבלה מתחת למכסה המנוע.
 
-Could add NoopStrategy for preview. Same interface, does nothing.
+אפשר להוסיף NoopStrategy לתצוגה מקדימה. אותו ממשק, לא עושה כלום.
 
-[Keep moving]
+[ממשיכים]
 -->
 
 ---
@@ -693,37 +692,37 @@ export class AdminDashboard {}
 **Zero if-statements.** Context decides, not component.
 
 <!--
-BEATS:<br>• Decision lives in the PROVIDER<br>• Key: provider scoped to subtree — hierarchical injection<br>• Zero if-statements in component<br>• Pro tip: NoopStrategy at root, override per context<br>• Strategy = mutually exclusive. Opt-in composition = directives<br>• THAT's visible coupling
+BEATS:<br>• ההחלטה חיה ב-PROVIDER<br>• מפתח: פרוביידר שמוגבל לעץ התחתון (subtree) — הזרקה היררכית<br>• אפס if-statements בקומפוננטה<br>• טיפ למקצוענים: NoopStrategy בשורש, לדרוס לפי קונטקסט<br>• Strategy = בחירה בין אפשרויות. Opt-in = directives<br>• זה צימוד גלוי (visible coupling)
 
 [12:30 - 13:15]
 
-Here's where the decision lives. In the provider.
+פה ההחלטה חיה. ב-provider.
 
-AdminDashboard says: "In my subtree, use ServerStorageStrategy."
+AdminDashboard אומר: "בעץ שלי, תשתמש ב-ServerStorageStrategy."
 
-Key insight: this provider is scoped to AdminDashboard's subtree — not global. That's the magic of hierarchical injection.
+תובנת מפתח: ה-provider הזה מוגבל לתת-העץ של AdminDashboard — הוא לא גלובלי. זה הקסם של הזרקה היררכית.
 
-List injects STORAGE_STRATEGY. Gets the server version. Zero if-statements.
+הרשימה מזריקה את STORAGE_STRATEGY. היא מקבלת את גרסת השרת. אפס if-statements.
 
-Different page? Provides LocalStorageStrategy. Same list, different behavior.
+דף אחר? מספק LocalStorageStrategy. אותה רשימה, התנהגות שונה.
 
-Pro tip: provide NoopStorageStrategy at root, override where needed. Safe by default, customized per context.
+טיפ: תספקו NoopStorageStrategy בשורש האפליקציה, ותדרסו איפה שצריך. בטוח כברירת מחדל, מותאם אישית לפי הצורך.
 
 ```ts
-// The third implementation — does nothing, safely
+// המימוש השלישי — לא עושה כלום, בבטחה
 export class NoopStorageStrategy implements StorageStrategy {
   async save() {}
   async load() { return null; }
 }
 ```
 
-List never changes. New mode? Write new strategy, provide it somewhere. List doesn't know, doesn't care.
+הרשימה לעולם לא משתנה. מצב חדש? כותבים אסטרטגיה חדשה, מספקים אותה איפשהו. לרשימה לא אכפת.
 
-Important: Strategy is for mutually exclusive implementations. One active at a time. If you want opt-in composition — adding behaviors, not swapping them — that's what directives are for.
+חשוב: Strategy נועד למימושים שמוציאים זה את זה (mutually exclusive). רק אחד פעיל בכל פעם. אם אתם רוצים "הרכבה" (opt-in composition) — להוסיף התנהגויות ולא להחליף אותן — בשביל זה יש directives.
 
-THAT's visible coupling. You can see exactly what behavior each context gets.
+זה מה שנקרא צימוד גלוי. אתם יכולים לראות בדיוק איזו התנהגות כל קונטקסט מקבל.
 
-[Emphasize: scoped providers, zero if-statements, visible coupling]
+[להדגיש: scoped providers, אפס if-statements, צימוד גלוי]
 -->
 
 ---
@@ -747,25 +746,25 @@ Features invisible in template. All three always present.
 </v-click>
 
 <!--
-BEATS:<br>• Problem: feature set invisible in template<br>• Strategy = SWAP, but what about OPTIONAL?<br>• [CLICK MEME]<br>• Need behaviors that ADD, not swap<br>• Strategy swaps, directives add
+BEATS:<br>• בעיה: סט הפיצ'רים נסתר בטמפלט<br>• Strategy = להחליף (SWAP), אבל מה עם אופציונלי?<br>• [CLICK MEME]<br>• צריכים התנהגויות שמוסיפות (ADD), לא מחליפות<br>• Strategy מחליף, Directives מוסיפים
 
 [13:15 - 14:00]
 
-But look at this. What's the problem?
+אבל תסתכלו על זה. מה הבעיה כאן?
 
-Strategy pattern is great for A or B — you SWAP implementations. But what if sorting is optional? What if filtering is optional?
+ה-Strategy pattern מעולה לבחירה בין א' ל-ב' — מחליפים מימושים. אבל מה אם sorting הוא אופציונלי? מה אם filtering הוא אופציונלי?
 
-Three strategies injected. All three always present. You can swap implementations — but you can't opt out. Strategy is for swapping, not adding.
+שלוש אסטרטגיות מוזרקות. שלושתן תמיד שם. אפשר להחליף מימושים — אבל אי אפשר לוותר עליהם. Strategy נועד להחלפה, לא להוספה.
 
 [Click for meme]
 
-Yeah, you could make injection optional. But then you're riddled with null checks. "If sorter exists, sort. If filter exists, filter."
+כן, אפשר להפוך את ההזרקה לאופציונלית. אבל אז הקוד מתמלא בבדיקות null. "אם sorter קיים, תמיין. אם filter קיים, תסנן."
 
-We need behaviors that ACCUMULATE — you ADD them, not swap them. And here's the key — visible in the template. Look at the HTML and know exactly what this list does.
+אנחנו צריכים התנהגויות שנערמות (ACCUMULATE) — שמוסיפים אותן, לא מחליפים. והנה המפתח — שזה יהיה גלוי בטמפלט. להסתכל על ה-HTML ולדעת בדיוק מה הרשימה הזו עושה.
 
-That's the third tell. Composable opt-ins. Strategy swaps, directives add.
+זה ה-tell השלישי. Composable opt-ins. אסטרטגיה מחליפה, דירקטיבה מוסיפה.
 
-[Transition]
+[מעבר]
 -->
 
 ---
@@ -779,25 +778,25 @@ What's **left** after the right extractions.
 The smallest unit of reusable behavior.
 
 <!--
-BEATS:<br>• Tool 3: Directives<br>• showHeader → projection. persistState → strategy. What's left? sortable<br>• Not structure, not a bundle — just a behavior. Present or absent<br>• Directive = smallest unit that survived extraction<br>• Directives aren't "another tool" — they're what's LEFT
+BEATS:<br>• כלי 3: Directives<br>• showHeader ← projection. persistState ← strategy. מה נשאר? sortable<br>• לא מבנה, לא חבילה — רק התנהגות. קיימת או לא<br>• Directive = היחידה הכי קטנה ששרדה את החילוץ<br>• Directives הם לא "עוד כלי" — הם מה ש*נשאר*
 
 [14:00 - 14:45]
 
-Tool three. Directives.
+כלי שלישי. Directives.
 
-Look back at the list. We handled showHeader — content projection now. We handled persistState and its bundle — strategy now.
+בואו נחזור לרשימה. טיפלנו ב-showHeader — עכשיו זה projection. טיפלנו ב-persistState והחבילה שלו — עכשיו זה strategy.
 
-What's left? sortable.
+מה נשאר? sortable.
 
-Doesn't control structure. Isn't a bundle of dependent inputs and services. It's just... a behavior. Either the list is sortable, or it's not.
+זה לא שולט במבנה. זו לא חבילה של inputs וסרוויסים שתלויים זה בזה. זו פשוט... התנהגות. או שהרשימה ניתנת למיון, או שלא.
 
-No branching. No context questions. Present or absent.
+בלי הסתעפויות. בלי שאלות של קונטקסט. קיים או לא קיים.
 
-That's a directive. Smallest unit of reusable behavior that survived extraction.
+זו דירקטיבה. היחידה הכי קטנה של התנהגות לשימוש חוזר ששרדה את החילוץ.
 
-Directives aren't "yet another tool." They're what's LEFT when you do the other extractions right.
+דירקטיבות הן לא "סתם עוד כלי בארגז". הן מה ש*נשאר* כשעושים את שאר החילוצים נכון.
 
-[Reframe — directives are inevitable, not arbitrary]
+[הגדרה מחדש — דירקטיבות הן בלתי נמנעות, לא שרירותיות]
 -->
 
 ---
@@ -833,21 +832,21 @@ export class Sortable {
 Directive owns sort config. List just displays.
 
 <!--
-BEATS:<br>• Selector: app-list[sortable] — no attribute = doesn't exist<br>• Directive owns inputs (sortKey, sortDir)<br>• List exposes displayItems signal — directive writes to it<br>• Selector makes coupling explicit
+BEATS:<br>• סלקטור: app-list[sortable] — בלי האטריביוט = לא קיים<br>• הדירקטיבה היא הבעלים של ה-inputs (sortKey, sortDir)<br>• הרשימה חושפת displayItems signal — הדירקטיבה כותבת אליו<br>• הסלקטור הופך את הצימוד לגלוי ומפורש
 
 [14:45 - 15:15]
 
-SortableDirective. Selector targets app-list with sortable attribute.
+SortableDirective. הסלקטור פונה ל-app-list עם האטריביוט sortable.
 
-No attribute? Directive doesn't exist. Zero overhead.
+אין אטריביוט? הדירקטיבה לא קיימת. אפס overhead.
 
-Notice: the directive owns its own inputs — sortKey, sortDir. The list just exposes a displayItems signal that the directive writes to.
+שימו לב: הדירקטיבה היא הבעלים של ה-inputs של עצמה — sortKey, sortDir. הרשימה רק חושפת displayItems signal שהדירקטיבה מעדכנת.
 
-inject(ListComponent) on the same element resolves the host instance. Yeah, directive knows the component's internal API. That's okay — they're designed together. The selector makes it explicit.
+שימוש ב-inject(ListComponent) על אותו אלמנט מחזיר את המופע של ה-host. כן, הדירקטיבה מכירה את ה-API הפנימי של הקומפוננטה. זה בסדר — הן עוצבו ביחד. הסלקטור הופך את זה למפורש.
 
-Effect reacts to items AND sort config. Change either, list re-sorts.
+ה-Effect מגיב לשינויים ב-items ובקונפיגורציה של המיון. שנו אחד מהם, והרשימה תתמיין מחדש.
 
-[Quick — show the pattern]
+[מהר — להראות את הדפוס]
 -->
 
 ---
@@ -877,22 +876,22 @@ export class Persistable {
 Notice: injects STORAGE_STRATEGY. **Tools layer together.**
 
 <!--
-BEATS:<br>• PersistDirective — same pattern<br>• KEY: injects STORAGE_STRATEGY — tools layer together!<br>• Strategy = WHERE/HOW (server vs localStorage)<br>• Directive = WHEN (on dirty state changes)<br>• Each tool has single job — easy to test, easy to compose
+BEATS:<br>• PersistDirective — אותו דפוס<br>• מפתח: מזריק את STORAGE_STRATEGY — הכלים נערמים ביחד!<br>• Strategy = איפה/איך (שרת vs localStorage)<br>• Directive = מתי (כשהסטייט "מלוכלך" / dirty)<br>• לכל כלי יש תפקיד אחד — קל לבדוק, קל להרכיב (compose)
 
 [15:15 - 15:45]
 
-PersistDirective. Same pattern.
+PersistableDirective. אותו דפוס.
 
-But notice — it injects STORAGE_STRATEGY. Key insight: we're decoupling persistence into two axes.
+אבל שימו לב — היא מזריקה את STORAGE_STRATEGY. תובנת מפתח: אנחנו מפרקים את ה-persistence לשני צירים.
 
-Strategy answers: WHERE and HOW do we store? Server vs localStorage vs noop.
-Directive answers: WHEN do we store? On state changes, only when dirty.
+ה-Strategy עונה על: איפה ואיך אנחנו שומרים? שרת לעומת localStorage לעומת noop.
+ה-Directive עונה על: מתי אנחנו שומרים? בשינויי סטייט, רק כשהוא dirty.
 
-Yeah, this effect causes I/O. In production I'd route it through a debounced queue with cancellation. But the decomposition is what matters: WHERE lives in strategy, WHEN lives in directive.
+כן, ה-effect הזה מבצע I/O. בקוד פרודקשן הייתי מעביר את זה דרך תור עם debouncing וביטולים. אבל הפירוק הוא מה שחשוב: ה"איפה" חי ב-strategy, ה"מתי" חי ב-directive.
 
-Tools layer together. Each one has a single job. Easy to test alone, easy to compose.
+הכלים עובדים ביחד. לכל אחד יש תפקיד אחד. קל לבדוק לבד, קל להרכיב ביחד.
 
-[Point out strategy injection — this is the payoff]
+[להצביע על הזרקת ה-strategy — זה ה-payoff]
 -->
 
 ---
@@ -916,21 +915,21 @@ layout: default
 **Visible in the template.** Look at the HTML, know what it does.
 
 <!--
-BEATS:<br>• Simple: no directives. With sorting: sortable + inputs. Full: all three<br>• Key: VISIBLE in template — look at HTML, know what it does<br>• Each page picks its combo — opt-in complexity
+BEATS:<br>• פשוט: בלי דירקטיבות. עם מיון: sortable + inputs. מלא: כל השלוש<br>• מפתח: גלוי בטמפלט — תסתכלו על ה-HTML, תדעו מה הוא עושה<br>• כל דף בוחר את השילוב שלו — מורכבות בבחירה (opt-in)
 
 [15:45 - 16:15]
 
-Look at the template.
+תסתכלו על הטמפלט.
 
-Simple page? No directives. Just a list.
+דף פשוט? אין דירקטיבות. פשוט רשימה.
 
-Need sorting? Add sortable. The directive owns its inputs — sortKey, sortDir. List doesn't care.
+צריכים מיון? מוסיפים sortable. הדירקטיבה מנהלת את ה-inputs שלה — sortKey, sortDir. לרשימה לא אכפת.
 
-Full-featured? All three directives. Each one brings its own configuration.
+פיצ'רים מלאים? כל שלוש הדירקטיבות. כל אחת מביאה את הקונפיגורציה שלה.
 
-Key insight: it's all visible in the template. New developer opens this file, immediately knows what this list does.
+תובנת מפתח: הכל גלוי בטמפלט. מפתח חדש שפותח את הקובץ הזה יודע מיד מה הרשימה הזו עושה.
 
-[Fast — template speaks for itself]
+[מהר — הטמפלט מדבר בעד עצמו]
 -->
 
 ---
@@ -957,23 +956,23 @@ Same combo. Three times.
 </v-click>
 
 <!--
-BEATS:<br>• Three pages, same three directives — copy-pasted<br>• Coupling hidden in REPETITION<br>• Add a fifth? Hunt every page. Miss one? Drift<br>• [CLICK MEME]<br>• Same combo 3x = concept without a name
+BEATS:<br>• שלושה דפים, אותן שלוש דירקטיבות — מועתק (copy-paste)<br>• הצימוד נסתר בתוך החזרתיות<br>• רוצים להוסיף חמישית? צריך לחפש בכל דף. פספסתם אחד? נוצר drift<br>• [CLICK MEME]<br>• אותו שילוב 3 פעמים = קונספט שאין לו שם
 
 [16:15 - 17:00]
 
-But look at this. What do you see?
+אבל תסתכלו על זה. מה אתם רואים?
 
-Three pages. Same three directives. Copy-pasted.
+שלושה דפים. אותן שלוש דירקטיבות. Copy-paste.
 
-Coupling is hidden in REPETITION. "We always use these three together."
+הצימוד (coupling) נסתר בתוך החזרתיות (repetition). "אנחנו תמיד משתמשים בשלוש האלה ביחד."
 
-What happens when we add a fifth? Hunt down every page. Update all of them. Miss one? Now they drift apart.
+מה קורה כשמוסיפים פיצ'ר חמישי? צריך לצוד כל דף באפליקציה. לעדכן את כולם. פספסתם אחד? עכשיו הם מתחילים להתרחק זה מזה.
 
 [Click for meme]
 
-Same combination three times. Not coincidence. That's a concept without a name.
+אותו שילוב שלוש פעמים. זה לא מקרי. זה קונספט שעדיין אין לו שם.
 
-[Set up the promotion rule]
+[מכינים את כלל הקידום / promotion rule]
 -->
 
 ---
@@ -989,25 +988,25 @@ Two times is coincidence.
 ## Name it.
 
 <!--
-BEATS:<br>• 1x = code. 2x = coincidence. 3x = concept — NAME IT<br>• Caveat: same meaning, same reason. Different reasons = don't bundle<br>• Named = talk about it, document, test, evolve in ONE place<br>• Unnamed patterns drift (story: filtering disabled "temporarily")<br>• 3x same meaning? Name it
+BEATS:<br>• פעם 1 = קוד. פעם 2 = מקריות. פעם 3 = קונספט — תנו לו שם<br>• סייג: אותה משמעות, אותה סיבה. סיבות שונות = אל תקבצו<br>• שם = אפשר לדבר על זה, לתעד, לבדוק, לפתח במקום אחד<br>• דפוסים בלי שם נוטים ל-drift (סיפור: הסינון כבוי "זמנית")<br>• 3 פעמים אותה משמעות? תנו לזה שם
 
 [17:00 - 17:45]
 
-The promotion rule.
+כלל הקידום.
 
-Once: just code.
-Twice: maybe coincidence.
-Three times: that's a concept. Give it a name.
+פעם אחת: פשוט קוד.
+פעמיים: אולי מקריות.
+שלוש פעמים: זה קונספט. תנו לו שם.
 
-Important caveat: three times with the SAME meaning, the SAME reason. If reasons differ, don't bundle. That's false duplication.
+סייג חשוב: שלוש פעמים עם אותה משמעות, מאותה סיבה. אם הסיבות שונות, אל תקבצו אותן. זה שכפול דמה (false duplication).
 
-When you name something, you can talk about it. Document it. Test it. Evolve it in ONE place.
+כשנותנים למשהו שם, אפשר לדבר עליו. לתעד אותו. לבדוק אותו. לפתח אותו במקום אחד.
 
-Unnamed patterns drift. We had three "full-featured lists." One had filtering disabled "temporarily." Six months later? Nobody knew why.
+דפוסים בלי שם נוטים להתפזר. היו לנו שלוש "רשימות עם כל הפיצ'רים". באחת מהן הסינון היה כבוי "זמנית". חצי שנה אחרי? אף אחד לא ידע למה.
 
-See it three times with the same meaning? Name it.
+רואים את זה שלוש פעמים עם אותה משמעות? תנו לזה שם.
 
-[Deliver with conviction — this is memorable]
+[להעביר בביטחון — זה מסר זכיר]
 -->
 
 ---
@@ -1031,19 +1030,19 @@ export class PowerList {}
 One attribute. Three behaviors.
 
 <!--
-BEATS:<br>• hostDirectives — bundles directives<br>• PowerList: one attribute, three behaviors<br>• Body is EMPTY — just composition, a name for a pattern<br>• Add fourth behavior? One file. Done
+BEATS:<br>• hostDirectives — מקבץ דירקטיבות<br>• PowerList: אטריביוט אחד, שלוש התנהגויות<br>• גוף הדירקטיבה ריק — רק הרכבה (composition), שם לדפוס<br>• רוצים להוסיף התנהגות רביעית? קובץ אחד. וזהו
 
 [17:45 - 18:15]
 
-Angular gives us hostDirectives.
+אנגולר נותנת לנו את hostDirectives.
 
-PowerListDirective bundles three others. One attribute, three behaviors.
+PowerListDirective מקבצת שלוש אחרות. אטריביוט אחד, שלוש התנהגויות.
 
-Look at the body. Empty. No logic. Just composition. It's a name for a pattern.
+תסתכלו על גוף הדירקטיבה. ריק. אין לוגיקה. רק קומפוזיציה. זה פשוט שם שניתן לדפוס מסוים.
 
-Add a fourth behavior? One file. Done.
+רוצים להוסיף התנהגות רביעית? מעדכנים קובץ אחד. סיימנו.
 
-[Show how naming creates maintainability]
+[להראות איך מתן שם יוצר maintainability]
 -->
 
 ---
@@ -1065,21 +1064,21 @@ layout: default
 </v-click>
 
 <!--
-BEATS:<br>• Before: 3 attributes. After: 1 word — powerList<br>• [CLICK MEME]<br>• Functionally identical, conceptually worlds apart<br>• New dev sees "powerList" — immediately gets it<br>• List of things → concept
+BEATS:<br>• Before: 3 אטריביוטים. After: מילה אחת — powerList<br>• [CLICK MEME]<br>• פונקציונלית זה זהה, קונספטואלית זה עולמות שונים<br>• מפתח חדש רואה "powerList" — מבין מיד<br>• רשימה של דברים ← קונספט
 
 [18:15 - 18:30]
 
-Before: three attributes. After: one word. powerList.
+לפני: שלושה אטריביוטים. אחרי: מילה אחת. powerList.
 
 [Click for meme]
 
-Functionally identical. Conceptually? Worlds apart.
+פונקציונלית זה זהה לחלוטין. קונספטואלית? עולמות שונים.
 
-New developer sees "powerList" — immediately understands what this list does.
+מפתח חדש רואה "powerList" — הוא מבין מיד מה הרשימה הזו עושה.
 
-First version is a list of things. Second is a concept.
+הגרסה הראשונה היא רשימה של דברים. השנייה היא קונספט.
 
-[Brief — slide is clear]
+[קצר — הסלייד ברור]
 -->
 
 ---
@@ -1110,23 +1109,23 @@ export class AutoSaveable {
 When A and B **must** work together.
 
 <!--
-BEATS:<br>• Coordinator directive — when directives must work together<br>• DirtyTrackable + Debounceable = independent<br>• AutoSaveable coordinates: when dirty, debounce save<br>• Intentional coupling? Give it a home — named, testable
+BEATS:<br>• Coordinator directive — כשדירקטיבות חייבות לעבוד ביחד<br>• DirtyTrackable + Debounceable = עצמאיות<br>• AutoSaveable מתאם: כשזה dirty, תריץ debounce לשמירה<br>• צימוד מכוון? תנו לו בית — עם שם, שאפשר לבדוק
 
 [18:30 - 19:00]
 
-One more pattern. Coordinator directive.
+עוד דפוס אחד. Coordinator directive.
 
-Remember the dirty guard in Persistable? That was the simple version. In real code, you also want debouncing, cancellation of in-flight saves, etc.
+זוכרים את ה-dirty guard ב-Persistable? זו הייתה הגרסה הפשוטה. בקוד אמיתי, אתם רוצים גם debouncing, ביטול של שמירות קודמות וכו'.
 
-Product says: "auto-save when dirty, but debounce it."
+הפרודקט אומר: "תשמור אוטומטית כשזה dirty, אבל עם debounce."
 
-DirtyTrackable and Debounceable are independent directives. Neither knows about the other.
+DirtyTrackable ו-Debounceable הן דירקטיבות עצמאיות. אף אחת מהן לא מכירה את השנייה.
 
-AutoSaveable brings both in, coordinates them. When dirty, debounce the save.
+AutoSaveable מביאה את שתיהן, ומתאמת ביניהן. כשזה dirty, תעשה debounce לשמירה.
 
-Intentional coupling? Give it a home. One place. Named. Testable.
+צימוד מכוון? תנו לו בית. מקום אחד. עם שם. שאפשר לכתוב לו טסטים.
 
-[Keep it brief — they get it]
+[קצר — הם מבינים את זה]
 -->
 
 ---
@@ -1138,13 +1137,13 @@ layout: section
 Each tool has limits.
 
 <!--
-BEATS:<br>• Quick guardrails — when NOT to use
+BEATS:<br>• מעקות בטיחות קצרים — מתי לא להשתמש
 
 [19:00 - 19:15]
 
-Quick guardrails. When NOT to use each escape hatch.
+מעקות בטיחות. מתי לא להשתמש בכל אחת מתבניות החילוץ.
 
-[Fast section]
+[קטע מהיר]
 -->
 
 ---
@@ -1153,7 +1152,7 @@ layout: default
 
 # Anti-Patterns
 
-| Escape Hatch       | Don't use when...                       |
+| Pattern            | Don't use when...                       |
 | ------------------ | --------------------------------------- |
 | Content Projection | You need behavior, not structure        |
 | Strategy via DI    | Behaviors should be optional/composable |
@@ -1161,22 +1160,22 @@ layout: default
 | hostDirectives     | Bundling unrelated things to save typing|
 
 <!--
-BEATS:<br>• Inputs = CHEAP, escape hatches = EXPENSIVE<br>• Don't reach for Tool 3 when inputs work<br>• Content projection: structure only<br>• Strategies: not for optional behaviors<br>• Directives: don't repeat bundles — promote<br>• hostDirectives: bundle concepts, not unrelated things
+BEATS:<br>• Inputs = זולים, תבניות חילוץ = יקרות<br>• אל תרוצו לכלי 3 כשיש inputs שעובדים<br>• Content projection: מבנה בלבד<br>• Strategies: לא כשהתנהגויות צריכות להיות אופציונליות<br>• Directives: אל תחזרו על אותו מקבץ — תקדמו אותו (promote)<br>• hostDirectives: לקבץ קונספטים, לא דברים לא קשורים רק כדי לחסוך הקלדה
 
 [19:15 - 19:30]
 
-Quick summary.
+סיכום מהיר.
 
-Important mental model: Inputs are CHEAP — easy to read and debug. Escape hatches are EXPENSIVE — more files, more indirection, debugging jumps across DI boundaries and directive composition.
+מודל מנטלי חשוב: Inputs הם זולים — קל לקרוא ולדבג אותם. תבניות חילוץ הן "יקרות" — יותר קבצים, יותר אינדירקציה, הדיבאגינג קופץ בין גבולות של DI והרכבת דירקטיבות.
 
-Don't reach for Tool 3 when inputs still work. Complexity should earn its keep.
+אל תרוצו לכלי 3 כשה-inputs עדיין עובדים. מורכבות צריכה להוכיח את הערך שלה.
 
-Content projection: structure only, not behavior.
-Strategies: not when behaviors should be optional.
-Directives: great, but don't repeat the same bundle across pages — promote it.
-hostDirectives: don't bundle unrelated things just to save typing. Bundle concepts that belong together.
+Content projection: למבנה בלבד, לא להתנהגות.
+Strategies: לא כשהתנהגויות צריכות להיות אופציונליות.
+Directives: מעולה, אבל אל תחזרו על אותו שילוב בכל הדפים — תנו לו שם.
+hostDirectives: אל תקבצו דברים לא קשורים רק כדי לחסוך הקלדה. תקבצו קונספטים ששייכים זה לזה.
 
-[Crisp — they have the framework]
+[חד — יש להם את הפריימוורק]
 -->
 
 ---
@@ -1193,23 +1192,23 @@ From God Component to clean architecture:
 4. **Name** - Bundle common patterns with hostDirectives
 
 <!--
-BEATS:<br>• 1. Extract — pull behaviors out, don't worry about perfection<br>• 2. Interface — mutually exclusive → strategies<br>• 3. Compose — remaining → optional directives<br>• 4. Name — 3x → hostDirectives<br>• One behavior at a time
+BEATS:<br>• 1. Extract — להוציא התנהגויות החוצה, לא לדאוג לשלמות<br>• 2. Interface — בחירה בין אפשרויות ← strategies<br>• 3. Compose — מה שנשאר ← דירקטיבות אופציונליות<br>• 4. Name — שלוש פעמים ← hostDirectives<br>• התנהגות אחת בכל פעם
 
 [19:30 - 20:15]
 
-So you've got a God Component. How do you fix it?
+אז יש לכם God Component. איך מתקנים אותו?
 
-One: Extract. Pull behaviors out. Don't worry about perfection. Just get them out of the god component.
+אחד: Extract. תחלצו התנהגויות החוצה. אל תדאגו לגבי שלמות בגרסה הראשונה. פשוט תוציאו אותן מה-god component.
 
-Two: Interface. Which behaviors are mutually exclusive? Those become strategies.
+שתיים: Interface. אילו התנהגויות מוציאות אחת את השנייה? אלו יהיו ה-strategies שלכם.
 
-Three: Compose. Remaining behaviors become optional directives.
+שלוש: Compose. שאר ההתנהגויות הופכות לדירקטיבות אופציונליות.
 
-Four: Name. See it three times? hostDirectives.
+ארבע: Name. רואים את זה שלוש פעמים? hostDirectives.
 
-Don't do it all at once. One behavior at a time. Each extraction makes the component lighter.
+אל תעשו הכל בבת אחת. התנהגות אחת בכל פעם. כל חילוץ הופך את הקומפוננטה לקלה יותר.
 
-[Practical — this is Monday morning advice]
+[פרקטי — זו עצה ליום ראשון בבוקר]
 -->
 
 ---
@@ -1229,27 +1228,27 @@ layout: default
 **Baseline** = always there. **The rest** = opt-in.
 
 <!--
-BEATS:<br>• Remember the grid? Here's how we fixed it<br>• Made a matrix — feature x occurrence<br>• Found baseline, rest became Strategy or Directive<br>• Show of hands payoff
+BEATS:<br>• זוכרים את ה-grid? הנה איך תיקנו אותו<br>• בנינו מטריצה — פיצ'ר x שימוש<br>• מצאנו את ה-baseline, השאר הפך ל-Strategy או Directive<br>• Payoff להרמת הידיים
 
 [20:15 - 21:45]
 
-Remember the grid from the start? Show of hands — who's worked on a component like that?
+זוכרים את ה-grid מההתחלה? הרמת ידיים — מי עבד על קומפוננטה כזו?
 
-[Same hands as before]
+[אותן ידיים כמו קודם]
 
-Here's how we fixed it.
+הנה איך תיקנו אותו.
 
-We made a matrix. Every feature, every place we used the grid.
+בנינו מטריצה. כל פיצ'ר, כל מקום שבו השתמשנו ב-grid.
 
-Expand/collapse? Everywhere. Row styles? Everywhere. That's baseline — stays in the component.
+Expand/collapse? בכל מקום. Row styles? בכל מקום. זה ה-baseline — נשאר בתוך הקומפוננטה.
 
-Context menu? Some places — directive. Column wizard? One place — directive. SSRM fetching? One context only — strategy.
+Context menu? בחלק מהמקומות — דירקטיבה. Column wizard? מקום אחד — דירקטיבה. SSRM fetching? רק קונטקסט אחד — strategy.
 
-The second drawer? Same grid, just different directives applied. Third drawer? Same grid, SSRM strategy provided.
+ה-drawer השני? אותו grid בדיוק, פשוט עם דירקטיבות אחרות. ה-drawer השלישי? אותו grid, עם SSRM strategy מסופק ב-DI.
 
-This framework isn't theory. It's what we actually shipped. The grid works now.
+הפריימוורק הזה הוא לא תיאוריה. זה מה ששיפפנו באמת. ה-grid עובד עכשיו.
 
-[Payoff — connect back to opening hands]
+[Payoff — להתחבר חזרה להרמת הידיים מהפתיחה]
 -->
 
 ---
@@ -1264,7 +1263,7 @@ Inputs are your default. When they fail:
 
 ::default::
 
-| The Tell           | Escape Hatch       |
+| The Tell           | Pattern            |
 | ------------------ | ------------------ |
 | Structural flags   | Content Projection |
 | Behavioral bundles | Strategy via DI    |
@@ -1272,27 +1271,27 @@ Inputs are your default. When they fail:
 | Same combo 3x      | hostDirectives     |
 
 <!--
-BEATS:<br>• Inputs = default, visible coupling = manageable<br>• Structural flags → Content Projection (extract @if)<br>• Behavioral bundles → Strategy via DI (injector decides)<br>• Composable opt-ins → Directives (visible in template)<br>• 3x same meaning → hostDirectives<br>• Your job: notice tell, pick escape hatch
+BEATS:<br>• Inputs = ברירת מחדל, צימוד גלוי = ניתן לניהול<br>• Structural flags → Content Projection (חילוץ @if)<br>• Behavioral bundles → Strategy via DI (ה-injector מחליט)<br>• Composable opt-ins → Directives (גלוי בטמפלט)<br>• 3 פעמים אותה משמעות → hostDirectives<br>• העבודה שלכם: לזהות את ה-tell, לבחור את תבנית החילוץ
 
 [21:45 - 22:30]
 
-Here's everything together.
+הנה הכל ביחד.
 
-Inputs are your default. Stay there as long as you can. They create visible coupling — that's manageable.
+Inputs הם ברירת המחדל שלכם. תישארו שם כל עוד אתם יכולים. הם יוצרים צימוד גלוי — וזה משהו שאפשר לנהל.
 
-But when you see these tells, reach for the escape hatch:
+אבל כשאתם רואים את ה-tells האלה, תשלפו את תבנית החילוץ המתאימה:
 
-Structural flags — booleans controlling what DOM exists? Content projection. Extract the @if.
+Structural flags — בוליאנים ששולטים באיזה DOM קיים? Content projection. תוציאו את ה-@if.
 
-Behavioral bundles — flag dragging services and lifecycle code? Strategy via DI. Let the injector decide.
+Behavioral bundles — פלאג שסוחב איתו סרוויסים וקוד lifecycle? Strategy via DI. תנו ל-injector להחליט.
 
-Composable opt-ins — behaviors that should stack, present or absent? Directives. Visible in template.
+Composable opt-ins — התנהגויות שצריכות להיערם, קיימות או לא? Directives. גלוי בטמפלט.
 
-Same combo three times, same meaning? Name it with hostDirectives.
+אותו שילוב שלוש פעמים, עם אותה משמעות? תנו לזה שם עם hostDirectives.
 
-Each row is a response to a tell. Your job: notice the tell. Pick the escape hatch.
+כל שורה היא תגובה ל-tell. העבודה שלכם: לזהות את ה-tell. לבחור את תבנית החילוץ.
 
-[Pause — let them photograph it]
+[הפסקה — לתת להם לצלם את זה]
 -->
 
 ---
@@ -1308,28 +1307,28 @@ Good abstractions aren't chosen.
 <img src="/assets/qr-slides.png" class="absolute bottom-8 right-8 w-28 opacity-80" />
 
 <!--
-BEATS:<br>• We started with "just one more input"<br>• Now you have a framework: spot the tell, pick the escape hatch<br>• Good abstractions aren't chosen — DISCOVERED<br>• Next time you see isAdmin or showCompactMode — you'll know
+BEATS:<br>• התחלנו עם "רק עוד input אחד"<br>• עכשיו יש לכם פריימוורק: זהו את ה-tell, בחרו את תבנית החילוץ<br>• אבסטרקציות טובות לא נבחרות — הן מתגלות (DISCOVERED)<br>• פעם הבאה שתראו isAdmin או showCompactMode — אתם תדעו
 
 [22:30 - 23:15]
 
-Final thought.
+מחשבה אחרונה.
 
-Remember at the start — "just one more input"? That's where every God Component begins.
+זוכרים את ההתחלה — "רק עוד input אחד"? שם כל God Component מתחיל.
 
-Now you have a framework. Spot the tell. Pick the escape hatch.
+עכשיו יש לכם פריימוורק. זהו את ה-tell. בחרו את תבנית החילוץ.
 
 Structural flag? Content projection.
 Behavioral bundle? Strategy.
 Composable opt-in? Directive.
-Same combo three times? Name it.
+אותו שילוב שלוש פעמים? תנו לו שם.
 
-Good abstractions aren't chosen at project kickoff. They're discovered in the code that's already there.
+אבסטרקציות טובות לא נבחרות בקיק-אוף של הפרויקט. הן מתגלות מתוך הקוד שכבר נמצא שם.
 
-Next time you see isAdmin, showCompactMode, persistState... you'll know what the code is telling you.
+בפעם הבאה שתראו isAdmin, showCompactMode, persistState... אתם תדעו מה הקוד מנסה להגיד לכם.
 
-Listen to it.
+תקשיבו לו.
 
-[Pause — let this land]
+[הפסקה — לתת לזה לשקוע]
 -->
 
 ---
@@ -1354,15 +1353,15 @@ layout: end
 Questions?
 
 <!--
-BEATS:<br>• Thank you<br>• Component fighting back? Come find me<br>• Questions?
+BEATS:<br>• תודה רבה<br>• קומפוננטה שנלחמת בכם? בואו נדבר<br>• שאלות?
 
 [23:15 - 24:15]
 
-That's it. Thank you.
+זהו זה. תודה רבה.
 
-Got a component that's fighting back? Come find me. Or if you just wanna talk Angular, decoupling, why your component has 47 inputs... I'm around.
+יש לכם קומפוננטה שנלחמת בכם? בואו תמצאו אותי. או אם סתם בא לכם לדבר על אנגולר, decoupling, למה לקומפוננטה שלכם יש 47 אינפוטים... אני פה.
 
-Questions?
+שאלות?
 
-[Open, approachable — real learning happens now]
+[פתוח, נגיש — הלמידה האמיתית קורית עכשיו]
 -->
