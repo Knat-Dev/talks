@@ -32,7 +32,7 @@ mdc: true
 </div>
 
 <template #right>
-  <img src="/assets/qr-slides.png" class="w-48 rounded-lg shadow-lg" />
+  <img src="/assets/qr-slides.png" class="w-48 rounded-lg shadow-lg border-4 border-white" />
   <div class="text-center mt-4">
     <div class="text-xl font-bold text-white">slides.knat.dev</div>
     <div class="text-white/70 text-sm mt-1">Follow along</div>
