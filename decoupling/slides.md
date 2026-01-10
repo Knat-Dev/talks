@@ -15,7 +15,7 @@ transition: slide-left
 mdc: true
 ---
 
-# Decoupling in Angular
+# Decoupling in Angular - Test
 
 ## Letting the Code Tell You What It Needs
 
@@ -60,7 +60,7 @@ layout: center
 <div class="flex flex-col items-center gap-6">
   <img src="/assets/qr-slides.png" class="w-48 rounded-lg shadow-lg" />
   <div class="text-center">
-    <div class="text-2xl font-bold">slides.knat.dev</div>
+    <div class="text-[var(--cx-green)] text-2xl font-bold">slides.knat.dev</div>
     <div class="text-gray-400 text-sm mt-2">Follow along on your device</div>
   </div>
 </div>
@@ -115,7 +115,7 @@ layout: section
 
 # The Laboratory
 
-A <span class="text-emerald-400 font-mono">ListComponent</span> built to fail.
+A <span class="text-[var(--cx-green)] font-mono">ListComponent</span> built to fail.
 
 So we can dissect it.
 
