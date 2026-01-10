@@ -15,7 +15,7 @@ transition: slide-left
 mdc: true
 ---
 
-# Decoupling in Angular - test
+# Decoupling in Angular
 
 ## Letting the Code Tell You What It Needs
 
