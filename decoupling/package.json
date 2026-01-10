@@ -1,0 +1,22 @@
+{
+  "name": "decoupling",
+  "version": "1.0.0",
+  "description": "Decoupling in Angular - Angular TLV 2025",
+  "scripts": {
+    "dev": "slidev",
+    "build": "slidev build",
+    "ship": "~/arr-stack/slides/deploy.sh",
+    "ship:clean": "~/arr-stack/slides/deploy.sh --clean",
+    "export": "slidev export",
+    "export:pdf": "slidev export --format pdf",
+    "export:png": "slidev export --format png"
+  },
+  "keywords": ["angular", "decoupling", "presentation"],
+  "author": "Dor Peled",
+  "license": "ISC",
+  "packageManager": "pnpm@10.11.0",
+  "devDependencies": {
+    "@slidev/cli": "^51.5.0",
+    "@slidev/theme-default": "^0.25.0"
+  }
+}

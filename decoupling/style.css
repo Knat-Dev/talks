@@ -1,0 +1,20 @@
+/* Root styles - loaded into all Slidev contexts including presenter view */
+
+/* Presenter view notes - higher contrast + RTL for Hebrew branch */
+.slidev-note,
+.slidev-note p,
+.slidev-note div {
+  color: var(--cx-text-muted) !important;
+  direction: rtl;
+  text-align: right;
+}
+
+/* Slidev progress bar - Coralogix green */
+.progress-bar {
+  height: 3px !important;
+}
+
+.progress-bar .progress {
+  height: 100% !important;
+  background: var(--slidev-theme-primary) !important;
+}

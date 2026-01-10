@@ -1,0 +1,183 @@
+/* Coralogix Slidev Theme - Minimal Reset */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  /* Coralogix Brand Colors - Greens (dark to light) */
+  --cx-green-dark: #059669; /* darkest - for text accents */
+  --cx-green: #34d399; /* primary - for gradients */
+  --cx-green-light: #6ee7b7; /* light */
+  --cx-green-lighter: #a7f3d0; /* lighter */
+  --cx-green-100: #d1fae5; /* very light */
+  --cx-green-50: #ecfdf5; /* lightest */
+
+  /* Gradients */
+  --cx-green-gradient: linear-gradient(
+    135deg,
+    var(--cx-green) 0%,
+    var(--cx-green-light) 50%,
+    var(--cx-green-lighter) 100%
+  );
+  --cx-green-gradient-vertical: linear-gradient(
+    180deg,
+    var(--cx-green) 0%,
+    var(--cx-green-light) 50%,
+    var(--cx-green-lighter) 100%
+  );
+  --cx-light-gradient: linear-gradient(
+    180deg,
+    var(--cx-green-100) 0%,
+    var(--cx-green-50) 40%,
+    var(--cx-white) 100%
+  );
+
+  /* Neutrals */
+  --cx-white: #ffffff;
+  --cx-text-dark: #111827;
+  --cx-text: #374151;
+  --cx-text-muted: #9ca3af;
+  --cx-text-light: #6b7280;
+  --cx-border: #e5e7eb;
+
+  /* Code */
+  --cx-code-bg: #1a1a2e;
+  --cx-code-border: #2d2d44;
+
+  /* Fonts */
+  --font-sans: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Slidev Theme Overrides */
+  --slidev-theme-primary: var(--cx-green);
+  --slidev-theme-cover-background: var(--cx-green);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body,
+.slidev-layout {
+  font-family: var(--font-sans);
+}
+
+code,
+pre,
+.shiki {
+  font-family: var(--font-mono);
+}
+
+/* Tables - Coralogix Design System */
+table {
+  border-collapse: collapse;
+  border: none;
+  width: auto !important;
+  table-layout: auto;
+  margin-top: 1rem;
+}
+
+th:first-child,
+td:first-child {
+  width: 1%;
+  white-space: nowrap;
+}
+
+th {
+  color: var(--cx-text-dark);
+  font-weight: 500;
+  font-size: 1.1rem;
+  text-align: left;
+  padding: 0.75rem 1.5rem;
+  border-bottom: 1px solid var(--cx-border);
+  border-right: 1px solid var(--cx-border);
+}
+
+th:last-child {
+  border-right: none;
+}
+
+td {
+  color: var(--cx-text);
+  font-size: 0.95rem;
+  padding: 0.75rem 1.5rem;
+  vertical-align: top;
+  line-height: 1.6;
+  border-bottom: 1px solid var(--cx-border);
+  border-right: 1px solid var(--cx-border);
+}
+
+td:last-child {
+  border-right: none;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+/* Diamond bullet points for lists */
+ul li {
+  list-style: none;
+  position: relative;
+  padding-left: 1.25rem;
+  margin-bottom: 0.4rem;
+}
+
+ul li::before {
+  content: '◆';
+  position: absolute;
+  left: 0;
+  color: var(--cx-text);
+  font-size: 0.45rem;
+  top: 0.45rem;
+}
+
+ul {
+  padding: 0;
+  margin: 0.5rem 0;
+}
+
+/* Paragraphs */
+p {
+  margin: 0.5rem 0;
+}
+
+/* Code blocks */
+.slidev-code-wrapper {
+  margin: 1rem 0 !important;
+}
+
+pre.shiki {
+  padding: 1rem !important;
+  border-radius: 0.5rem !important;
+  background: var(--cx-code-bg) !important;
+  border: 1px solid var(--cx-code-border) !important;
+}
+
+/* Ordered lists */
+ol {
+  padding-left: 1.5rem;
+  margin: 0.5rem 0;
+}
+
+ol li {
+  color: var(--cx-text);
+  margin-bottom: 0.4rem;
+}
+
+/* H3 styling */
+h3 {
+  color: var(--cx-text);
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin: 1rem 0 0.5rem 0;
+}
+
+/* Inline code styling */
+:not(pre) > code {
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--cx-white);
+  padding: 0.15rem 0.4rem;
+  border-radius: 0.25rem;
+  font-size: 0.9em;
+  font-weight: 500;
+}

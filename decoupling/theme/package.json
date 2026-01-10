@@ -1,0 +1,17 @@
+{
+  "name": "slidev-theme-coralogix",
+  "version": "1.0.0",
+  "engines": {
+    "slidev": ">=0.48.0"
+  },
+  "slidev": {
+    "colorSchema": "dark",
+    "highlighter": "shiki",
+    "defaults": {
+      "fonts": {
+        "sans": "Inter, Segoe UI, system-ui, sans-serif",
+        "mono": "JetBrains Mono, Fira Code, Consolas, monospace"
+      }
+    }
+  }
+}
