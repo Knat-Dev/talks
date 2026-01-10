@@ -1,22 +1,28 @@
 <script setup lang="ts">
 /**
  * Coralogix Main Cover Layout (A_Main Cover 2)
- * Solid green background with content on left, image area on right
+ * Solid green background with two-column grid layout
  */
 </script>
 
 <template>
   <div class="cover">
-    <!-- Content block with logo -->
-    <div class="cover-block">
-      <div class="cover-logo">
-        <img
-          src="/assets/coralogix-logo.png"
-          alt="Coralogix"
-        />
+    <div class="cover-grid">
+      <!-- Left column with logo and content -->
+      <div class="cover-left">
+        <div class="cover-logo">
+          <img
+            src="/assets/coralogix-logo.png"
+            alt="Coralogix"
+          />
+        </div>
+        <div class="cover-content">
+          <slot />
+        </div>
       </div>
-      <div class="cover-content">
-        <slot />
+      <!-- Right column for optional content -->
+      <div class="cover-right">
+        <slot name="right" />
       </div>
     </div>
   </div>
@@ -29,18 +35,31 @@
   background: var(--cx-green-gradient);
   padding: 0;
   display: flex;
-  flex-direction: column;
-  position: relative;
+  align-items: center;
   overflow: hidden;
 }
 
-.cover-block {
-  position: absolute;
-  left: 5rem;
-  top: 50%;
-  transform: translateY(-50%);
-  max-width: 50%;
-  z-index: 1;
+.cover-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  width: 100%;
+  height: 100%;
+  padding: 0 5rem;
+  align-items: center;
+}
+
+.cover-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.cover-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .cover-logo {
