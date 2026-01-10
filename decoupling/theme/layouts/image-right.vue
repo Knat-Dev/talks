@@ -119,7 +119,7 @@ const { $page } = useSlideContext()
 }
 
 .right-panel :deep(strong) {
-  color: var(--cx-green-dark);
+  color: var(--cx-green);
   font-weight: 500;
 }
 

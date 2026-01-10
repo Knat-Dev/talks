@@ -15,7 +15,7 @@ transition: slide-left
 mdc: true
 ---
 
-# Decoupling in Angular - Test
+# Decoupling in Angular
 
 ## Letting the Code Tell You What It Needs
 
@@ -26,7 +26,7 @@ mdc: true
     <div class="opacity-80">Software Engineer @ Coralogix</div>
     <div class="flex gap-4 mt-3 text-lg">
       <a href="https://github.com/Knat-Dev" target="_blank" class="opacity-75 hover:opacity-100"><carbon-logo-github /></a>
-      <a href="https://www.linkedin.com/in/dor-peled-swe/" target="_blank" class="opacity-75 hover:opacity-100"><carbon-logo-linkedin /></a>
+      <a href="https://www.linkedin.com/in/knat-dev" target="_blank" class="opacity-75 hover:opacity-100"><carbon-logo-linkedin /></a>
     </div>
   </div>
 </div>
@@ -60,7 +60,7 @@ layout: center
 <div class="flex flex-col items-center gap-6">
   <img src="/assets/qr-slides.png" class="w-48 rounded-lg shadow-lg" />
   <div class="text-center">
-    <div class="text-[var(--cx-green)] text-2xl font-bold">slides.knat.dev</div>
+    <div class="text-2xl font-bold" style="color: var(--cx-green)">slides.knat.dev</div>
     <div class="text-gray-400 text-sm mt-2">Follow along on your device</div>
   </div>
 </div>
@@ -115,7 +115,7 @@ layout: section
 
 # The Laboratory
 
-A <span class="text-[var(--cx-green)] font-mono">ListComponent</span> built to fail.
+A **ListComponent** built to fail.
 
 So we can dissect it.
 
@@ -138,22 +138,16 @@ layout: default
 # The God List
 
 ```ts [list.ts]
-@Component({ selector: 'app-list' })
 export class ListComponent {
   items = input<Item[]>([]);
   // ... loading, error, etc.
-  sortable = input(false);        // flag
-  showHeader = input(false);      // flag  
-  persistState = input(false);    // flag + friends below
+  sortable = input(false);       // flag
+  showHeader = input(false);     // flag
+  persistState = input(false);   // flag + friends below
 
-  storageKey = input<string>();   // only if persistState
-  initialState = input<ListState>();
+  storageKey = input<string>();  // only if persistState
   #storage = inject(StorageService);
   // ... more services
-
-  ngOnInit() {
-    if (this.persistState()) { /* 30 lines... */ }
-  }
 }
 ```
 
@@ -339,7 +333,7 @@ layout: default
 </app-list>
 ```
 
-The `@if` becomes a **slot**. The boolean disappears.
+The **@if** becomes a **slot**. The boolean disappears.
 
 <!--
 BEATS:<br>• Before: showHeader=true, קומפוננטה מרנדרת פנימית<br>• After: בלי בוליאני, ה-parent מזריק או לא<br>• @if ← ng-content slot, הבוליאני נעלם<br>• Content projection = חילוץ החלטות מבניות (structural)
@@ -798,20 +792,12 @@ layout: default
 @Directive({ selector: 'app-list[sortable]' })
 export class Sortable {
   #list = inject(ListComponent);
-
   sortKey = input<string>();
   sortDir = input<'asc' | 'desc'>('asc');
 
   constructor() {
     effect(() => {
-      const items = this.#list.items();
-      const key = this.sortKey();
-      const dir = this.sortDir();
-      if (!key) return;
-
-      const sorted = [...items].sort((a, b) =>
-        dir === 'asc' ? a[key] - b[key] : b[key] - a[key]
-      );
+      const sorted = [...this.#list.items()].sort(/*...*/);
       this.#list.displayItems.set(sorted);
     });
   }
@@ -1313,8 +1299,7 @@ layout: end
     <div class="opacity-80">Software Engineer @ Coralogix</div>
     <div class="flex gap-4 mt-3 text-lg">
       <a href="https://github.com/Knat-Dev" target="_blank" class="opacity-75 hover:opacity-100"><carbon-logo-github /></a>
-      <a href="https://linkedin.com/in/dorpeled" target="_blank" class="opacity-75 hover:opacity-100"><carbon-logo-linkedin /></a>
-      <a href="https://twitter.com/Knat_Dev" target="_blank" class="opacity-75 hover:opacity-100"><carbon-logo-x /></a>
+      <a href="https://www.linkedin.com/in/knat-dev" target="_blank" class="opacity-75 hover:opacity-100"><carbon-logo-linkedin /></a>
     </div>
   </div>
 </div>

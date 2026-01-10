@@ -83,7 +83,7 @@
 }
 
 .layout :deep(h2) {
-  color: var(--cx-green-dark) !important;
+  color: var(--cx-green) !important;
   font-size: 2rem !important;
   font-weight: 500 !important;
   margin-bottom: 0.75rem !important;
@@ -96,7 +96,7 @@
 }
 
 .layout :deep(strong) {
-  color: var(--cx-green-dark);
+  color: var(--cx-green);
   font-weight: 500;
 }
 </style>
