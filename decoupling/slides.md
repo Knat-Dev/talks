@@ -1294,8 +1294,8 @@ layout: end
 
 <div class="flex items-center gap-6 mt-4">
   <img src="/assets/profile.jpg" class="w-20 h-20 rounded-full object-cover" alt="Dor Peled" />
-  <div>
-    <div class="font-bold text-xl">Dor Peled</div>
+  <div class="text-left">
+    <div class="font-bold text-xl text-left">Dor Peled</div>
     <div class="opacity-80">Software Engineer @ Coralogix</div>
     <div class="flex gap-4 mt-3 text-lg">
       <a href="https://github.com/Knat-Dev" target="_blank" class="opacity-75 hover:opacity-100"><carbon-logo-github /></a>
@@ -1304,7 +1304,7 @@ layout: end
   </div>
 </div>
 
-Questions?
+<div class="text-left mt-4">Questions?</div>
 
 <!--
 BEATS:<br>• תודה רבה<br>• קומפוננטה שנלחמת בכם? בואו נדבר<br>• שאלות?

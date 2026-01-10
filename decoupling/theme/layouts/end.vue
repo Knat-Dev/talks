@@ -28,7 +28,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   text-align: center;
   position: relative;
 }
@@ -46,6 +46,7 @@
 
 .layout-content {
   max-width: 70%;
+  text-align: left;
 }
 
 /* Typography */
