@@ -101,8 +101,10 @@ layout: default
 
 ```ts
 @Component({ selector: 'app-grid' })
-export class GridComponent {
-  @Input() data: any[];
+export class GridComponent<T> {
+  data = input<T[]>([]);
+  loading = input(false);
+  options = input<GridOptions<T> | null>(null);
 }
 ```
 
@@ -133,7 +135,7 @@ export class GridComponent {
 
 לפני שנתחיל עם התיאוריה, בואו נראה תכלס מה קרה.
 
-בעבודה בניתי קומפוננטת גריד. בהתחלה זה היה פשוט, תראו פה משמאל, data input וזהו.
+בעבודה בניתי קומפוננטת Grid. בהתחלה זה היה פשוט, תראו פה משמאל: היו לנו שלושה inputs, data, loading ו-options, וזהו.
 
 ואז הגיעו הדרישות...
 
@@ -1126,9 +1128,7 @@ BEATS:<br>• פשוט: בלי דירקטיבות. עם מיון: sortable + inp
 
 הכל גלוי, מפתח חדש פותח את הקובץ ורואה *בדיוק* מה הרשימה הזו עושה, לא צריך לנחש.
 
-הבהרה קטנה, כי מישהו כבר חושב על זה.
-
-הסדר בדרך כלל לא משנה לסינון ולמיון. תסננו ואז תמיינו, או להפך, זה יוצא אותו דבר. לכן אין כאן עדיפות מכוונת.
+כל דירקטיבה עצמאית — אפשר לשלב אותן בכל סדר, כל דף בוחר את מה שהוא צריך.
 
 Persist זה סיפור אחר, הוא לא משנה את הדאטה, הוא מתבונן במצב הסופי.
 
@@ -1478,26 +1478,31 @@ layout: image-right
 
 Inputs are your default. When they fail:
 
+**WHERE, WHAT, HOW, WHETHER, NAME**
+
 ::default::
 
 | The Tell           | Pattern            | Separates   |
 | ------------------ | ------------------ | ----------- |
-| Mega Component     | Feature × Context  | The **WHERE**   |
+| Cross-context drift | Map Feature × Context | The **WHERE** (Map) |
 | Structural flags   | Content Projection | The **WHAT**    |
 | Behavioral bundles | Strategy via DI    | The **HOW**     |
 | Composable opt-ins | Directives         | The **WHETHER** |
 | Same combo 3x      | hostDirectives     | The **NAME**    |
 
 <!--
-BEATS:<br>• זוכרים את המסע? Map → Extract → Interface → Compose → Name<br>• הנה הסיכום עם ה-Tells והשאלות: WHERE/WHAT/HOW/WHETHER/NAME<br>• Mega Component → Feature × Context matrix (WHERE)<br>• Structural flags → Content Projection (WHAT)<br>• Behavioral bundles → Strategy via DI (HOW)<br>• Composable opt-ins → Directives (WHETHER)<br>• 3 פעמים אותה משמעות → hostDirectives (NAME)
+BEATS:<br>• זוכרים את המסע? Map → Extract → Interface → Compose → Name<br>• הנה הסיכום עם ה-Tells והשאלות: WHERE/WHAT/HOW/WHETHER/NAME<br>• Cross-context drift → Map: Feature × Context (WHERE)<br>• Structural flags → Content Projection (WHAT)<br>• Behavioral bundles → Strategy via DI (HOW)<br>• Composable opt-ins → Directives (WHETHER)<br>• 3 פעמים אותה משמעות → hostDirectives (NAME)
 
 [19:45 - 20:30]
 
 זוכרים את המסע? Map, Extract, Interface, Compose, Name.
 
-הנה הסיכום, תצלמו את זה. שימו לב לעמודה השלישית — זו השאלה שכל כלי עונה עליה.
+הנה הסיכום, תצלמו את זה. חמש שאלות: WHERE, WHAT, HOW, WHETHER, NAME.
 
-WHERE — איפה הקומפוננטה בשימוש ומה משתנה? המטריצה.
+תסתכלו על השורה הראשונה — Map זה WHERE. איפה הקומפוננטה בשימוש ומה משתנה? המטריצה.
+
+כל השאר זה אותו רעיון: כל כלי עונה על שאלה אחרת.
+
 WHAT — מה התוכן? Content Projection.
 HOW — איך זה נעשה? Strategy.
 WHETHER — האם זה בכלל קורה? Directives.
@@ -1507,7 +1512,7 @@ Inputs זה הבית, תישארו שם.
 
 אבל כשזה נשבר, תחפשו את ה-Tell:
 
-Mega Component עם הרבה flags? **מטריצה** — זה Map.
+קומפוננטה אחת בכמה קונטקסטים מתחילה לסטות? **מטריצה** — זה Map.
 בוליאני שמשנה מבנה? **Content Projection** — זה Extract.
 חבילת התנהגות? **Strategy** — זה Interface.
 פיצ'רים אופציונליים? **Directives** — זה Compose.
