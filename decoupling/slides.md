@@ -19,18 +19,6 @@ mdc: true
 
 ## Letting the Code Tell You What It Needs
 
-<div class="flex items-center gap-6 mt-8">
-  <img src="/assets/profile.jpg" class="w-24 h-24 rounded-full object-cover" alt="Dor Peled" />
-  <div>
-    <div class="font-bold text-xl">Dor Peled</div>
-    <div class="opacity-80">Software Engineer @ Coralogix</div>
-    <div class="flex gap-4 mt-3 text-lg">
-      <a href="https://github.com/Knat-Dev" target="_blank" class="opacity-75 hover:opacity-100"><carbon-logo-github /></a>
-      <a href="https://www.linkedin.com/in/knat-dev" target="_blank" class="opacity-75 hover:opacity-100"><carbon-logo-linkedin /></a>
-    </div>
-  </div>
-</div>
-
 <template #right>
   <img src="/assets/qr-slides.png" class="w-48 rounded-lg shadow-lg border-4 border-white" />
   <div class="text-center mt-4">
@@ -40,16 +28,70 @@ mdc: true
 </template>
 
 <!--
-BEATS:<br>• היכרות קצרה — דור, Coralogix, קומפוננטות משותפות<br>• QR code לעקוב<br>• מעבר מהיר לתוכן
+BEATS:<br>• ברכה + הוק<br>• QR code לעקוב<br>• מעבר לאבאוט מי
 
-[0:00 - 0:30]
+[0:00 - 0:20]
 
-שלום, אני דור, מהנדס תוכנה בקורלוג'יקס.
-אני עובד על קומפוננטות משותפות ודיזיין סיסטמס.
-
-מי שרוצה לעקוב מהנייד — תנו סריקה.
+שלום לכולם!
 
 היום נדבר על איך מזהים שהקוד מתחיל להסתבך — ומה עושים לפני שהוא נהיה bottleneck.
+
+מי שרוצה לעקוב מהנייד — תנו סריקה ל-QR.
+
+קצת עליי...
+-->
+
+---
+layout: default
+---
+
+# About Me
+
+<div class="flex items-center gap-12 mt-12">
+  <!-- Avatar -->
+  <img src="/assets/profile.jpg" class="w-40 h-40 rounded-full object-cover border-4 shrink-0" style="border-color: var(--cx-green);" alt="Dor Peled" />
+
+  <!-- Name & Role -->
+  <div class="shrink-0">
+    <div class="font-bold text-2xl text-gray-800">Dor Peled</div>
+    <div class="text-lg text-gray-600">Software Engineer @ Coralogix</div>
+    <div class="text-sm text-gray-500 mt-1">Shared Components & Design Systems</div>
+    <div class="flex gap-4 mt-4 text-lg">
+      <a href="https://github.com/Knat-Dev" target="_blank" class="text-gray-600 hover:text-gray-800"><carbon-logo-github /></a>
+      <a href="https://www.linkedin.com/in/knat-dev" target="_blank" class="text-gray-600 hover:text-gray-800"><carbon-logo-linkedin /></a>
+    </div>
+  </div>
+
+  <!-- Hobbies -->
+  <div class="flex flex-col gap-3">
+    <div class="flex items-center gap-3">
+      <span class="text-2xl">🎮</span>
+      <span class="text-gray-600">Gaming</span>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="text-2xl">🤘</span>
+      <span class="text-gray-600">Metal</span>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="text-2xl">📚</span>
+      <span class="text-gray-600">Fantasy Books</span>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="text-2xl">🖥️</span>
+      <span class="text-gray-600">Homelab</span>
+    </div>
+  </div>
+</div>
+
+<!--
+BEATS:<br>• היכרות קצרה — דור, Coralogix, קומפוננטות משותפות<br>• תחביבים לחיבור אישי<br>• מעבר לתוכן
+
+[0:20 - 0:45]
+
+אני דור, מהנדס תוכנה בקורלוג'יקס.
+אני עובד על קומפוננטות משותפות ודיזיין סיסטמס.
+
+בזמן הפנוי אני משחק גיימס, מאזין למטאל, קורא פנטזיה, ומשחק עם ההומלאב.
 
 בואו נצלול.
 -->
@@ -68,8 +110,6 @@ One more boolean and that's it?
 BEATS:<br>• הרמת ידיים: מי הוסיף "רק עוד input אחד"?<br>• הרמת ידיים: מי חיכה שמישהו אחר יסיים באותו קובץ?<br>• ככה מתחיל Mega Component<br>• מחפשים "tells" — כמו בפוקר
 
 [0:30 - 1:30]
-
-בואו נדבר קוד.
 
 מי פה הוסיף פעם "רק עוד input אחד" לקומפוננטה? עוד בוליאן קטן וזהו? בהרמת יד.
 
@@ -122,6 +162,7 @@ export class GridComponent<T> {
 - SSRM fetching
 - Persistence
 - Global state deps...
+- "Make it generic & reusable"
 
 </v-clicks>
 
@@ -152,6 +193,8 @@ export class GridComponent<T> {
 [click] Persistence - שמירת מצב
 
 [click] Global state deps - תלויות בסטייט גלובלי
+
+[click] Make it generic & reusable - צוותים אחרים ראו, רצו, וביקשו "תעשו את זה גנרי לכל החברה"
 
 [click] מי פה תחזק פעם קומפוננטה כזו? אני אגיד לכם מה קרה לנו.
 -->
