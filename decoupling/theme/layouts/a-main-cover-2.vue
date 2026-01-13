@@ -42,7 +42,7 @@
 .cover-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 4rem;
+  gap:4rem;
   width: 100%;
   height: 100%;
   padding: 0 5rem;

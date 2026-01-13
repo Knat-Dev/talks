@@ -45,9 +45,13 @@ BEATS:<br>• ברכה + הוק<br>• QR code לעקוב<br>• מעבר לאב
 layout: default
 ---
 
+<template #title>
+
 # About Me
 
-<div class="flex items-center gap-12 mt-12">
+</template>
+
+<div class="flex items-center gap-12">
   <!-- Avatar -->
   <img src="/assets/profile.jpg" class="w-40 h-40 rounded-full object-cover border-4 shrink-0" style="border-color: var(--cx-green);" alt="Dor Peled" />
 
@@ -55,43 +59,51 @@ layout: default
   <div class="shrink-0">
     <div class="font-bold text-2xl text-gray-800">Dor Peled</div>
     <div class="text-lg text-gray-600">Software Engineer @ Coralogix</div>
-    <div class="text-sm text-gray-500 mt-1">Shared Components & Design Systems</div>
+    <div class="text-sm text-gray-500 mt-1">
+      Angular, large codebases, and hard trade-offs
+    </div>
     <div class="flex gap-4 mt-4 text-lg">
       <a href="https://github.com/Knat-Dev" target="_blank" class="text-gray-600 hover:text-gray-800"><carbon-logo-github /></a>
       <a href="https://www.linkedin.com/in/knat-dev" target="_blank" class="text-gray-600 hover:text-gray-800"><carbon-logo-linkedin /></a>
     </div>
   </div>
 
-  <!-- Hobbies -->
+  <!-- Outside of work -->
   <div class="flex flex-col gap-3">
     <div class="flex items-center gap-3">
-      <span class="text-2xl">🎮</span>
-      <span class="text-gray-600">Gaming</span>
+      <span class="text-2xl">🎸</span>
+      <span class="text-gray-600">
+        Playing guitar ~20 years (metal bands in the past)
+      </span>
     </div>
     <div class="flex items-center gap-3">
       <span class="text-2xl">🤘</span>
-      <span class="text-gray-600">Metal</span>
+      <span class="text-gray-600">Metal — taste, not background noise</span>
     </div>
     <div class="flex items-center gap-3">
       <span class="text-2xl">📚</span>
-      <span class="text-gray-600">Fantasy Books</span>
+      <span class="text-gray-600">Fantasy & long-form worlds</span>
     </div>
     <div class="flex items-center gap-3">
       <span class="text-2xl">🖥️</span>
-      <span class="text-gray-600">Homelab</span>
+      <span class="text-gray-600">Homelab tinkering</span>
     </div>
   </div>
 </div>
 
 <!--
-BEATS:<br>• היכרות קצרה — דור, Coralogix, קומפוננטות משותפות<br>• תחביבים לחיבור אישי<br>• מעבר לתוכן
+BEATS:<br>• היכרות קצרה — דור, Coralogix, Angular בקודבייס גדול<br>• מחוץ לעבודה — גיטרה, מטאל, פנטזיה<br>• הקשר בין מטאל לקוד — טעם, איטרציה, זיהוי של "לא נכון"<br>• מעבר לתוכן
 
 [0:20 - 0:45]
 
 אני דור, מהנדס תוכנה בקורלוג'יקס.
-אני עובד על קומפוננטות משותפות ודיזיין סיסטמס.
+אני עובד עם Angular בקודבייס גדול, כזה שכל החלטה נשארת איתך הרבה זמן.
 
-בזמן הפנוי אני משחק גיימס, מאזין למטאל, קורא פנטזיה, ומשחק עם ההומלאב.
+מחוץ לעבודה — אני מנגן גיטרה כבר כמעט 20 שנה.
+הייתי בלהקות מטאל, כתבתי מוזיקה, וזרקתי המון רעיונות לפח עד שמשהו הרגיש נכון.
+
+וזה בעצם אותו שריר שאני משתמש בו בקוד —
+לזהות מתי משהו *מרגיש* לא נכון, גם אם עדיין קשה להסביר למה.
 
 בואו נצלול.
 -->
@@ -100,7 +112,11 @@ BEATS:<br>• היכרות קצרה — דור, Coralogix, קומפוננטות 
 layout: default
 ---
 
+<template #title>
+
 # Let's Talk Code
+
+</template>
 
 Who here has added _"just one more input"_ to a component?
 
@@ -132,7 +148,11 @@ BEATS:<br>• הרמת ידיים: מי הוסיף "רק עוד input אחד"?<b
 layout: default
 ---
 
+<template #title>
+
 # The Grid
+
+</template>
 
 <div class="grid grid-cols-2 gap-12 mt-8">
 <div>
@@ -169,7 +189,7 @@ export class GridComponent<T> {
 </div>
 </div>
 
-<img v-click src="/assets/this-is-fine.jpg" class="absolute bottom-10 right-10 w-64 rounded-lg shadow-xl" />
+<img v-click src="/assets/this-is-fine.jpg" class="absolute top-10 right-10 w-96 rounded-lg shadow-xl" />
 
 <!--
 [1:30 - 2:30]
@@ -203,7 +223,11 @@ export class GridComponent<T> {
 layout: default
 ---
 
+<template #title>
+
 # The Price We Paid
+
+</template>
 
 <div class="grid grid-cols-3 gap-6 mt-8">
 
@@ -253,7 +277,11 @@ Technical debt מצטבר. כל קיצור דרך היום הוא מס על כל
 layout: default
 ---
 
+<template #title>
+
 # The Mega List
+
+</template>
 
 ```ts [list.ts]
 export class ListComponent {
@@ -304,7 +332,11 @@ Inputs לדאטה... סבבה, אבל גם inputs ל-flags של מיון, ל-sto
 layout: default
 ---
 
+<template #title>
+
 # The Journey
+
+</template>
 
 From Mega Component to clean architecture:
 
@@ -346,7 +378,11 @@ BEATS:<br>• המפה שלנו — חמישה צעדים<br>• Map → Extract
 layout: default
 ---
 
+<template #title>
+
 # The Map
+
+</template>
 
 | Feature | Main Page | Admin Panel | Preview |
 |---------|-----------|-------------|---------|
@@ -456,7 +492,11 @@ Composable opt-ins — התנהגויות שאפשר להוסיף אחת על ה
 layout: default
 ---
 
+<template #title>
+
 # The Tell
+
+</template>
 
 ```ts [list.ts] {1-3}
 sortable = input(false);
@@ -490,7 +530,11 @@ BEATS:<br>• Boolean flags = feature toggles, הקומפוננטה שואלת "
 layout: default
 ---
 
+<template #title>
+
 # The Structural Flag
+
+</template>
 
 ```ts [list.ts]
 // From The Mega List:
@@ -544,7 +588,11 @@ BEATS:<br>• showHeader הוא שונה — הוא שולט ב-STRUCTURE, לא 
 layout: default
 ---
 
+<template #title>
+
 # Extract the @if
+
+</template>
 
 ```html [before]
 <!-- Before: component decides structure -->
@@ -582,7 +630,11 @@ Content projection זה לא פיצ'ר עיצובי, זה מה שקורה כשא
 layout: section
 ---
 
+<template #title>
+
 # Tool 1: Content Projection
+
+</template>
 
 Separating the **WHAT**
 
@@ -614,7 +666,11 @@ BEATS:<br>• כלי 1: Content Projection — מפריד את ה-WHAT<br>• כ
 layout: default
 ---
 
+<template #title>
+
 # Content Projection
+
+</template>
 
 ```html [card.html]
 <div class="header">
@@ -643,7 +699,11 @@ Cards, Modals, Panels. המעטפת קבועה, התוכן משתנה.
 layout: default
 ---
 
+<template #title>
+
 # The Next Ceiling
+
+</template>
 
 Content Projection solved **WHAT** appears.
 
@@ -681,7 +741,11 @@ BEATS:<br>• הצלחנו עם WHAT — עכשיו נחשף ה-HOW<br>• Conte
 layout: default
 ---
 
+<template #title>
+
 # The Implementation Branch
+
+</template>
 
 ```ts [list.ts]
 save(state: ListState) {
@@ -717,7 +781,11 @@ else — שמור ל-localStorage.
 layout: section
 ---
 
+<template #title>
+
 # Tool 2: Strategy via DI
+
+</template>
 
 Separating the **HOW**
 
@@ -793,7 +861,11 @@ Admin? תשמור לשרת. Public? תשמור ב-localStorage. Preview? אל ת
 layout: default
 ---
 
+<template #title>
+
 # Strategy: The Interface
+
+</template>
 
 ```ts [storage-strategy.ts]
 export interface StorageStrategy {
@@ -825,7 +897,11 @@ InjectionToken זה המפתח שלנו ל-DI.
 layout: default
 ---
 
+<template #title>
+
 # Strategy: Two Implementations
+
+</template>
 
 <div class="grid grid-cols-2 gap-4">
 <div>
@@ -885,7 +961,11 @@ BEATS:<br>• שני מימושים — localStorage ו-Server<br>• אותו �
 layout: default
 ---
 
+<template #title>
+
 # Strategy: The Provider
+
+</template>
 
 ```ts [admin-dashboard.ts]
 @Component({
@@ -927,7 +1007,11 @@ BEATS:<br>• ההחלטה חיה ב-PROVIDER<br>• מפתח: פרוביידר 
 layout: default
 ---
 
+<template #title>
+
 # The Next Ceiling
+
+</template>
 
 ```ts [list.ts]
 export class ListComponent {
@@ -974,7 +1058,11 @@ Strategy פתר את ה-HOW.
 layout: default
 ---
 
+<template #title>
+
 # The Hidden Behavior
+
+</template>
 
 ```ts [list.ts]
 sortable = input(false);
@@ -1006,7 +1094,11 @@ BEATS:<br>• sortable עם לוגיקה מוסתרת בתוך הקומפוננ�
 layout: section
 ---
 
+<template #title>
+
 # Tool 3: Directives
+
+</template>
 
 Separating the **WHETHER**
 
@@ -1046,7 +1138,11 @@ BEATS:<br>• כלי 3: Directives — מפריד את ה-WHETHER<br>• showHea
 layout: default
 ---
 
+<template #title>
+
 # Directive: Sortable
+
+</template>
 
 ```ts [sortable.ts]
 @Directive({ selector: 'app-list[sortable]' })
@@ -1090,7 +1186,11 @@ BEATS:<br>• סלקטור: app-list[sortable] — בלי האטריביוט = �
 layout: default
 ---
 
+<template #title>
+
 # Directive: Persist
+
+</template>
 
 ```ts [persistable.ts]
 @Directive({ selector: 'app-list[persistable]' })
@@ -1142,7 +1242,11 @@ inject(STORAGE_STRATEGY)
 layout: default
 ---
 
+<template #title>
+
 # Directives: Usage
+
+</template>
 
 ```html [app.html]
 <!-- Simple -->
@@ -1182,7 +1286,11 @@ Persist זה סיפור אחר, הוא לא משנה את הדאטה, הוא מ�
 layout: default
 ---
 
+<template #title>
+
 # The Sign
+
+</template>
 
 ```html [scattered across pages]
 <!-- Page A -->
@@ -1225,7 +1333,11 @@ BEATS:<br>• שלושה דפים, אותן שלוש דירקטיבות — מו
 layout: section
 ---
 
+<template #title>
+
 # The Promotion Rule
+
+</template>
 
 Two times is coincidence.
 
@@ -1259,7 +1371,11 @@ BEATS:<br>• פעם 1 = קוד. פעם 2 = מקריות. פעם 3 = קונספ�
 layout: default
 ---
 
+<template #title>
+
 # hostDirectives
+
+</template>
 
 ```ts [power-list.ts]
 @Directive({
@@ -1302,7 +1418,11 @@ Persistable בלי forwarding — זה preset קבוע. אין לו knobs.
 layout: default
 ---
 
+<template #title>
+
 # Before/After
+
+</template>
 
 ```html [app.html]
 <!-- Before: 3 attributes -->
@@ -1337,7 +1457,11 @@ BEATS:<br>• Before: 3 אטריביוטים. After: מילה אחת — powerLi
 layout: default
 ---
 
+<template #title>
+
 # Coordinator Directive
+
+</template>
 
 ```ts [auto-saveable.ts]
 @Directive({
@@ -1435,7 +1559,11 @@ Name — שפה משותפת. אומרים "powerList" בדיילי וכולם �
 layout: section
 ---
 
+<template #title>
+
 # When NOT to Use These
+
+</template>
 
 Each tool has limits.
 
@@ -1453,7 +1581,11 @@ BEATS:<br>• מעקות בטיחות קצרים — מתי לא להשתמש
 layout: default
 ---
 
+<template #title>
+
 # Guardrails
+
+</template>
 
 | Pattern            | Don't use when...                         |
 | ------------------ | ----------------------------------------- |
@@ -1484,7 +1616,11 @@ hostDirectives? תקבצו רק דברים שיש ביניהם קשר אמיתי
 layout: section
 ---
 
+<template #title>
+
 # The Circle Closes
+
+</template>
 
 Remember the price we paid?
 
@@ -1570,7 +1706,11 @@ Inputs זה הבית, תישארו שם.
 layout: section
 ---
 
+<template #title>
+
 # The Takeaway
+
+</template>
 
 Good abstractions aren't chosen.
 

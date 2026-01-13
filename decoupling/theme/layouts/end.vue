@@ -9,7 +9,10 @@
   <div class="layout">
     <!-- Logo top-left -->
     <div class="layout-logo">
-      <img src="/assets/coralogix-logo.png" alt="Coralogix" />
+      <img
+        src="/assets/coralogix-logo.png"
+        alt="Coralogix"
+      />
     </div>
 
     <!-- Content -->

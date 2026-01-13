@@ -3,8 +3,8 @@
  * Coralogix Split Layout
  * 30% green left with title, 70% white right with dynamic content
  */
-import { useSlideContext } from '@slidev/client'
-const { $page } = useSlideContext()
+import { useSlideContext } from '@slidev/client';
+const { $page } = useSlideContext();
 </script>
 
 <template>
@@ -12,7 +12,10 @@ const { $page } = useSlideContext()
     <!-- Left panel - green -->
     <div class="left-panel">
       <div class="left-logo">
-        <img src="/assets/coralogix-logo.png" alt="Coralogix" />
+        <img
+          src="/assets/coralogix-logo.png"
+          alt="Coralogix"
+        />
       </div>
       <div class="left-content">
         <slot name="left" />

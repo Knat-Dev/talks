@@ -3,15 +3,22 @@
  * Coralogix Section Layout
  * For section dividers and key statement slides
  */
-import { useSlideContext } from '@slidev/client'
-const { $page } = useSlideContext()
+import { useSlideContext } from '@slidev/client';
+const { $page } = useSlideContext();
 </script>
 
 <template>
-  <div class="section">
+  <div class="slidev-layout section">
     <!-- Logo top-left -->
-    <div class="section-logo">
-      <img src="/assets/coralogix-logo-dark.png" alt="Coralogix" />
+    <img
+      class="logo"
+      src="/assets/coralogix-logo-dark.png"
+      alt="Coralogix"
+    />
+
+    <!-- Title slot (fixed position - same as default) -->
+    <div class="title-area">
+      <slot name="title" />
     </div>
 
     <!-- Content -->
@@ -29,27 +36,34 @@ const { $page } = useSlideContext()
   width: 100%;
   height: 100%;
   background: var(--cx-light-gradient);
-  padding: 4.5rem 4rem 3rem 4rem;
+  padding: 4rem;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  position: relative;
 }
 
-.section-logo {
-  position: absolute;
-  top: 1.5rem;
-  left: 4rem;
-}
-
-.section-logo img {
+.logo {
   height: 28px;
   width: auto;
+  margin-bottom: 1.5rem;
+  flex-shrink: 0;
+  object-fit: contain;
+  align-self: flex-start;
+}
+
+.title-area {
+  margin-bottom: 1rem;
 }
 
 .section-content {
+  width: 100%;
   max-width: 70%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .page-number {
@@ -61,20 +75,19 @@ const { $page } = useSlideContext()
   font-weight: 500;
 }
 
-/* Typography */
+/* Typography - same h1 as default */
 .section :deep(h1) {
   color: var(--cx-text-dark) !important;
-  font-size: 3rem !important;
+  font-size: 2.5rem !important;
   font-weight: 500 !important;
-  line-height: 1.2 !important;
-  margin-bottom: 1rem !important;
+  margin: 0 !important;
 }
 
 .section :deep(h2) {
   color: var(--cx-green) !important;
   font-size: 2rem !important;
   font-weight: 500 !important;
-  margin-bottom: 0.75rem !important;
+  margin: 0 !important;
 }
 
 .section :deep(p) {

@@ -35,7 +35,8 @@
      TYPOGRAPHY - Replace for Coralogix fonts
      ======================================================================= */
   --font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
-  --font-family-code: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  --font-family-code: 'JetBrains Mono', 'Fira Code',
+    'Consolas', monospace;
   --font-size-base: 26px;
   --font-size-code: 18px;
   --font-size-h1: 48px;
@@ -87,7 +88,8 @@ h3 {
   margin-bottom: 0.5em;
 }
 
-p, li {
+p,
+li {
   line-height: 1.6;
 }
 
