@@ -7,8 +7,8 @@ info: |
 
   Dor Peled · @Knat-Dev
 
-  Runtime: ~2,900 words in speaker notes.
-  120 wpm (with pauses) = ~24 min.
+  Runtime: ~2,700 words in speaker notes.
+  120 wpm (with pauses) = ~22 min.
 layout: a-main-cover-2
 highlighter: shiki
 transition: slide-left
@@ -26,6 +26,11 @@ mdc: true
     <div class="text-white/70 text-sm mt-1">Follow along</div>
   </div>
 </template>
+
+<div class="absolute bottom-[80px] left-[80px] flex items-center gap-3">
+  <img src="/assets/profile.jpg" class="w-12 h-12 rounded-full object-cover border-2 border-white/50" />
+  <div class="text-white/80 text-sm flex items-center gap-1">Dor Peled <span class="opacity-50">·</span> <span class="text-xs opacity-70">@Knat-Dev</span></div>
+</div>
 
 <!--
 BEATS:<br>• ברכה + הוק<br>• QR code לעקוב<br>• מעבר לאבאוט מי
@@ -57,7 +62,7 @@ layout: default
 
   <!-- Name & Role -->
   <div class="shrink-0">
-    <div class="font-bold text-2xl text-gray-800">Dor Peled</div>
+    <div class="font-bold text-2xl text-gray-800 flex items-center gap-2">Dor Peled <span class="text-gray-400 font-normal">·</span> <span class="text-lg font-normal text-gray-500">@Knat-Dev</span></div>
     <div class="text-lg text-gray-600">Software Engineer @ Coralogix</div>
     <div class="text-sm text-gray-500 mt-1">
       Angular, large codebases, and hard trade-offs
@@ -175,11 +180,11 @@ export class GridComponent<T> {
 
 <v-clicks>
 
-- Cell renderers
+- Custom templates
 - Row styles
 - Expand / Collapse
 - Context menu
-- SSRM fetching
+- Lazy loading
 - Persistence
 - Global state deps...
 - "Make it generic & reusable"
@@ -200,7 +205,7 @@ export class GridComponent<T> {
 
 ואז הגיעו הדרישות...
 
-[click] Cell renderers - צריך לעצב תאים שונים
+[click] Custom templates - תבניות מותאמות לתאים שונים
 
 [click] Row styles - סטיילים לשורות
 
@@ -208,7 +213,7 @@ export class GridComponent<T> {
 
 [click] Context menu - תפריט קונטקסט
 
-[click] SSRM - Server Side Row Model fetching
+[click] Lazy loading - טעינה מדורגת מהשרת
 
 [click] Persistence - שמירת מצב
 
@@ -342,11 +347,11 @@ From Mega Component to clean architecture:
 
 <v-clicks>
 
-1. **Map** - Identify what varies where
-2. **Extract** - Pull behaviors out of the component
-3. **Interface** - Define contracts for swappable behaviors
-4. **Compose** - Make behaviors optional with directives
-5. **Name** - Bundle patterns with hostDirectives
+1. **Map** - The **WHERE** (Identify context)
+2. **Extract** - The **WHAT** (Content Projection)
+3. **Interface** - The **HOW** (Strategy via DI)
+4. **Compose** - The **WHETHER** (Directives)
+5. **Name** - The **NAME** (hostDirectives)
 
 </v-clicks>
 
@@ -380,7 +385,7 @@ layout: default
 
 <template #title>
 
-# The Map
+# The Map (WHERE)
 
 </template>
 
@@ -602,7 +607,7 @@ layout: default
 ```html [after]
 <!-- After: parent decides structure -->
 <app-list>
-  <app-header header></app-header>
+  <app-list-header header />
 </app-list>
 ```
 
@@ -636,7 +641,7 @@ layout: section
 
 </template>
 
-Separating the **WHAT**
+Separating the <span style="color: var(--cx-green); font-weight: bold;">WHAT</span>
 
 What content appears. Not how it behaves.
 
@@ -749,10 +754,10 @@ layout: default
 
 ```ts [list.ts]
 save(state: ListState) {
-  if (this.isAdmin()) {
+  if (this.isProd()) {
     this.api.post('/preferences', state);
   } else {
-    localStorage.setItem(this.key, JSON.stringify(state));
+    this.mockApi.save(state); // dev mode
   }
 }
 ```
@@ -760,18 +765,18 @@ save(state: ListState) {
 The component knows **too much** about the "how".
 
 <!--
-BEATS:<br>• if-else על מימוש — הקומפוננטה מכירה את כל האופציות<br>• Admin = שרת, אחרת = localStorage<br>• מה קורה כשמוסיפים אופציה שלישית? רביעית?<br>• זה ה-tell של Strategy
+BEATS:<br>• if-else על מימוש — הקומפוננטה מכירה את כל האופציות<br>• Prod = API אמיתי, Dev = Mock<br>• מה קורה כשמוסיפים אופציה שלישית? רביעית?<br>• זה ה-tell של Strategy
 
 [9:45 - 10:00]
 
 תסתכלו על זה.
 
-if isAdmin — שמור לשרת.
-else — שמור ל-localStorage.
+if isProd — שמור ל-API אמיתי.
+else — שמור ל-Mock.
 
 הקומפוננטה מכירה את כל האופציות. היא יודעת יותר מדי.
 
-מה קורה כשמוסיפים cookies? IndexedDB? Session storage?
+מה קורה כשמוסיפים staging? Testing? עוד סביבה?
 עוד else-if? ועוד אחד?
 
 זה ה-tell. כשיש לכם if-else על מימושים שונים — זה Strategy.
@@ -787,7 +792,7 @@ layout: section
 
 </template>
 
-Separating the **HOW**
+Separating the <span style="color: var(--cx-green); font-weight: bold;">HOW</span>
 
 How it's done. A or B, never both.
 
@@ -833,14 +838,14 @@ That **if-else** needs to disappear. But where does the decision go?
 
 ::default::
 
-| Context | Storage      |
-| ------- | ------------ |
-| Admin   | Server       |
-| Public  | localStorage |
-| Preview | Don't save   |
+| Context     | Storage    |
+| ----------- | ---------- |
+| Production  | Real API   |
+| Development | Mock API   |
+| Testing     | In-memory  |
 
 <!--
-BEATS:<br>• ה-if-else צריך להיעלם<br>• ה"לאן" תלוי בקונטקסט: אדמין=שרת, ציבורי=localStorage, תצוגה מקדימה=noop<br>• אותה קומפוננטה, התנהגות שונה<br>• פעם: עוד בוליאנים. היום: לקומפוננטה לא אכפת
+BEATS:<br>• ה-if-else צריך להיעלם<br>• ה"לאן" תלוי בקונטקסט: Production=API אמיתי, Dev=Mock, Testing=In-memory<br>• אותה קומפוננטה, התנהגות שונה<br>• פעם: עוד בוליאנים. היום: לקומפוננטה לא אכפת
 
 [10:30 - 10:45]
 
@@ -848,7 +853,7 @@ BEATS:<br>• ה-if-else צריך להיעלם<br>• ה"לאן" תלוי בקו
 
 אבל לאן? תלוי בקונטקסט.
 
-Admin? תשמור לשרת. Public? תשמור ב-localStorage. Preview? אל תשמור כלום.
+Production? API אמיתי. Development? Mock. Testing? In-memory.
 
 אותה קומפוננטה בדיוק, התנהגות שונה לגמרי.
 
@@ -1018,17 +1023,18 @@ export class ListComponent {
   #storage = inject(STORAGE_STRATEGY);
   #sorter = inject(SORT_STRATEGY);
   #filter = inject(FILTER_STRATEGY);
+  // ... and 5 more tokens
 }
 ```
 
-Strategy solved **HOW**. But what about **WHETHER**?
+**Too many tokens.** Strategy solved **HOW**. But what about **WHETHER**?
 
 <v-click>
 <img src="/assets/one-does-not-simply.jpg" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-120 rounded-lg shadow-xl" />
 </v-click>
 
 <!--
-BEATS:<br>• Strategy עבד — עכשיו נחשפה בעיה חדשה<br>• כל שלושת ה-strategies מוזרקים תמיד<br>• אי אפשר לראות בטמפלט מה דלוק<br>• Strategy מחליף, Directives מוסיפים
+BEATS:<br>• Strategy עבד — עכשיו נחשפה בעיה חדשה<br>• יותר מדי tokens מוזרקים תמיד<br>• אי אפשר לראות בטמפלט מה דלוק<br>• Strategy מחליף, Directives מוסיפים
 
 [12:15 - 13:00]
 
@@ -1038,11 +1044,11 @@ Strategy עבד. ה-HOW יצא מהקומפוננטה. אפס if-ים.
 
 אבל ההצלחה הזו חשפה משהו חדש.
 
-תסתכלו על הקוד הזה. שלושה strategies מוזרקים.
-מה אם המיון הוא אופציונלי? מה אם הסינון אופציונלי?
+תסתכלו על הקוד הזה. שלושה tokens, ועוד חמישה שלא נכנסו לסלייד.
+הקומפוננטה מזריקה את כולם. תמיד. גם כשלא צריך.
 
-פה אנחנו מזריקים את שלושתם. תמיד.
-אי אפשר להיפטר מהם — רק להחליף אותם.
+מה אם המיון הוא אופציונלי? מה אם הסינון לא רלוונטי בכלל?
+הקומפוננטה עדיין סוחבת את כל ה-tokens האלה.
 
 [Click for meme]
 
@@ -1100,7 +1106,7 @@ layout: section
 
 </template>
 
-Separating the **WHETHER**
+Separating the <span style="color: var(--cx-green); font-weight: bold;">WHETHER</span>
 
 Is it on or off? Composable opt-ins.
 
@@ -1188,62 +1194,6 @@ layout: default
 
 <template #title>
 
-# Directive: Persist
-
-</template>
-
-```ts [persistable.ts]
-@Directive({ selector: 'app-list[persistable]' })
-export class Persistable {
-  #list = inject(ListComponent);
-  #storage = inject(STORAGE_STRATEGY);
-
-  constructor() {
-    effect(() => {
-      const key = this.#list.storageKey();
-      if (!key) return;
-      const state = this.#list.state();   // internal signal
-      if (!state.dirty) return;
-      this.#storage.save(key, state);
-    });
-  }
-}
-```
-
-Notice: injects STORAGE_STRATEGY. **Tools layer together.**
-
-<!--
-BEATS:<br>• PersistDirective — אותו דפוס<br>• מפתח: מזריק את STORAGE_STRATEGY — הכלים נערמים ביחד!<br>• **רגע ה-Aha** — הכלים לא נפרדים, הם שרשרת<br>• לכל כלי יש תפקיד אחד — קל לבדוק, קל להרכיב (compose)
-
-[14:30 - 15:15]
-
-הנה Persistable.
-
-אבל רגע — תסתכלו על השורה הזו.
-
-inject(STORAGE_STRATEGY)
-
-[פאוזה ארוכה — לתת לזה לשקוע]
-
-פה קורה החיבור.
-
-הדירקטיבה הזו משתמשת ב-Strategy שהגדרנו קודם.
-היא לא יודעת אם זה שרת או localStorage — היא רק יודעת לשמור.
-
-[פאוזה]
-
-פה רואים שהכלים מתחברים.
-הדירקטיבה תלויה ב-Strategy. זה מאפשר לה להישאר קטנה.
-
-זו לא רשימת טכניקות. זה רצף החלטות.
--->
-
----
-layout: default
----
-
-<template #title>
-
 # Directives: Usage
 
 </template>
@@ -1265,7 +1215,7 @@ layout: default
 <!--
 BEATS:<br>• פשוט: בלי דירקטיבות. עם מיון: sortable + inputs. מלא: כל השלוש<br>• מפתח: גלוי בטמפלט — תסתכלו על ה-HTML, תדעו מה הוא עושה<br>• כל דף בוחר את השילוב שלו — מורכבות בבחירה (opt-in)
 
-[15:15 - 15:45]
+[14:30 - 15:00]
 
 תסתכלו על ה-HTML.
 
@@ -1312,7 +1262,7 @@ Same combo. Three times.
 <!--
 BEATS:<br>• שלושה דפים, אותן שלוש דירקטיבות — מועתק (copy-paste)<br>• הצימוד נסתר בתוך החזרתיות<br>• רוצים להוסיף חמישית? צריך לחפש בכל דף. פספסתם אחד? נוצר drift<br>• [CLICK MEME]<br>• אותו שילוב 3 פעמים = קונספט שאין לו שם
 
-[15:45 - 16:30]
+[15:00 - 15:45]
 
 אבל רגע, תסתכלו על זה.
 
@@ -1348,7 +1298,7 @@ Two times is coincidence.
 <!--
 BEATS:<br>• פעם 1 = קוד. פעם 2 = מקריות. פעם 3 = קונספט — תנו לו שם<br>• סייג: אותה משמעות, אותה סיבה. סיבות שונות = אל תקבצו<br>• שם = אפשר לדבר על זה, לתעד, לבדוק, לפתח במקום אחד<br>• דפוסים בלי שם נוטים ל-drift (סיפור: הסינון כבוי "זמנית")<br>• 3 פעמים אותה משמעות? תנו לזה שם
 
-[16:30 - 17:15]
+[15:45 - 16:30]
 
 הנה הכלל:
 
@@ -1392,13 +1342,16 @@ export class PowerList {}
 Forward inputs explicitly. **No magic.**
 
 <!--
-BEATS:<br>• hostDirectives — מקבץ דירקטיבות<br>• PowerList: אטריביוט אחד, שלוש התנהגויות<br>• Input forwarding מפורש — אין קסם<br>• Persistable בלי forwarding = preset קבוע<br>• רוצים להוסיף התנהגות רביעית? קובץ אחד. וזהו
+BEATS:<br>• hostDirectives — מקבץ דירקטיבות<br>• PowerList: אטריביוט אחד, שלוש התנהגויות<br>• Trade-off: מאבדים visibility בטמפלט, מקבלים קונספט עם שם + מקום אחד לעדכן<br>• Input forwarding מפורש — אין קסם<br>• Persistable בלי forwarding = preset קבוע
 
-[17:15 - 17:45]
+[16:30 - 17:00]
 
 באנגולר יש לנו את `hostDirectives`.
 
 `PowerList` מאגדת את כל השלוש. אטריביוט אחד שמביא איתו את כל החבילה.
+
+כן, אנחנו מאבדים את ה-visibility בטמפלט שדיברנו עליה קודם.
+אבל מה אנחנו מקבלים בתמורה? קונספט עם שם, ומקום אחד לעדכן את כל המקומות.
 
 הבהרה חשובה — אין פה קסם.
 
@@ -1439,7 +1392,7 @@ layout: default
 <!--
 BEATS:<br>• Before: 3 אטריביוטים. After: מילה אחת — powerList<br>• [CLICK MEME]<br>• פונקציונלית זה זהה, קונספטואלית זה עולמות שונים<br>• מפתח חדש רואה "powerList" — מבין מיד<br>• רשימה של דברים ← קונספט
 
-[17:45 - 18:00]
+[17:00 - 17:15]
 
 לפני: רשימת מכולת של אטריביוטים.
 אחרי: `powerList`.
@@ -1487,7 +1440,7 @@ When A and B **must** work together.
 <!--
 BEATS:<br>• Coordinator directive — כשדירקטיבות חייבות לעבוד ביחד<br>• DirtyTrackable + Debounceable = עצמאיות<br>• AutoSaveable מתאם: כשזה dirty, תריץ debounce לשמירה<br>• צימוד מכוון? תנו לו בית — עם שם, שאפשר לבדוק
 
-[18:00 - 18:30]
+[17:15 - 17:45]
 
 דפוס אחרון, Coordinator.
 
@@ -1525,32 +1478,58 @@ layout: center
       ✓ Name
     </div>
   </div>
-  <div class="mt-8 text-sm font-bold" style="color: var(--cx-green);">Team Superpowers:</div>
-  <div class="grid grid-cols-5 gap-4 mt-4 text-xs text-gray-400">
-    <div>Clear scope</div>
-    <div>Parallel work</div>
-    <div>Split ownership</div>
-    <div>Visible in template</div>
-    <div>Shared vocabulary</div>
+</div>
+
+<!--
+[17:45 - 17:52]
+
+חמישה שלבים, סיימנו את המסע.
+-->
+
+---
+layout: center
+---
+
+<div class="text-center">
+  <div class="text-gray-400 text-sm uppercase tracking-widest mb-6">Team Superpowers</div>
+  <div class="flex justify-center gap-8 mt-8">
+    <div class="text-center">
+      <div class="text-2xl mb-2">🎯</div>
+      <div class="text-sm text-gray-300">Clear scope</div>
+    </div>
+    <div class="text-center">
+      <div class="text-2xl mb-2">⚡</div>
+      <div class="text-sm text-gray-300">Parallel work</div>
+    </div>
+    <div class="text-center">
+      <div class="text-2xl mb-2">🧪</div>
+      <div class="text-sm text-gray-300">Testable in isolation</div>
+    </div>
+    <div class="text-center">
+      <div class="text-2xl mb-2">📍</div>
+      <div class="text-sm text-gray-300">Single point of change</div>
+    </div>
+    <div class="text-center">
+      <div class="text-2xl mb-2">💬</div>
+      <div class="text-sm text-gray-300">Shared vocabulary</div>
+    </div>
   </div>
 </div>
 
 <!--
-[18:30 - 18:45]
-
-חמישה שלבים, סיימנו את המסע.
+[17:52 - 18:00]
 
 כל אחד נתן לנו סופרפאואר אחר:
 
-Map — היקף ברור. יודעים בדיוק מה לחלץ לפני שמתחילים.
+Clear scope — יודעים בדיוק מה לחלץ לפני שמתחילים.
 
-Extract — עבודה במקביל. מפתח אחד על הרשימה, אחר על ההדר.
+Parallel work — מפתח אחד על הרשימה, אחר על ההדר, בלי לחכות.
 
-Interface — פיצול בעלות. מי שכותב את ServerStorageStrategy לא צריך להכיר את הקומפוננטה.
+Testable in isolation — כל חלק אפשר לבדוק בנפרד.
 
-Compose — גלוי בטמפלט. מפתח חדש רואה sortable ומבין מיד.
+Single point of change — רוצים להוסיף התנהגות? מקום אחד.
 
-Name — שפה משותפת. אומרים "powerList" בדיילי וכולם יודעים.
+Shared vocabulary — אומרים "powerList" בדיילי וכולם יודעים.
 
 עכשיו בואו נשים גבולות גזרה.
 -->
@@ -1570,7 +1549,7 @@ Each tool has limits.
 <!--
 BEATS:<br>• מעקות בטיחות קצרים — מתי לא להשתמש
 
-[18:45 - 19:00]
+[18:00 - 18:15]
 
 מתי לא להשתמש בזה? בואו נשים גבולות גזרה.
 
@@ -1597,7 +1576,7 @@ layout: default
 <!--
 BEATS:<br>• Inputs = זולים, תבניות חילוץ = יקרות<br>• אל תרוצו לכלי כשיש inputs שעובדים<br>• Guardrails — מתי להישאר עם הפשוט
 
-[19:00 - 19:15]
+[18:15 - 18:30]
 
 Inputs זה זול. Extraction patterns עולים מורכבות.
 תשתמשו רק כשהמחיר כבר שם.
@@ -1627,7 +1606,7 @@ Remember the price we paid?
 <!--
 BEATS:<br>• סגירת מעגל — חוזרים לכאב האנושי<br>• כל בעיה שציינו בהתחלה — עכשיו פתורה<br>• זה לא היה על patterns, זה היה על לשחרר את הצוות
 
-[19:15 - 19:45]
+[18:30 - 19:00]
 
 זוכרים את המחיר ששילמנו?
 
@@ -1672,7 +1651,7 @@ Inputs are your default. When they fail:
 <!--
 BEATS:<br>• זוכרים את המסע? Map → Extract → Interface → Compose → Name<br>• הנה הסיכום עם ה-Tells והשאלות: WHERE/WHAT/HOW/WHETHER/NAME<br>• Cross-context drift → Map: Feature × Context (WHERE)<br>• Structural flags → Content Projection (WHAT)<br>• Behavioral bundles → Strategy via DI (HOW)<br>• Composable opt-ins → Directives (WHETHER)<br>• 3 פעמים אותה משמעות → hostDirectives (NAME)
 
-[19:45 - 20:30]
+[19:00 - 19:45]
 
 זוכרים את המסע? Map, Extract, Interface, Compose, Name.
 
@@ -1721,7 +1700,7 @@ Good abstractions aren't chosen.
 <!--
 BEATS:<br>• אבסטרקציות טובות לא נבחרות — הן מתגלות<br>• סגירת מעגל לגריד<br>• אתגר: מחר בבוקר, קומפוננטה אחת, פלאג אחד, שאלה אחת<br>• "שם הגילוי מתחיל"
 
-[20:30 - 21:30]
+[19:45 - 20:45]
 
 "אבסטרקציות טובות לא נבחרות. הן מתגלות."
 
@@ -1760,7 +1739,7 @@ layout: end
 <div class="flex items-center gap-6 mt-4">
   <img src="/assets/profile.jpg" class="w-20 h-20 rounded-full object-cover" alt="Dor Peled" />
   <div class="text-left">
-    <div class="font-bold text-xl text-left">Dor Peled</div>
+    <div class="font-bold text-xl text-left flex items-center gap-2">Dor Peled <span class="font-normal opacity-50">·</span> <span class="text-base font-normal opacity-70">@Knat-Dev</span></div>
     <div class="opacity-80">Software Engineer @ Coralogix</div>
     <div class="flex gap-4 mt-3 text-lg">
       <a href="https://github.com/Knat-Dev" target="_blank" class="opacity-75 hover:opacity-100"><carbon-logo-github /></a>
@@ -1769,12 +1748,12 @@ layout: end
   </div>
 </div>
 
-<div class="text-left mt-4">Questions?</div>
+<div class="text-left mt-4 text-3xl font-bold">Questions?</div>
 
 <!--
 BEATS:<br>• תודה רבה<br>• קומפוננטה שנלחמת בכם? בואו נדבר<br>• שאלות?
 
-[21:30 - 22:30]
+[20:45 - 21:45]
 
 תודה רבה לכולם.
 
