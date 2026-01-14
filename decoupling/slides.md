@@ -39,7 +39,7 @@ BEATS:<br>• ברכה + הוק<br>• QR code לעקוב<br>• מעבר לאב
 
 שלום לכולם!
 
-היום נדבר על איך מזהים שהקוד מתחיל להסתבך — ומה עושים לפני שהוא נהיה bottleneck.
+היום נדבר על איך מזהים שהקוד מתחיל להסתבך — ומה עושים כשהוא נהיה bottleneck.
 
 מי שרוצה לעקוב מהנייד — תנו סריקה ל-QR.
 
@@ -101,14 +101,11 @@ BEATS:<br>• היכרות קצרה — דור, Coralogix, Angular בקודבי�
 
 [0:20 - 0:45]
 
-אני דור, מהנדס תוכנה בקורלוג'יקס.
-אני עובד עם Angular בקודבייס גדול, כזה שכל החלטה נשארת איתך הרבה זמן.
+אני דור, מהנדס בקורלוג'יקס.
+חיי ונושם קוד, כמעט תמיד עובד על פרוייקט חדש בצד.
 
-מחוץ לעבודה — אני מנגן גיטרה כבר כמעט 20 שנה.
-הייתי בלהקות מטאל, כתבתי מוזיקה, וזרקתי המון רעיונות לפח עד שמשהו הרגיש נכון.
-
-וזה בעצם אותו שריר שאני משתמש בו בקוד —
-לזהות מתי משהו *מרגיש* לא נכון, גם אם עדיין קשה להסביר למה.
+מחוץ לעבודה — אני מנגן גיטרה כבר מעל 20 שנה.
+ניגנתי בלהקות מטאל, כתבתי והקלטתי מוזיקה.
 
 בואו נצלול.
 -->
@@ -1424,19 +1421,18 @@ layout: default
 ```ts [auto-saveable.ts]
 @Directive({
   selector: 'app-list[autoSaveable]',
-  hostDirectives: [DirtyTrackable, Debounceable],
+  hostDirectives: [DirtyTrackable, Debounceable, Persistable],
 })
 export class AutoSaveable {
   #dirty = inject(DirtyTrackable);
   #debounce = inject(Debounceable);
+  #persist = inject(Persistable);
 
-  constructor() {
-    effect(() => {
-      if (this.#dirty.isDirty()) {
-        this.#debounce.run(() => this.save());
-      }
-    });
-  }
+  #autoSave = effect(() => {
+    if (this.#dirty.isDirty()) {
+      this.#debounce.run(() => this.#persist.save());
+    }
+  });
 }
 ```
 
