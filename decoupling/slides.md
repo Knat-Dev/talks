@@ -1071,27 +1071,30 @@ layout: default
 </template>
 
 ```ts [list.ts]
-sortable = input(false);
+persistState = input(false);
+#storage = inject(STORAGE_STRATEGY); // always injected!
 
 ngOnInit() {
-  if (this.sortable()) {
-    this.items = this.items.sort(/*...*/);
+  if (this.persistState()) {
+    this.#storage.save(this.storageKey(), this.state());
   }
 }
 ```
 
-Behavior buried inside the component. Invisible from outside.
+Service injected even when not needed. Invisible from outside.
 
 <!--
-BEATS:<br>• sortable עם לוגיקה מוסתרת בתוך הקומפוננטה<br>• אי אפשר לראות מבחוץ אם הרשימה ממויינת<br>• הפלאג שולט בהתנהגות פנימית<br>• זה ה-tell של Directives
+BEATS:<br>• persistState עם service מוזרק תמיד<br>• אי אפשר לראות מבחוץ אם הרשימה נשמרת<br>• הפלאג שולט בהתנהגות פנימית, אבל ה-service תמיד שם<br>• זה ה-tell של Directives
 
 [13:00 - 13:15]
 
-תסתכלו על sortable.
+תסתכלו על persistState.
 
 הפלאג קיים, והלוגיקה קבורה בתוך ngOnInit.
 
-מבחוץ? אי אפשר לדעת שהרשימה הזו ממויינת בלי לקרוא את הקוד.
+אבל יותר גרוע — ה-STORAGE_STRATEGY מוזרק תמיד. גם כש-persistState הוא false.
+
+מבחוץ? אי אפשר לדעת שהרשימה הזו נשמרת בלי לקרוא את הקוד.
 
 זה ה-tell. כשיש לכם התנהגות מוסתרת מאחורי פלאג — זו דירקטיבה שמחכה לצאת.
 -->
@@ -1117,7 +1120,7 @@ Is it on or off? Composable opt-ins.
 </div>
 
 <!--
-BEATS:<br>• כלי 3: Directives — מפריד את ה-WHETHER<br>• showHeader ← projection (WHAT). persistState ← strategy (HOW). מה נשאר? sortable (WHETHER)<br>• Short term: נזריק בכל מקום. Long term: פיצ'רים נסתרים, null-check hell<br>• Directive = היחידה הכי קטנה ששרדה את החילוץ
+BEATS:<br>• כלי 3: Directives — מפריד את ה-WHETHER<br>• showHeader ← projection (WHAT). Strategy נתן לנו HOW. מה נשאר? persistable (WHETHER)<br>• Short term: נזריק בכל מקום. Long term: פיצ'רים נסתרים, null-check hell<br>• Directive = היחידה הכי קטנה ששרדה את החילוץ + מביאה את ה-dependencies שלה
 
 [13:15 - 14:00]
 
@@ -1125,17 +1128,18 @@ BEATS:<br>• כלי 3: Directives — מפריד את ה-WHETHER<br>• showHea
 
 מה המחיר? בטווח הקצר, "נזריק את זה בכל מקום". בטווח הארוך? פיצ'רים נסתרים שאי אפשר לראות בטמפלט, null-check hell.
 
-בואו נסכם: Content Projection מפריד את ה-WHAT — מה התוכן. Strategy מפריד את ה-HOW — איך זה עובד. Directives? מפריד את ה-WHETHER — האם זה בכלל קורה.
+בואו נסכם: Content Projection מפריד את ה-WHAT — מה התוכן. Strategy מפריד את ה-HOW — איך השמירה עובדת.
 
-בואו נחזור לרשימה, את ה-Header העפנו עם Projection (WHAT), את ה-Persistence העפנו עם Strategy (HOW).
+אבל רגע — Strategy נתן לנו את ה-HOW. הוא לא פתר את ה-WHETHER.
 
-מה נשאר? sortable.
+הרשימה עדיין מזריקה את STORAGE_STRATEGY תמיד, גם כשלא צריך אותו.
 
-זה לא משנה מבנה, זו לא חבילה של סרוויסים, זו פשוט... התנהגות, או שהרשימה ממויינת, או שלא.
+Directives פותרים את זה. ההזרקה עוברת לדירקטיבה.
+אין דירקטיבה? אין הזרקה.
 
 בלי "אולי", בלי תנאים, יש או אין — WHETHER.
 
-זו דירקטיבה, חתיכת התנהגות קטנה שאפשר להדביק איפה שרוצים.
+זו דירקטיבה, חתיכת התנהגות קטנה שמביאה איתה את ה-dependencies שלה.
 
 [הגדרה מחדש — WHAT/HOW/WHETHER]
 -->
@@ -1146,42 +1150,43 @@ layout: default
 
 <template #title>
 
-# Directive: Sortable
+# Directive: Persistable
 
 </template>
 
-```ts [sortable.ts]
-@Directive({ selector: 'app-list[sortable]' })
-export class Sortable {
+```ts [persistable.ts]
+@Directive({ selector: 'app-list[persistable]' })
+export class Persistable {
   #list = inject(ListComponent);
-  sortKey = input<string>();
-  sortDir = input<'asc' | 'desc'>('asc');
+  #storage = inject(STORAGE_STRATEGY);
+  storageKey = input.required<string>();
 
   constructor() {
     effect(() => {
-      const sorted = [...this.#list.items()].sort(/*...*/);
-      this.#list.displayItems.set(sorted);
+      const state = this.#list.state();
+      this.#storage.save(this.storageKey(), state);
     });
   }
 }
 ```
 
-Directive owns sort config. List just displays.
+Directive owns persistence. List doesn't know it's being saved.
 
 <!--
-BEATS:<br>• סלקטור: app-list[sortable] — בלי האטריביוט = לא קיים<br>• הדירקטיבה היא הבעלים של ה-inputs (sortKey, sortDir)<br>• הרשימה חושפת displayItems signal — הדירקטיבה כותבת אליו<br>• הסלקטור הופך את הצימוד לגלוי ומפורש
+BEATS:<br>• סלקטור: app-list[persistable] — בלי האטריביוט = לא קיים<br>• הדירקטיבה היא הבעלים של ה-storageKey<br>• הדירקטיבה מזריקה את ה-Strategy — לא הרשימה<br>• הסלקטור הופך את הצימוד לגלוי ומפורש
 
 [14:00 - 14:30]
 
-תראו את ה-Selector: `app-list[sortable]`.
+תראו את ה-Selector: `app-list[persistable]`.
 
-בלי האטריביוט? הדירקטיבה לא קיימת, כמעט אפס overhead.
+בלי האטריביוט? הדירקטיבה לא קיימת. אפס overhead.
 
-הדירקטיבה לוקחת בעלות על ה-inputs שלה: sortKey, sortDir. הרשימה רק חושפת signal של displayItems, והדירקטיבה מעדכנת אותו.
+וזה הקטע החזק — תזכרו את הבעיה? הרשימה הזריקה STORAGE_STRATEGY גם כשלא היה צריך?
 
-כן, היא מזריקה את הקומפוננטה של הרשימה, הצימוד הזה מכוון.
+עכשיו הדירקטיבה מזריקה את ה-Strategy, לא הרשימה.
+הרשימה לא יודעת בכלל שמישהו שומר אותה.
 
-שיניתם sortKey? ה-Effect רץ, הרשימה מתמיינת.
+הדירקטיבה מחזיקה את storageKey, מאזינה לשינויים ב-state, ושומרת.
 
 ה-effect ננקה אוטומטית ב-destroy של הדירקטיבה.
 
@@ -1202,32 +1207,32 @@ layout: default
 <!-- Simple -->
 <app-list [items]="data" />
 
-<!-- With sorting -->
-<app-list sortable sortKey="name" [items]="data" />
+<!-- With persistence -->
+<app-list persistable storageKey="admin-list" [items]="data" />
 
 <!-- Full-featured -->
 <app-list sortable sortKey="date" sortDir="desc"
-          filterable persistable [items]="data" />
+          filterable persistable storageKey="main" [items]="data" />
 ```
 
 **Visible in the template.** Look at the HTML, know what it does.
 
 <!--
-BEATS:<br>• פשוט: בלי דירקטיבות. עם מיון: sortable + inputs. מלא: כל השלוש<br>• מפתח: גלוי בטמפלט — תסתכלו על ה-HTML, תדעו מה הוא עושה<br>• כל דף בוחר את השילוב שלו — מורכבות בבחירה (opt-in)
+BEATS:<br>• פשוט: בלי דירקטיבות. עם persistence: persistable + storageKey. מלא: כל השלוש<br>• מפתח: גלוי בטמפלט — תסתכלו על ה-HTML, תדעו מה הוא עושה<br>• כל דף בוחר את השילוב שלו — מורכבות בבחירה (opt-in)
 
 [14:30 - 15:00]
 
 תסתכלו על ה-HTML.
 
-רשימה פשוטה? בלי כלום.
-רוצים מיון? תוסיפו `sortable`. הדירקטיבה מביאה איתה את ה-Inputs שלה.
-רוצים הכל? שימו את הכל.
+רשימה פשוטה? בלי כלום. אפס injections מיותרים.
+רוצים persistence? תוסיפו `persistable`. הדירקטיבה מביאה איתה את ה-storageKey.
 
-הכל גלוי, מפתח חדש פותח את הקובץ ורואה *בדיוק* מה הרשימה הזו עושה, לא צריך לנחש.
+וזה הקטע — ה-STORAGE_STRATEGY מוזרק רק כשיש persistable.
+הרשימה הפשוטה? בלי storage service. בלי null checks.
+
+הכל גלוי, מפתח חדש פותח את הקובץ ורואה *בדיוק* מה הרשימה הזו עושה.
 
 כל דירקטיבה עצמאית — אפשר לשלב אותן בכל סדר, כל דף בוחר את מה שהוא צריך.
-
-Persist זה סיפור אחר, הוא לא משנה את הדאטה, הוא מתבונן במצב הסופי.
 
 [זה ה-Payoff של ה-visibility]
 -->
