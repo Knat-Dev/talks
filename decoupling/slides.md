@@ -1426,14 +1426,14 @@ layout: default
 <app-list powerList [items]="data" />
 ```
 
-<img v-click src="/assets/pam-theyre-different.jpg" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-120 rounded-lg shadow-xl" />
+<img v-click src="/assets/drake-coupling.jpg" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-120 rounded-lg shadow-xl" />
 
 <!--
 [18:20 - 18:40] (20s)
 
 • Before: grocery list of attributes. After: `powerList`
 
-• [click] They're the same picture
+• [click] Drake approves
 
 • Code runs same thing. In your head? Different world
 
