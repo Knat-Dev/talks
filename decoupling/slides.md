@@ -280,6 +280,30 @@ _"What features am I today?"_
 -->
 
 ---
+layout: section
+---
+
+# The Real Problem
+
+Coupling isn't bad.
+
+## Hidden coupling is.
+
+<!--
+[3:30 - 4:00]
+
+• Coupling isn't bad — HIDDEN coupling is
+
+• Visible deps (inputs, constructor) = manageable
+
+• Buried in flags/templates = lose control, touch here, breaks there
+
+• Question: not "remove coupling" but "make it VISIBLE"
+
+• Inputs = your default, extraction patterns when they fail
+-->
+
+---
 layout: default
 ---
 
@@ -302,7 +326,7 @@ From Mega Component to clean architecture:
 </v-clicks>
 
 <!--
-[4:15 - 4:45]
+[4:00 - 4:30]
 
 • Here's the map — five steps from Mega Component to clean architecture
 
@@ -340,7 +364,7 @@ layout: default
 **Baseline** = always there. **The rest** = opt-in.
 
 <!--
-[4:45 - 5:15]
+[4:30 - 5:00]
 
 • Map tool — simple matrix: rows = features, columns = contexts
 
@@ -351,66 +375,6 @@ layout: default
 • persistState only in one place? doesn't belong in component
 
 • Now we have a map — we know what to extract
--->
-
----
-layout: section
----
-
-# The Real Problem
-
-Coupling isn't bad.
-
-## Hidden coupling is.
-
-<!--
-[5:15 - 5:45]
-
-• Coupling isn't bad — HIDDEN coupling is
-
-• Visible deps (inputs, constructor) = manageable
-
-• Buried in flags/templates = lose control, touch here, breaks there
-
-• Question: not "remove coupling" but "make it VISIBLE"
-
-• Inputs = your default, three extraction patterns when they fail
--->
-
----
-layout: image-right
----
-
-::left::
-
-# Three Extraction Patterns
-
-Inputs are your default.
-
-**When they fail, reach for these.**
-
-::default::
-
-| The Tell            | Pattern            |
-| ------------------- | ------------------ |
-| Structural flags    | Content Projection |
-| Behavioral bundles  | Strategy via DI    |
-| Composable opt-ins  | Directives         |
-
-<!--
-[5:45 - 6:30]
-
-• Three patterns — you know them, wisdom is knowing WHEN
-
-• Inputs = visible coupling, stay there while it works
-
-• Structural flags (booleans changing DOM) → Content Projection
-
-• Behavioral bundles (flag + logic + services) → Strategy via DI
-
-• Composable opt-ins (stackable behaviors) → Directives
-
-• We'll learn to spot the tell
 -->
 
 ---
@@ -525,6 +489,8 @@ The **@if** becomes a **slot**. The boolean disappears.
 • Content projection = what happens when you stop making structural decisions inside
 
 • Aha moment: projected content is just an @if you pulled out
+
+• Not every @if — only structural ones. Loading states, null guards stay inside
 -->
 
 ---
@@ -541,24 +507,46 @@ Separating the <span style="color: var(--cx-green); font-weight: bold;">WHAT</sp
 
 What content appears. Not how it behaves.
 
-<div class="text-sm text-gray-500 mt-8">
-  <span class="text-yellow-500">Short term:</span> "Just one more @if"
-  <span class="mx-4">→</span>
-  <span class="text-red-400">Long term:</span> Template spaghetti, impossible to test
-</div>
-
 <!--
-[8:15 - 8:45]
+[8:15 - 8:30]
 
 • Tool 1: Content Projection — separates the WHAT
 
 • When inputs control STRUCTURE (what DOM exists)
 
-• Short term: "just one more @if" → Long term: template spaghetti
-
 • Like a picture frame — frame owns size/shape, you choose the picture
 
 • Component owns layout, you own content
+-->
+
+---
+layout: section
+---
+
+# The Shortcut
+
+"Just one more @if"
+
+<!--
+• The familiar excuse — just add one more conditional
+
+• Seems harmless in the moment
+-->
+
+---
+layout: section
+---
+
+# The Tax
+
+Template spaghetti.
+
+## Impossible to test.
+
+<!--
+• Reality: template becomes unreadable
+
+• Testing requires mocking every branch
 -->
 
 ---
@@ -673,14 +661,8 @@ Separating the <span style="color: var(--cx-green); font-weight: bold;">HOW</spa
 
 How it's done. A or B, never both.
 
-<div class="text-sm text-gray-500 mt-8">
-  <span class="text-yellow-500">Short term:</span> "Just add an if for server mode"
-  <span class="mx-4">→</span>
-  <span class="text-red-400">Long term:</span> if-forests, untestable without mocks
-</div>
-
 <!--
-[10:00 - 10:30]
+[10:00 - 10:15]
 
 • Tool 2: Strategy via DI — separates the HOW
 
@@ -689,10 +671,36 @@ How it's done. A or B, never both.
 • Server or LocalStorage, Prod or Mock — only one runs
 
 • Component doesn't know what it got — just asks "give me something that saves"
+-->
 
-• Zero if-statements in component — decision happened before it was created
+---
+layout: section
+---
 
-• Let's see code
+# The Shortcut
+
+"Just add an if for server mode"
+
+<!--
+• The familiar excuse — just check the environment
+
+• One condition, what's the harm?
+-->
+
+---
+layout: section
+---
+
+# The Tax
+
+if-forests.
+
+## Untestable without mocks.
+
+<!--
+• Reality: conditions multiply
+
+• Every test needs to mock every branch
 -->
 
 ---
@@ -955,30 +963,46 @@ Separating the <span style="color: var(--cx-green); font-weight: bold;">WHETHER<
 
 Is it on or off? Composable opt-ins.
 
-<div class="text-sm text-gray-500 mt-8">
-  <span class="text-yellow-500">Short term:</span> "Just inject it everywhere"
-  <span class="mx-4">→</span>
-  <span class="text-red-400">Long term:</span> Hidden features, null-check hell
-</div>
-
 <!--
-[13:15 - 14:00]
+[13:15 - 13:30]
 
 • Tool 3: Directives — separates the WHETHER
 
-• Short term: "inject everywhere". Long term: hidden features, null-check hell
-
 • Recap: Content Projection = WHAT, Strategy = HOW
 
-• But Strategy didn't solve WHETHER — list still injects STORAGE_STRATEGY always
+• Directives fix WHETHER — injection moves to directive
 
-• Directives fix this — injection moves to directive
+• No directive? No injection. Exists or doesn't
+-->
 
-• No directive? No injection
+---
+layout: section
+---
 
-• No "maybe", no conditions — exists or doesn't — WHETHER
+# The Shortcut
 
-• Directive = small behavior chunk that brings its own dependencies
+"Just inject it everywhere"
+
+<!--
+• The familiar excuse — inject all services, check flags later
+
+• Easier than thinking about what's actually needed
+-->
+
+---
+layout: section
+---
+
+# The Tax
+
+Hidden features.
+
+## Null-check hell.
+
+<!--
+• Reality: can't tell what's active without reading code
+
+• Every service needs null checks and guards
 -->
 
 ---
@@ -1372,8 +1396,8 @@ layout: default
 | Pattern            | Don't use when...                         |
 | ------------------ | ----------------------------------------- |
 | Content Projection | You need behavior, not structure          |
-| Strategy via DI    | Behaviors should be optional/composable   |
-| Directives         | Same bundle repeated — name it instead    |
+| Strategy via DI    | Only one implementation will ever exist   |
+| Directives         | Behavior is exclusive (use Strategy instead) |
 | hostDirectives     | Things are unrelated — don't bundle them  |
 
 <!--
@@ -1387,9 +1411,9 @@ layout: default
 
 • Content Projection? Structure only. Not behavior
 
-• Strategy? Not for optional things
+• Strategy? Not if only one implementation exists
 
-• Directives? Don't copy-paste — name it
+• Directives? Not for exclusive A-or-B choices
 
 • hostDirectives? Bundle only related things
 
@@ -1446,7 +1470,7 @@ Inputs are your default. When they fail:
 | ------------------ | ------------------ | ----------- |
 | Cross-context drift | Map Feature × Context | The **WHERE** (Map) |
 | Structural flags   | Content Projection | The **WHAT**    |
-| Behavioral bundles | Strategy via DI    | The **HOW**     |
+| Exclusive alternatives | Strategy via DI    | The **HOW**     |
 | Composable opt-ins | Directives         | The **WHETHER** |
 | Same combo 3x      | hostDirectives     | The **WHICH**    |
 
@@ -1477,7 +1501,7 @@ Inputs are your default. When they fail:
 
 • Boolean changing structure? Content Projection — Extract
 
-• Behavior bundle? Strategy — Interface
+• Exclusive alternatives? Strategy — Interface
 
 • Optional features? Directives — Compose
 
