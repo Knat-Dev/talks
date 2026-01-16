@@ -555,35 +555,6 @@ layout: default
 
 <template #title>
 
-# Content Projection
-
-</template>
-
-```html [card.html]
-<div class="header">
-  <ng-content select="[header]" />
-</div>
-<ng-content />
-```
-
-Card owns layout. Consumer owns content via ng-content.
-
-<!--
-[8:45 - 9:15]
-
-• Two slots: header + default
-
-• "I'll handle the wrapper, you decide the content"
-
-• Cards, Modals, Panels — wrapper fixed, content varies
--->
-
----
-layout: default
----
-
-<template #title>
-
 # The Next Ceiling
 
 </template>
@@ -593,7 +564,7 @@ Content Projection solved **WHAT** appears.
 But what about **HOW** it behaves?
 
 - _"Save to localStorage vs server"_
-- _"Persist state when flag is true"_
+- _"Call real API vs mock in dev"_
 
 <!--
 [9:15 - 9:45]
@@ -760,6 +731,8 @@ export const STORAGE_STRATEGY =
 
 • InjectionToken = our key for DI
 
+• Alternative: abstract class as token — implementations extend it, no InjectionToken needed
+
 • (Promise for readability, Observable works same)
 
 • Just the contract, no implementation yet
@@ -912,41 +885,6 @@ export class ListComponent {
 • New dev opens file — no clue what this list does without reading code
 
 • Strategy solved HOW — need tool for WHETHER, and it must be VISIBLE
--->
-
----
-layout: default
----
-
-<template #title>
-
-# The Hidden Behavior
-
-</template>
-
-```ts [list.ts]
-persistState = input(false);
-#storage = inject(STORAGE_STRATEGY); // always injected!
-
-ngOnInit() {
-  if (this.persistState()) {
-    this.#storage.save(this.storageKey(), this.state());
-  }
-}
-```
-
-Service injected even when not needed. Invisible from outside.
-
-<!--
-[13:00 - 13:15]
-
-• persistState flag exists, logic buried in ngOnInit
-
-• Worse: STORAGE_STRATEGY injected ALWAYS, even when persistState=false
-
-• From outside? Can't tell if list saves without reading code
-
-• The tell: hidden behavior behind a flag = directive waiting to be born
 -->
 
 ---
