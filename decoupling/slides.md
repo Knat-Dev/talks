@@ -351,14 +351,15 @@ layout: default
 ```ts [list.ts]
 export class ListComponent {
   items = input<Item[]>([]);
-  // ... loading, error, etc.
-  sortable = input(false);       // flag
-  showHeader = input(false);     // flag
-  persistState = input(false);   // flag + friends below
 
-  storageKey = input<string>();  // only if persistState
-  #storage = inject(StorageService);
-  // ... more services
+  // Structure flag → Content Projection
+  showHeader = input(false);
+
+  // Logic flag → Strategy
+  multiSelect = input(false);
+
+  // Behavior flag → Directives
+  autoSave = input(false);
 }
 ```
 
@@ -371,9 +372,9 @@ _"What features am I today?"_
 
 • Think of YOUR codebase — that component with 15 inputs, every PR touches it
 
-• Inputs for data... but also flags, storage keys, services used conditionally
+• Three types of flags: structure (showHeader), logic (multiSelect), behavior (autoSave)
 
-• persistState doesn't come alone — brings storageKey, initialState, service
+• Each will need a different extraction tool
 
 • Mega Component asks "what features am I today?" instead of just being a list
 
@@ -558,14 +559,16 @@ layout: default
 
 | Feature | Main Page | Admin Panel | Preview |
 |---------|-----------|-------------|---------|
-| sortable | ✓ | ✓ | ✗ |
+| selection | Single | Multi | None |
 
-**sortable** varies — another opt-in behavior.
+**selection** varies in **type** — not just on/off. Signal for **Strategy**.
 
 <!--
 [4:52 - 5:00]
 
-• sortable varies across contexts
+• selection varies — but not boolean! Single, Multi, or None
+
+• Different logic, not just toggle — needs Strategy pattern
 -->
 
 ---
@@ -580,14 +583,14 @@ layout: default
 
 | Feature | Main Page | Admin Panel | Preview |
 |---------|-----------|-------------|---------|
-| filterable | ✗ | ✓ | ✓ |
+| sortable | ✓ | ✓ | ✗ |
 
-**filterable** — not everywhere either.
+**sortable** varies — opt-in behavior. Signal for **Directives**.
 
 <!--
 [5:00 - 5:08]
 
-• filterable also varies
+• sortable varies — optional behavior, use Directives
 -->
 
 ---
@@ -602,14 +605,14 @@ layout: default
 
 | Feature | Main Page | Admin Panel | Preview |
 |---------|-----------|-------------|---------|
-| persistState | ✗ | ✓ | ✗ |
+| autoSave | ✗ | ✓ | ✗ |
 
-**persistState** only in one place? **Doesn't belong in component.**
+**autoSave** only in one place? **Doesn't belong in component.**
 
 <!--
 [5:08 - 5:20]
 
-• persistState only in one place? doesn't belong in component
+• autoSave only in Admin — doesn't belong in component
 
 • Now we have a map — we know what to extract
 -->
@@ -800,8 +803,8 @@ Content Projection solved **WHAT** appears.
 
 But what about **HOW** it behaves?
 
-- _"Save to localStorage vs server"_
-- _"Call real API vs mock in dev"_
+- _"Single select vs multi select"_
+- _"Click to select vs checkbox"_
 
 <!--
 [9:15 - 9:45]
@@ -814,7 +817,7 @@ But what about **HOW** it behaves?
 
 • But what about HOW — how things are done?
 
-• Ever tried ng-content for HttpClient? Doesn't work — ng-content is for DOM
+• Selection logic: single vs multi — completely different algorithms
 
 • Need a tool that separates the HOW
 -->
@@ -830,11 +833,13 @@ layout: default
 </template>
 
 ```ts [list.ts]
-save(state: ListState) {
-  if (this.isProd()) {
-    this.api.post('/preferences', state);
+select(item: Item) {
+  if (this.multiSelect()) {
+    // Multi: toggle in set
+    this.selection.update(s => toggle(s, item));
   } else {
-    this.mockApi.save(state); // dev mode
+    // Single: clear and set
+    this.selection.set(new Set([item]));
   }
 }
 ```
@@ -844,11 +849,11 @@ The component knows **too much** about the "how".
 <!--
 [9:45 - 10:00]
 
-• if isProd → real API, else → Mock
+• if multiSelect → toggle logic, else → replace logic
 
-• Component knows all options — knows too much
+• Component knows all selection algorithms — knows too much
 
-• What happens when you add staging? Testing? Another env?
+• What happens when you add range select? Checkbox mode?
 
 • More else-if? And another?
 
@@ -867,7 +872,7 @@ layout: section
 
 Separating the <span style="color: var(--cx-green); font-weight: bold;">HOW</span>
 
-How it's done. A or B, never both.
+How it's done. Single or Multi, never both.
 
 <!--
 [10:00 - 10:15]
@@ -876,9 +881,9 @@ How it's done. A or B, never both.
 
 • A or B, pick one, never both together
 
-• Server or LocalStorage, Prod or Mock — only one runs
+• Single or Multi selection — only one runs
 
-• Component doesn't know what it got — just asks "give me something that saves"
+• Component doesn't know what it got — just asks "give me something that selects"
 -->
 
 ---
@@ -887,10 +892,10 @@ layout: section
 
 # The Shortcut
 
-"Just add an if for server mode"
+"Just add an if for multi-select"
 
 <!--
-• The familiar excuse — just check the environment
+• The familiar excuse — just check the mode
 
 • One condition, what's the harm?
 -->
@@ -923,20 +928,20 @@ That **if-else** needs to disappear. But where does the decision go?
 
 ::default::
 
-| Context     | Storage    |
-| ----------- | ---------- |
-| Production  | Real API   |
-| Development | Mock API   |
-| Testing     | In-memory  |
+| Context      | Selection |
+| ------------ | --------- |
+| Main Page    | Single    |
+| Admin Panel  | Multi     |
+| Preview      | None      |
 
 <!--
 [10:30 - 10:45]
 
 • if-else needs to disappear from component — but where to?
 
-• Depends on context: Prod=real API, Dev=Mock, Testing=In-memory
+• Depends on context: Main=single, Admin=multi, Preview=none
 
-• Same component, completely different behavior
+• Same component, completely different selection behavior
 
 • Before: more ifs, more booleans. Now: component doesn't care
 -->
@@ -951,26 +956,23 @@ layout: default
 
 </template>
 
-```ts [storage-strategy.ts]
-export interface StorageStrategy {
-  save(key: string, data: unknown): Promise<void>;
-  load<T>(key: string): Promise<T | null>;
+```ts [selection-strategy.ts]
+export interface SelectionStrategy {
+  select(item: Item, current: Set<string>): Set<string>;
 }
 
-export const STORAGE_STRATEGY =
-  new InjectionToken<StorageStrategy>('StorageStrategy');
+export const SELECTION_STRATEGY =
+  new InjectionToken<SelectionStrategy>('SelectionStrategy');
 ```
 
 <!--
 [10:45 - 11:00]
 
-• Interface: defines WHAT (save/load), not HOW
+• Interface: defines WHAT (select), not HOW
 
 • InjectionToken = our key for DI
 
-• Alternative: abstract class as token — implementations extend it, no InjectionToken needed
-
-• (Promise for readability, Observable works same)
+• Takes current selection, returns new selection
 
 • Just the contract, no implementation yet
 -->
@@ -981,28 +983,27 @@ layout: default
 
 <template #title>
 
-# Strategy: LocalStorageStrategy
+# Strategy: SingleSelection
 
 </template>
 
-```ts [local-storage.ts]
-export class LocalStorageStrategy implements StorageStrategy {
-  async save(key: string, data: unknown) {
-    localStorage.setItem(key, JSON.stringify(data));
-  }
-  async load<T>(key: string) {
-    const item = localStorage.getItem(key);
-    return item ? JSON.parse(item) as T : null;
+```ts [single-selection.ts]
+export class SingleSelection implements SelectionStrategy {
+  select(item: Item, current: Set<string>) {
+    // Clear everything, select only this one
+    return new Set([item.id]);
   }
 }
 ```
 
-Saves in browser. Works offline.
+Click = replace. Only one item selected.
 
 <!--
 [11:00 - 11:15]
 
-• localStorage — saves in browser, works offline
+• Single selection — click replaces current selection
+
+• Simple, predictable behavior
 -->
 
 ---
@@ -1011,33 +1012,31 @@ layout: default
 
 <template #title>
 
-# Strategy: ServerStorageStrategy
+# Strategy: MultiSelection
 
 </template>
 
-```ts [server-storage.ts]
-export class ServerStorageStrategy implements StorageStrategy {
-  #api = inject(ApiService);
-
-  async save(key: string, data: unknown) {
-    await firstValueFrom(this.#api.post(...));
-  }
-  async load<T>(key: string) {
-    return firstValueFrom(this.#api.get(...));
+```ts [multi-selection.ts]
+export class MultiSelection implements SelectionStrategy {
+  select(item: Item, current: Set<string>) {
+    const next = new Set(current);
+    // Toggle: add if missing, remove if present
+    next.has(item.id) ? next.delete(item.id) : next.add(item.id);
+    return next;
   }
 }
 ```
 
-Calls API. Syncs across devices.
+Click = toggle. Multiple items selected.
 
 **Same interface. Different "how".**
 
 <!--
 [11:15 - 11:30]
 
-• Server — calls API, syncs across devices
+• Multi selection — click toggles item in set
 
-• Same interface exactly — list calls save, doesn't know where it goes
+• Same interface exactly — list calls select, doesn't know which strategy
 -->
 
 ---
@@ -1050,16 +1049,16 @@ layout: default
 
 </template>
 
-```ts [admin-dashboard.ts]
+```ts [admin-panel.ts]
 @Component({
   providers: [
     {
-      provide: STORAGE_STRATEGY,
-      useClass: ServerStorageStrategy,
+      provide: SELECTION_STRATEGY,
+      useClass: MultiSelection,
     },
   ],
 })
-export class AdminDashboard {}
+export class AdminPanel {}
 ```
 
 **Zero if-statements.** Context decides, not component.
@@ -1069,13 +1068,13 @@ export class AdminDashboard {}
 
 • Decision lives in PROVIDER
 
-• AdminDashboard says: "below me, anyone asking for Storage gets ServerStorageStrategy"
+• AdminPanel says: "below me, anyone asking for Selection gets MultiSelection"
 
 • Angular's power: hierarchical injection — affects only subtree
 
 • Zero if-statements in component
 
-• Pro tip: NoopStrategy at root — nothing breaks by default, override where needed
+• Pro tip: NoopSelection at root — nothing breaks by default, override where needed
 
 • Strategy = exclusive choice. Composition = Directives
 
@@ -1094,7 +1093,7 @@ layout: default
 
 ```ts [list.ts]
 export class ListComponent {
-  #storage = inject(STORAGE_STRATEGY);
+  #selection = inject(SELECTION_STRATEGY);
   #sorter = inject(SORT_STRATEGY);
   #filter = inject(FILTER_STRATEGY);
   // ... and 5 more tokens
@@ -1424,36 +1423,38 @@ layout: default
 
 </template>
 
-```ts [auto-saveable.ts]
+```ts [auto-save.ts]
 @Directive({
-  selector: 'app-list[autoSaveable]',
-  hostDirectives: [DirtyTrackable, Debounceable, Persistable],
+  selector: 'app-list[autoSave]',
+  hostDirectives: [StateTracker, Debouncer, LocalStorage],
 })
-export class AutoSaveable {
-  #dirty = inject(DirtyTrackable);
-  #debounce = inject(Debounceable);
-  #persist = inject(Persistable);
+export class AutoSaveCoordinator {
+  #tracker = inject(StateTracker);   // 1. Emits changes
+  #wait = inject(Debouncer);         // 2. Handles timing
+  #disk = inject(LocalStorage);      // 3. Handles writing
 
-  #autoSave = effect(() => {
-    if (this.#dirty.isDirty()) {
-      this.#debounce.run(() => this.#persist.save());
-    }
-  });
+  constructor() {
+    // The Glue: Connect A → B → C
+    effect(() => {
+      const state = this.#tracker.changes();
+      this.#wait.run(() => this.#disk.save(state));
+    });
+  }
 }
 ```
 
-When A and B **must** work together.
+The **Glue**. When A, B, and C **must** work together.
 
 <!--
 [17:15 - 17:45]
 
-• Last pattern: Coordinator
+• Last pattern: Coordinator — the glue
 
-• Product asks: "auto-save, but only when dirty, with debounce"
+• Product asks: "auto-save, but only when state changes, with debounce"
 
-• Have directive for Dirty, directive for Debounce — they don't know each other
+• Three separate concerns: tracking, timing, storage — they don't know each other
 
-• Coordinator connects them: "when dirty, run save through debounce"
+• Coordinator connects them: "when state changes → wait → save"
 
 • This IS coupling — but intentional. Give it a home, a name, write a test
 -->
