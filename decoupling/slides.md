@@ -373,7 +373,7 @@ _"What features am I today?"_
 
 • autoSave brings saveDelay, onSaved, StorageService
 
-• God Component asks "what features am I today?" instead of just being a list
+• This component is having an identity crisis
 -->
 
 ---
