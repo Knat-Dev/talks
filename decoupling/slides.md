@@ -524,7 +524,7 @@ layout: default
 
 <template #title>
 
-# The Map (WHERE)
+# The Map (WHERE) - items
 
 </template>
 
@@ -548,7 +548,7 @@ layout: default
 
 <template #title>
 
-# The Map (WHERE)
+# The Map (WHERE) - showHeader
 
 </template>
 
@@ -570,20 +570,20 @@ layout: default
 
 <template #title>
 
-# The Map (WHERE)
+# The Map (WHERE) - multiSelect
 
 </template>
 
 | Feature | Main Page | Admin Panel | Preview |
 |---------|-----------|-------------|---------|
-| selection | Single | Multi | None |
+| multiSelect | Single | Multi | None |
 
-**selection** varies in **type** — not just on/off. Signal for **Strategy**.
+**multiSelect** varies in **type** — not just on/off. Signal for **Strategy**.
 
 <!--
 [6:55 - 7:10] (15s)
 
-• selection varies — but not boolean! Single, Multi, or None
+• multiSelect varies — but not boolean! Single, Multi, or None
 
 • Different logic, not just toggle — needs Strategy pattern
 -->
@@ -594,7 +594,7 @@ layout: default
 
 <template #title>
 
-# The Map (WHERE)
+# The Map (WHERE) - sortable
 
 </template>
 
@@ -616,7 +616,7 @@ layout: default
 
 <template #title>
 
-# The Map (WHERE)
+# The Map (WHERE) - autoSave
 
 </template>
 
