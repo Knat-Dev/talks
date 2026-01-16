@@ -190,14 +190,14 @@ layout: center
   <div class="text-xl text-gray-600 mt-4">across the entire company</div>
 </div>
 
-<img src="/assets/this-is-fine.jpg" class="absolute bottom-8 right-8 w-80 rounded-lg shadow-xl" />
+<img v-click src="/assets/this-is-fine.jpg" class="absolute bottom-8 right-8 w-80 rounded-lg shadow-xl" />
 
 <!--
 [2:25 - 2:50] (25s)
 
 • The big one — every team wants to use it, but they all have slightly different needs
 
-• Who maintained something like this? Let me tell you what happened
+• [click] Who maintained something like this? Let me tell you what happened
 -->
 
 ---
@@ -301,12 +301,11 @@ layout: default
 
 <template #title>
 
-# Booleans Bring Friends
+# Booleans Bring Friends: showHeader
 
 </template>
 
 ```ts [list.ts]
-// showHeader brings...
 showHeader = input(false);
 headerTitle = input('');
 headerActions = input<Action[]>([]);
@@ -328,12 +327,11 @@ layout: default
 
 <template #title>
 
-# Booleans Bring Friends
+# Booleans Bring Friends: multiSelect
 
 </template>
 
 ```ts [list.ts]
-// multiSelect brings...
 multiSelect = input(false);
 selection = output<Item[]>();
 #selectionService = inject(SelectionService);
@@ -355,12 +353,11 @@ layout: default
 
 <template #title>
 
-# Booleans Bring Friends
+# Booleans Bring Friends: autoSave
 
 </template>
 
 ```ts [list.ts]
-// autoSave brings...
 autoSave = input(false);
 saveDelay = input(300);
 onSaved = output<void>();
@@ -1130,7 +1127,7 @@ export class ListComponent {
 
 **Too many tokens.** Strategy solved **HOW**. But what about **WHETHER**?
 
-<img src="/assets/one-does-not-simply.jpg" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-120 rounded-lg shadow-xl" />
+<img v-click src="/assets/one-does-not-simply.jpg" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-120 rounded-lg shadow-xl" />
 
 <!--
 [13:40 - 14:25] (45s)
@@ -1143,7 +1140,7 @@ export class ListComponent {
 
 • What if sorting is optional? Filtering not relevant?
 
-• [click meme]
+• [click] One does not simply inject everything
 
 • Main problem: can't see in template what's on
 
@@ -1321,7 +1318,7 @@ layout: default
 
 Same combo. Three times.
 
-<img src="/assets/distracted-boyfriend.jpg" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-120 rounded-lg shadow-xl" />
+<img v-click src="/assets/distracted-boyfriend.jpg" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-120 rounded-lg shadow-xl" />
 
 <!--
 [16:20 - 17:00] (40s)
@@ -1332,7 +1329,7 @@ Same combo. Three times.
 
 • Want to add a fourth? Hunt through entire app. Miss one? Drift begins
 
-• [click meme]
+• [click] Distracted by repetition
 
 • Same thing 3 times? Not coincidence — concept without a name yet
 -->
@@ -1429,14 +1426,14 @@ layout: default
 <app-list powerList [items]="data" />
 ```
 
-<img src="/assets/pam-theyre-different.jpg" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-120 rounded-lg shadow-xl" />
+<img v-click src="/assets/pam-theyre-different.jpg" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-120 rounded-lg shadow-xl" />
 
 <!--
 [18:20 - 18:40] (20s)
 
 • Before: grocery list of attributes. After: `powerList`
 
-• [click meme]
+• [click] They're the same picture
 
 • Code runs same thing. In your head? Different world
 
