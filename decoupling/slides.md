@@ -7,8 +7,7 @@ info: |
 
   Dor Peled · @Knat-Dev
 
-  Runtime: ~2,700 words in speaker notes.
-  120 wpm (with pauses) = ~22 min.
+  Runtime: ~25 min content + 5 min Q&A = 30 min total
 layout: a-main-cover-2
 highlighter: shiki
 transition: slide-left
@@ -33,7 +32,7 @@ mdc: true
 </div>
 
 <!--
-[0:00 - 0:20]
+[0:00 - 0:25] (25s)
 
 • Greeting + hook
 
@@ -93,7 +92,7 @@ layout: default
 </div>
 
 <!--
-[0:20 - 0:45]
+[0:25 - 0:55] (30s)
 
 • Quick intro — Dor, Coralogix, Angular in large codebase
 
@@ -117,13 +116,13 @@ Who here has added _"just one more input"_ to a component?
 One more boolean and that's it?
 
 <!--
-[0:45 - 1:30]
+[0:55 - 1:50] (55s)
 
 • Hands up: who added "just one more input"?
 
 • Hands up: who waited for someone to finish editing the same file?
 
-• That's how Mega Components are born
+• That's how God Components are born
 
 • Looking for "tells" — like in poker
 
@@ -152,7 +151,7 @@ export class GridComponent<T> {
 ```
 
 <!--
-[1:30 - 1:40]
+[1:50 - 2:05] (15s)
 
 • Before theory — let's see what actually happened
 
@@ -165,94 +164,20 @@ layout: section
 
 # Then Requirements Came...
 
+Custom templates, row styles, expand/collapse...
+
+## Context menus, column management, persistence...
+
 <!--
-[1:40 - 1:44]
+[2:05 - 2:25] (20s)
 
 • Requirements started coming in...
--->
 
----
-layout: section
----
+• Custom templates, row styles, expand/collapse, context menus
 
-# Custom templates
+• Column management, persistence, global state deps...
 
-<!--
-[1:44 - 1:52]
-
-• Different column types needed different rendering — dates, icons, actions, custom HTML
--->
-
----
-layout: section
----
-
-# Row styles
-
-<!--
-[1:52 - 2:00]
-
-• Highlight overdue items in red, completed in green, selected rows need different background
--->
-
----
-layout: section
----
-
-# Expand / Collapse
-
-<!--
-[2:00 - 2:08]
-
-• Click a row to show detail panel below — order history, nested data, related items
--->
-
----
-layout: section
----
-
-# Context menu
-
-<!--
-[2:08 - 2:16]
-
-• Right-click for actions — edit, delete, duplicate, export row
--->
-
----
-layout: section
----
-
-# Lazy loading
-
-<!--
-[2:16 - 2:24]
-
-• 10,000 rows? Can't render all at once — virtual scrolling, load on demand
--->
-
----
-layout: section
----
-
-# Persistence
-
-<!--
-[2:24 - 2:32]
-
-• User sorts by date, closes browser, comes back — remember their preferences
--->
-
----
-layout: section
----
-
-# Global state deps...
-
-<!--
-[2:32 - 2:40]
-
-• Feature flags, user permissions, theme settings — grid needs to react to all of them
+• Each one "just one more feature"
 -->
 
 ---
@@ -268,7 +193,7 @@ layout: center
 <img src="/assets/this-is-fine.jpg" class="absolute bottom-8 right-8 w-80 rounded-lg shadow-xl" />
 
 <!--
-[2:40 - 2:54]
+[2:25 - 2:50] (25s)
 
 • The big one — every team wants to use it, but they all have slightly different needs
 
@@ -286,7 +211,7 @@ layout: center
 </div>
 
 <!--
-[2:50 - 3:05]
+[2:50 - 3:05] (15s)
 
 • Cognitive Load — hold 2000 lines in your head for any change
 -->
@@ -302,7 +227,7 @@ layout: center
 </div>
 
 <!--
-[3:05 - 3:20]
+[3:05 - 3:20] (15s)
 
 • Bottleneck — only 2 people "understood" it, rest afraid to touch
 -->
@@ -318,7 +243,7 @@ layout: center
 </div>
 
 <!--
-[3:20 - 3:35]
+[3:20 - 3:35] (15s)
 
 • Slow Delivery — simple features took weeks, bugs hid in complexity
 -->
@@ -333,7 +258,7 @@ layout: center
 </div>
 
 <!--
-[3:35 - 3:50]
+[3:35 - 3:50] (15s)
 
 • Technical debt compounds — every shortcut is a tax on tomorrow
 -->
@@ -352,33 +277,128 @@ layout: default
 export class ListComponent {
   items = input<Item[]>([]);
 
-  // Structure flag → Content Projection
   showHeader = input(false);
-
-  // Logic flag → Strategy
   multiSelect = input(false);
-
-  // Behavior flag → Directives
   autoSave = input(false);
 }
 ```
 
-_"What features am I today?"_
+Three boolean flags. Looks innocent.
 
 <!--
-[3:30 - 4:15]
+[3:50 - 4:05] (15s)
 
 • Grid too big for slides — built smaller example with same problems
 
-• Think of YOUR codebase — that component with 15 inputs, every PR touches it
+• Three boolean flags — looks innocent, right?
 
-• Three types of flags: structure (showHeader), logic (multiSelect), behavior (autoSave)
+• But booleans never come alone...
+-->
 
-• Each will need a different extraction tool
+---
+layout: default
+---
 
-• Mega Component asks "what features am I today?" instead of just being a list
+<template #title>
 
-• Let's break it down
+# Booleans Bring Friends
+
+</template>
+
+```ts [list.ts]
+// showHeader brings...
+showHeader = input(false);
+headerTitle = input('');
+headerActions = input<Action[]>([]);
+```
+
+One flag → three inputs.
+
+<!--
+[4:05 - 4:20] (15s)
+
+• showHeader brings headerTitle, headerActions
+
+• One boolean → three inputs to configure
+-->
+
+---
+layout: default
+---
+
+<template #title>
+
+# Booleans Bring Friends
+
+</template>
+
+```ts [list.ts]
+// multiSelect brings...
+multiSelect = input(false);
+selection = output<Item[]>();
+#selectionService = inject(SelectionService);
+```
+
+One flag → output + service.
+
+<!--
+[4:20 - 4:35] (15s)
+
+• multiSelect brings selection output, SelectionService
+
+• Now we have external dependencies
+-->
+
+---
+layout: default
+---
+
+<template #title>
+
+# Booleans Bring Friends
+
+</template>
+
+```ts [list.ts]
+// autoSave brings...
+autoSave = input(false);
+saveDelay = input(300);
+onSaved = output<void>();
+#storage = inject(StorageService);
+```
+
+One flag → config + output + service.
+
+_"What features am I today?"_
+
+<!--
+[4:35 - 4:50] (15s)
+
+• autoSave brings saveDelay, onSaved, StorageService
+
+• God Component asks "what features am I today?" instead of just being a list
+-->
+
+---
+layout: default
+---
+
+<template #title>
+
+# God Component
+
+</template>
+
+> A component that knows too much or does too much. It violates the single responsibility principle by handling multiple concerns that should be separated.
+
+Our **Mega List** is becoming one.
+
+<!--
+[4:50 - 5:05] (15s)
+
+• God Component — knows too much, does too much
+
+• Our Mega List is becoming one
 -->
 
 ---
@@ -392,7 +412,7 @@ Coupling isn't bad.
 ## Hidden coupling is.
 
 <!--
-[3:30 - 4:00]
+[5:05 - 5:40] (35s)
 
 • Coupling isn't bad — HIDDEN coupling is
 
@@ -411,12 +431,12 @@ layout: section
 
 # The Journey
 
-From Mega Component to clean architecture
+From God Component to clean architecture
 
 <!--
-[4:00 - 4:06]
+[5:40 - 5:50] (10s)
 
-• Here's the map — five steps from Mega Component to clean architecture
+• Here's the map — five steps from God Component to clean architecture
 -->
 
 ---
@@ -430,7 +450,7 @@ layout: center
 </div>
 
 <!--
-[4:06 - 4:12]
+[5:50 - 5:58] (8s)
 
 • Map — what varies and where, shooting blind without it
 -->
@@ -446,7 +466,7 @@ layout: center
 </div>
 
 <!--
-[4:12 - 4:18]
+[5:58 - 6:06] (8s)
 
 • Extract — pull behaviors out of the component
 -->
@@ -462,7 +482,7 @@ layout: center
 </div>
 
 <!--
-[4:18 - 4:24]
+[6:06 - 6:14] (8s)
 
 • Interface — define contracts for swappable behaviors
 -->
@@ -478,7 +498,7 @@ layout: center
 </div>
 
 <!--
-[4:24 - 4:30]
+[6:14 - 6:22] (8s)
 
 • Compose — make behaviors optional with directives
 -->
@@ -494,7 +514,7 @@ layout: center
 </div>
 
 <!--
-[4:30 - 4:36]
+[6:22 - 6:32] (10s)
 
 • Bundle — group repeating patterns with hostDirectives
 
@@ -518,7 +538,7 @@ layout: default
 **items** everywhere? That's the **baseline** — stays in component.
 
 <!--
-[4:36 - 4:44]
+[6:32 - 6:45] (13s)
 
 • Map tool — simple matrix: rows = features, columns = contexts
 
@@ -542,7 +562,7 @@ layout: default
 **showHeader** varies? Signal for **Content Projection**.
 
 <!--
-[4:44 - 4:52]
+[6:45 - 6:55] (10s)
 
 • showHeader varies? signal for Content Projection
 -->
@@ -564,7 +584,7 @@ layout: default
 **selection** varies in **type** — not just on/off. Signal for **Strategy**.
 
 <!--
-[4:52 - 5:00]
+[6:55 - 7:10] (15s)
 
 • selection varies — but not boolean! Single, Multi, or None
 
@@ -588,7 +608,7 @@ layout: default
 **sortable** varies — opt-in behavior. Signal for **Directives**.
 
 <!--
-[5:00 - 5:08]
+[7:10 - 7:20] (10s)
 
 • sortable varies — optional behavior, use Directives
 -->
@@ -610,7 +630,7 @@ layout: default
 **autoSave** only in one place? **Doesn't belong in component.**
 
 <!--
-[5:08 - 5:20]
+[7:20 - 7:35] (15s)
 
 • autoSave only in Admin — doesn't belong in component
 
@@ -638,7 +658,7 @@ Boolean flags. The component asking _"what features am I?"_
 But look closer at **The Mega List**...
 
 <!--
-[6:30 - 7:15]
+[7:35 - 8:10] (35s)
 
 • sortable, showHeader, persistState — each is a feature toggle
 
@@ -676,7 +696,7 @@ showHeader = input(false);
 Why does the **list** decide whether a header exists?
 
 <!--
-[7:15 - 7:45]
+[8:10 - 8:50] (40s)
 
 • showHeader is different — controls STRUCTURE, not behavior
 
@@ -718,7 +738,7 @@ layout: default
 The **@if** becomes a **slot**. The boolean disappears.
 
 <!--
-[7:45 - 8:15]
+[8:50 - 9:30] (40s)
 
 • Before: pass true, component renders internally
 
@@ -748,7 +768,7 @@ Separating the <span style="color: var(--cx-green); font-weight: bold;">WHAT</sp
 What content appears. Not how it behaves.
 
 <!--
-[8:15 - 8:30]
+[9:30 - 9:50] (20s)
 
 • Tool 1: Content Projection — separates the WHAT
 
@@ -768,6 +788,8 @@ layout: section
 "Just one more @if"
 
 <!--
+[9:50 - 9:58] (8s)
+
 • The familiar excuse — just add one more conditional
 
 • Seems harmless in the moment
@@ -784,6 +806,8 @@ Template spaghetti.
 ## Impossible to test.
 
 <!--
+[9:58 - 10:06] (8s)
+
 • Reality: template becomes unreadable
 
 • Testing requires mocking every branch
@@ -807,7 +831,7 @@ But what about **HOW** it behaves?
 - _"Click to select vs checkbox"_
 
 <!--
-[9:15 - 9:45]
+[10:06 - 10:40] (34s)
 
 • Good move — extracted structural decision, boolean gone, parent decides
 
@@ -847,7 +871,7 @@ select(item: Item) {
 The component knows **too much** about the "how".
 
 <!--
-[9:45 - 10:00]
+[10:40 - 11:05] (25s)
 
 • if multiSelect → toggle logic, else → replace logic
 
@@ -875,7 +899,7 @@ Separating the <span style="color: var(--cx-green); font-weight: bold;">HOW</spa
 How it's done. Single or Multi, never both.
 
 <!--
-[10:00 - 10:15]
+[11:05 - 11:25] (20s)
 
 • Tool 2: Strategy via DI — separates the HOW
 
@@ -895,6 +919,8 @@ layout: section
 "Just add an if for multi-select"
 
 <!--
+[11:25 - 11:33] (8s)
+
 • The familiar excuse — just check the mode
 
 • One condition, what's the harm?
@@ -911,6 +937,8 @@ if-forests.
 ## Untestable without mocks.
 
 <!--
+[11:33 - 11:41] (8s)
+
 • Reality: conditions multiply
 
 • Every test needs to mock every branch
@@ -935,7 +963,7 @@ That **if-else** needs to disappear. But where does the decision go?
 | Preview      | None      |
 
 <!--
-[10:30 - 10:45]
+[11:41 - 12:00] (19s)
 
 • if-else needs to disappear from component — but where to?
 
@@ -966,7 +994,7 @@ export const SELECTION_STRATEGY =
 ```
 
 <!--
-[10:45 - 11:00]
+[12:00 - 12:20] (20s)
 
 • Interface: defines WHAT (select), not HOW
 
@@ -999,7 +1027,7 @@ export class SingleSelection implements SelectionStrategy {
 Click = replace. Only one item selected.
 
 <!--
-[11:00 - 11:15]
+[12:20 - 12:35] (15s)
 
 • Single selection — click replaces current selection
 
@@ -1032,7 +1060,7 @@ Click = toggle. Multiple items selected.
 **Same interface. Different "how".**
 
 <!--
-[11:15 - 11:30]
+[12:35 - 12:55] (20s)
 
 • Multi selection — click toggles item in set
 
@@ -1064,7 +1092,7 @@ export class AdminPanel {}
 **Zero if-statements.** Context decides, not component.
 
 <!--
-[11:30 - 12:15]
+[12:55 - 13:40] (45s)
 
 • Decision lives in PROVIDER
 
@@ -1105,7 +1133,7 @@ export class ListComponent {
 <img src="/assets/one-does-not-simply.jpg" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-120 rounded-lg shadow-xl" />
 
 <!--
-[12:15 - 13:00]
+[13:40 - 14:25] (45s)
 
 • Strategy worked — HOW is out, zero ifs
 
@@ -1139,7 +1167,7 @@ Separating the <span style="color: var(--cx-green); font-weight: bold;">WHETHER<
 Is it on or off? Composable opt-ins.
 
 <!--
-[13:15 - 13:30]
+[14:25 - 14:45] (20s)
 
 • Tool 3: Directives — separates the WHETHER
 
@@ -1159,6 +1187,8 @@ layout: section
 "Just inject it everywhere"
 
 <!--
+[14:45 - 14:53] (8s)
+
 • The familiar excuse — inject all services, check flags later
 
 • Easier than thinking about what's actually needed
@@ -1175,6 +1205,8 @@ Hidden features.
 ## Null-check hell.
 
 <!--
+[14:53 - 15:01] (8s)
+
 • Reality: can't tell what's active without reading code
 
 • Every service needs null checks and guards
@@ -1209,7 +1241,7 @@ export class Persistable {
 Directive owns persistence. List doesn't know it's being saved.
 
 <!--
-[14:00 - 14:30]
+[15:01 - 15:40] (39s)
 
 • Selector: `app-list[persistable]` — no attribute = doesn't exist, zero overhead
 
@@ -1249,7 +1281,7 @@ layout: default
 **Visible in the template.** Look at the HTML, know what it does.
 
 <!--
-[14:30 - 15:00]
+[15:40 - 16:20] (40s)
 
 • Simple list? Nothing. Zero unnecessary injections
 
@@ -1292,7 +1324,7 @@ Same combo. Three times.
 <img src="/assets/distracted-boyfriend.jpg" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-120 rounded-lg shadow-xl" />
 
 <!--
-[15:00 - 15:45]
+[16:20 - 17:00] (40s)
 
 • Three different pages, exact same combo — copy-paste
 
@@ -1322,7 +1354,7 @@ Two times is coincidence.
 ## Name it.
 
 <!--
-[15:45 - 16:30]
+[17:00 - 17:40] (40s)
 
 • Once = code. Twice = coincidence. Three times = concept — NAME IT
 
@@ -1360,7 +1392,7 @@ export class PowerList {}
 Forward inputs explicitly. **No magic.**
 
 <!--
-[16:30 - 17:00]
+[17:40 - 18:20] (40s)
 
 • Angular has `hostDirectives`
 
@@ -1400,7 +1432,7 @@ layout: default
 <img src="/assets/pam-theyre-different.jpg" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-120 rounded-lg shadow-xl" />
 
 <!--
-[17:00 - 17:15]
+[18:20 - 18:40] (20s)
 
 • Before: grocery list of attributes. After: `powerList`
 
@@ -1446,7 +1478,7 @@ export class AutoSaveCoordinator {
 The **Glue**. When A, B, and C **must** work together.
 
 <!--
-[17:15 - 17:45]
+[18:40 - 19:15] (35s)
 
 • Last pattern: Coordinator — the glue
 
@@ -1485,7 +1517,7 @@ layout: center
 </div>
 
 <!--
-[17:45 - 17:52]
+[19:15 - 19:22] (7s)
 
 • Five steps — journey complete
 -->
@@ -1501,7 +1533,7 @@ layout: center
 </div>
 
 <!--
-[17:52 - 17:58]
+[19:22 - 19:30] (8s)
 
 • Clear scope — know exactly what to extract before starting
 -->
@@ -1517,7 +1549,7 @@ layout: center
 </div>
 
 <!--
-[17:58 - 18:04]
+[19:30 - 19:38] (8s)
 
 • Parallel work — one dev on list, another on header, no waiting
 -->
@@ -1533,7 +1565,7 @@ layout: center
 </div>
 
 <!--
-[18:04 - 18:10]
+[19:38 - 19:46] (8s)
 
 • Testable in isolation — each part testable separately
 -->
@@ -1549,7 +1581,7 @@ layout: center
 </div>
 
 <!--
-[18:10 - 18:16]
+[19:46 - 19:54] (8s)
 
 • Single point of change — add behavior? one place
 -->
@@ -1565,7 +1597,7 @@ layout: center
 </div>
 
 <!--
-[18:16 - 18:22]
+[19:54 - 20:05] (11s)
 
 • Shared vocabulary — say "powerList" in daily, everyone knows
 
@@ -1585,7 +1617,7 @@ layout: section
 Each tool has limits.
 
 <!--
-[18:00 - 18:15]
+[20:05 - 20:15] (10s)
 
 • When NOT to use? Let's set boundaries
 -->
@@ -1601,7 +1633,7 @@ layout: center
 </div>
 
 <!--
-[18:22 - 18:30]
+[20:15 - 20:25] (10s)
 
 • Content Projection? Structure only. Not behavior
 -->
@@ -1617,7 +1649,7 @@ layout: center
 </div>
 
 <!--
-[18:30 - 18:38]
+[20:25 - 20:35] (10s)
 
 • Strategy? Not if only one implementation exists
 -->
@@ -1633,7 +1665,7 @@ layout: center
 </div>
 
 <!--
-[18:38 - 18:46]
+[20:35 - 20:45] (10s)
 
 • Directives? Not for exclusive A-or-B choices
 -->
@@ -1649,7 +1681,7 @@ layout: center
 </div>
 
 <!--
-[18:46 - 18:54]
+[20:45 - 20:58] (13s)
 
 • hostDirectives? Bundle only related things
 
@@ -1669,7 +1701,7 @@ layout: section
 Remember the price we paid?
 
 <!--
-[18:30 - 19:00]
+[20:58 - 21:40] (42s)
 
 • Remember the price we paid?
 
@@ -1699,7 +1731,7 @@ Inputs are your default. When they fail:
 **WHERE, WHAT, HOW, WHETHER, WHICH**
 
 <!--
-[19:00 - 19:10]
+[21:40 - 21:52] (12s)
 
 • Remember the journey? Map, Extract, Interface, Compose, Bundle
 
@@ -1718,7 +1750,7 @@ layout: center
 </div>
 
 <!--
-[19:10 - 19:18]
+[21:52 - 22:02] (10s)
 
 • Component drifting across contexts? Matrix — Map
 -->
@@ -1735,7 +1767,7 @@ layout: center
 </div>
 
 <!--
-[19:18 - 19:26]
+[22:02 - 22:12] (10s)
 
 • Boolean changing structure? Content Projection — Extract
 -->
@@ -1752,7 +1784,7 @@ layout: center
 </div>
 
 <!--
-[19:26 - 19:34]
+[22:12 - 22:22] (10s)
 
 • Exclusive alternatives? Strategy — Interface
 -->
@@ -1769,7 +1801,7 @@ layout: center
 </div>
 
 <!--
-[19:34 - 19:42]
+[22:22 - 22:32] (10s)
 
 • Optional features? Directives — Compose
 -->
@@ -1786,7 +1818,7 @@ layout: center
 </div>
 
 <!--
-[19:42 - 19:50]
+[22:32 - 22:45] (13s)
 
 • Copy-paste 3x? hostDirectives — Bundle
 
@@ -1810,7 +1842,7 @@ Good abstractions aren't chosen.
 <img src="/assets/qr-slides.png" class="absolute bottom-8 right-8 w-28 opacity-80" />
 
 <!--
-[19:45 - 20:45]
+[22:45 - 23:55] (70s)
 
 • "Good abstractions aren't chosen. They're discovered."
 
@@ -1856,7 +1888,7 @@ layout: end
 <div class="text-left mt-4 text-3xl font-bold">Questions?</div>
 
 <!--
-[20:45 - 21:45]
+[23:55 - 24:10] (15s)
 
 • Thank you all
 

@@ -282,10 +282,65 @@ h3 {
 
 /* Inline code styling */
 :not(pre) > code {
-  background: rgba(255, 255, 255, 0.15);
-  color: var(--cx-white);
+  background: rgba(55, 65, 81, 0.1);
+  color: var(--cx-text-dark);
   padding: 0.15rem 0.4rem;
   border-radius: 0.25rem;
   font-size: 0.9em;
   font-weight: 500;
+}
+
+/* Blockquote styling */
+blockquote {
+  position: relative;
+  margin: 1.5rem 0;
+  padding: 1.5rem 2rem 1.5rem 1.5rem;
+  background: rgba(52, 211, 153, 0.08);
+  border-left: 4px solid var(--cx-green);
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+
+blockquote::after {
+  content: '"';
+  position: absolute;
+  top: 0.75rem;
+  right: 1.5rem;
+  font-size: 3rem;
+  font-family: Georgia, serif;
+  color: var(--cx-green);
+  opacity: 0.4;
+  line-height: 1;
+}
+
+blockquote p {
+  color: var(--cx-text);
+  font-size: 1.25rem;
+  font-style: italic;
+  line-height: 1.6;
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+
+blockquote p:first-child {
+  margin-top: 0;
+}
+
+blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* Citation styling - use em inside blockquote for attribution */
+blockquote em:last-child,
+blockquote cite {
+  display: block;
+  margin-top: 1rem;
+  font-size: 1rem;
+  font-style: normal;
+  color: var(--cx-text-muted);
+}
+
+blockquote em:last-child::before,
+blockquote cite::before {
+  content: '— ';
 }
