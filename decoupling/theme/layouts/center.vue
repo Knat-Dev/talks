@@ -34,6 +34,7 @@
   align-items: center;
   text-align: center;
   position: relative;
+  color: var(--cx-text-dark);
 }
 
 .layout-logo {

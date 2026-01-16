@@ -58,9 +58,9 @@ layout: default
 
   <!-- Name & Role -->
   <div class="shrink-0">
-    <div class="font-bold text-2xl text-gray-800 flex items-center gap-2">Dor Peled <span class="text-gray-400 font-normal">·</span> <span class="text-lg font-normal text-gray-500">@Knat-Dev</span></div>
+    <div class="font-bold text-2xl text-gray-800 flex items-center gap-2">Dor Peled <span class="text-gray-600 font-normal">·</span> <span class="text-lg font-normal text-gray-700">@Knat-Dev</span></div>
     <div class="text-lg text-gray-600">Software Engineer @ Coralogix</div>
-    <div class="text-sm text-gray-500 mt-1">
+    <div class="text-sm text-gray-700 mt-1">
       Angular, large codebases, and hard trade-offs
     </div>
     <div class="flex gap-4 mt-4 text-lg">
@@ -140,9 +140,6 @@ layout: default
 
 </template>
 
-<div class="grid grid-cols-2 gap-12 mt-8">
-<div>
-
 **Started simple...**
 
 ```ts
@@ -154,87 +151,191 @@ export class GridComponent<T> {
 }
 ```
 
-</div>
-<div>
-
-**Then requirements came...**
-
-<v-clicks>
-
-- Custom templates
-- Row styles
-- Expand / Collapse
-- Context menu
-- Lazy loading
-- Persistence
-- Global state deps...
-- "Make it generic & reusable"
-
-</v-clicks>
-
-</div>
-</div>
-
-<img v-click src="/assets/this-is-fine.jpg" class="absolute top-10 right-10 w-96 rounded-lg shadow-xl" />
-
 <!--
-[1:30 - 2:30]
+[1:30 - 1:40]
 
 • Before theory — let's see what actually happened
 
 • Built a Grid component — started simple: data, loading, options
-
-• Then requirements came... [click through each]
-
-• [click] Who maintained something like this? Let me tell you what happened
 -->
 
 ---
-layout: default
+layout: section
 ---
 
-<template #title>
+# Then Requirements Came...
 
-# The Price We Paid
+<!--
+[1:40 - 1:44]
 
-</template>
+• Requirements started coming in...
+-->
 
-<div class="grid grid-cols-3 gap-6 mt-8">
+---
+layout: section
+---
+
+# Custom templates
+
+<!--
+[1:44 - 1:52]
+
+• Different column types needed different rendering — dates, icons, actions, custom HTML
+-->
+
+---
+layout: section
+---
+
+# Row styles
+
+<!--
+[1:52 - 2:00]
+
+• Highlight overdue items in red, completed in green, selected rows need different background
+-->
+
+---
+layout: section
+---
+
+# Expand / Collapse
+
+<!--
+[2:00 - 2:08]
+
+• Click a row to show detail panel below — order history, nested data, related items
+-->
+
+---
+layout: section
+---
+
+# Context menu
+
+<!--
+[2:08 - 2:16]
+
+• Right-click for actions — edit, delete, duplicate, export row
+-->
+
+---
+layout: section
+---
+
+# Lazy loading
+
+<!--
+[2:16 - 2:24]
+
+• 10,000 rows? Can't render all at once — virtual scrolling, load on demand
+-->
+
+---
+layout: section
+---
+
+# Persistence
+
+<!--
+[2:24 - 2:32]
+
+• User sorts by date, closes browser, comes back — remember their preferences
+-->
+
+---
+layout: section
+---
+
+# Global state deps...
+
+<!--
+[2:32 - 2:40]
+
+• Feature flags, user permissions, theme settings — grid needs to react to all of them
+-->
+
+---
+layout: center
+---
 
 <div class="text-center">
-<div class="text-4xl mb-3">🧠</div>
-<div class="font-bold text-red-400">Cognitive Load</div>
-<div class="text-sm text-gray-400 mt-2">Had to hold the entire Grid in your head to make any change</div>
+  <div class="text-2xl text-gray-700 mb-8">And then...</div>
+  <div class="text-5xl font-bold">"Make it generic & reusable"</div>
+  <div class="text-xl text-gray-600 mt-4">across the entire company</div>
 </div>
+
+<img src="/assets/this-is-fine.jpg" class="absolute bottom-8 right-8 w-80 rounded-lg shadow-xl" />
+
+<!--
+[2:40 - 2:54]
+
+• The big one — every team wants to use it, but they all have slightly different needs
+
+• Who maintained something like this? Let me tell you what happened
+-->
+
+---
+layout: center
+---
 
 <div class="text-center">
-<div class="text-4xl mb-3">🚧</div>
-<div class="font-bold text-red-400">Bottleneck</div>
-<div class="text-sm text-gray-400 mt-2">Only 2 people "understood" it. Everyone else was afraid to touch it</div>
-</div>
-
-<div class="text-center">
-<div class="text-4xl mb-3">🐌</div>
-<div class="font-bold text-red-400">Slow Delivery</div>
-<div class="text-sm text-gray-400 mt-2">Simple features took weeks. Bugs hid in the complexity</div>
-</div>
-
-</div>
-
-<div v-click class="text-center mt-12 text-xl">
-  <span class="text-gray-400">Technical debt</span> <span class="text-red-400 font-bold">compounds</span><span class="text-gray-400">. Every shortcut today is a tax on every change tomorrow.</span>
+  <div class="text-8xl mb-8">🧠</div>
+  <div class="text-4xl font-bold text-red-400 mb-4">Cognitive Load</div>
+  <div class="text-xl text-gray-600">Had to hold the entire Grid in your head to make any change</div>
 </div>
 
 <!--
-[2:30 - 3:30]
+[2:50 - 3:05]
 
 • Cognitive Load — hold 2000 lines in your head for any change
+-->
+
+---
+layout: center
+---
+
+<div class="text-center">
+  <div class="text-8xl mb-8">🚧</div>
+  <div class="text-4xl font-bold text-red-400 mb-4">Bottleneck</div>
+  <div class="text-xl text-gray-600">Only 2 people "understood" it. Everyone else was afraid to touch it</div>
+</div>
+
+<!--
+[3:05 - 3:20]
 
 • Bottleneck — only 2 people "understood" it, rest afraid to touch
+-->
+
+---
+layout: center
+---
+
+<div class="text-center">
+  <div class="text-8xl mb-8">🐌</div>
+  <div class="text-4xl font-bold text-red-400 mb-4">Slow Delivery</div>
+  <div class="text-xl text-gray-600">Simple features took weeks. Bugs hid in the complexity</div>
+</div>
+
+<!--
+[3:20 - 3:35]
 
 • Slow Delivery — simple features took weeks, bugs hid in complexity
+-->
 
-• [click] Technical debt compounds — every shortcut is a tax on tomorrow
+---
+layout: center
+---
+
+<div class="text-center text-3xl">
+  <span class="text-gray-600">Technical debt</span> <span class="text-red-400 font-bold">compounds</span><span class="text-gray-600">.</span>
+  <div class="mt-6 text-xl text-gray-700">Every shortcut today is a tax on every change tomorrow.</div>
+</div>
+
+<!--
+[3:35 - 3:50]
+
+• Technical debt compounds — every shortcut is a tax on tomorrow
 -->
 
 ---
@@ -304,41 +405,97 @@ Coupling isn't bad.
 -->
 
 ---
-layout: default
+layout: section
 ---
-
-<template #title>
 
 # The Journey
 
-</template>
-
-From Mega Component to clean architecture:
-
-<v-clicks>
-
-1. **Map** - The **WHERE** (Identify context)
-2. **Extract** - The **WHAT** (Content Projection)
-3. **Interface** - The **HOW** (Strategy via DI)
-4. **Compose** - The **WHETHER** (Directives)
-5. **Bundle** - The **WHICH** (hostDirectives)
-
-</v-clicks>
+From Mega Component to clean architecture
 
 <!--
-[4:00 - 4:30]
+[4:00 - 4:06]
 
 • Here's the map — five steps from Mega Component to clean architecture
+-->
 
-• [click] Map — what varies and where, shooting blind without it
+---
+layout: center
+---
 
-• [click] Extract — pull behaviors out of the component
+<div class="text-center">
+  <div class="text-6xl font-bold mb-4">1. Map</div>
+  <div class="text-2xl text-gray-600">The <span style="color: var(--cx-green); font-weight: bold;">WHERE</span></div>
+  <div class="text-xl text-gray-700 mt-4">Identify context</div>
+</div>
 
-• [click] Interface — define contracts for swappable behaviors
+<!--
+[4:06 - 4:12]
 
-• [click] Compose — make behaviors optional with directives
+• Map — what varies and where, shooting blind without it
+-->
 
-• [click] Bundle — group repeating patterns with hostDirectives
+---
+layout: center
+---
+
+<div class="text-center">
+  <div class="text-6xl font-bold mb-4">2. Extract</div>
+  <div class="text-2xl text-gray-600">The <span style="color: var(--cx-green); font-weight: bold;">WHAT</span></div>
+  <div class="text-xl text-gray-700 mt-4">Content Projection</div>
+</div>
+
+<!--
+[4:12 - 4:18]
+
+• Extract — pull behaviors out of the component
+-->
+
+---
+layout: center
+---
+
+<div class="text-center">
+  <div class="text-6xl font-bold mb-4">3. Interface</div>
+  <div class="text-2xl text-gray-600">The <span style="color: var(--cx-green); font-weight: bold;">HOW</span></div>
+  <div class="text-xl text-gray-700 mt-4">Strategy via DI</div>
+</div>
+
+<!--
+[4:18 - 4:24]
+
+• Interface — define contracts for swappable behaviors
+-->
+
+---
+layout: center
+---
+
+<div class="text-center">
+  <div class="text-6xl font-bold mb-4">4. Compose</div>
+  <div class="text-2xl text-gray-600">The <span style="color: var(--cx-green); font-weight: bold;">WHETHER</span></div>
+  <div class="text-xl text-gray-700 mt-4">Directives</div>
+</div>
+
+<!--
+[4:24 - 4:30]
+
+• Compose — make behaviors optional with directives
+-->
+
+---
+layout: center
+---
+
+<div class="text-center">
+  <div class="text-6xl font-bold mb-4">5. Bundle</div>
+  <div class="text-2xl text-gray-600">The <span style="color: var(--cx-green); font-weight: bold;">WHICH</span></div>
+  <div class="text-xl text-gray-700 mt-4">hostDirectives</div>
+</div>
+
+<!--
+[4:30 - 4:36]
+
+• Bundle — group repeating patterns with hostDirectives
 
 • Let's start with Map
 -->
@@ -356,21 +513,101 @@ layout: default
 | Feature | Main Page | Admin Panel | Preview |
 |---------|-----------|-------------|---------|
 | items | ✓ | ✓ | ✓ |
-| showHeader | ✓ | ✗ | ✓ |
-| sortable | ✓ | ✓ | ✗ |
-| filterable | ✗ | ✓ | ✓ |
-| persistState | ✗ | ✓ | ✗ |
 
-**Baseline** = always there. **The rest** = opt-in.
+**items** everywhere? That's the **baseline** — stays in component.
 
 <!--
-[4:30 - 5:00]
+[4:36 - 4:44]
 
 • Map tool — simple matrix: rows = features, columns = contexts
 
 • items everywhere? baseline — stays in component
+-->
+
+---
+layout: default
+---
+
+<template #title>
+
+# The Map (WHERE)
+
+</template>
+
+| Feature | Main Page | Admin Panel | Preview |
+|---------|-----------|-------------|---------|
+| showHeader | ✓ | ✗ | ✓ |
+
+**showHeader** varies? Signal for **Content Projection**.
+
+<!--
+[4:44 - 4:52]
 
 • showHeader varies? signal for Content Projection
+-->
+
+---
+layout: default
+---
+
+<template #title>
+
+# The Map (WHERE)
+
+</template>
+
+| Feature | Main Page | Admin Panel | Preview |
+|---------|-----------|-------------|---------|
+| sortable | ✓ | ✓ | ✗ |
+
+**sortable** varies — another opt-in behavior.
+
+<!--
+[4:52 - 5:00]
+
+• sortable varies across contexts
+-->
+
+---
+layout: default
+---
+
+<template #title>
+
+# The Map (WHERE)
+
+</template>
+
+| Feature | Main Page | Admin Panel | Preview |
+|---------|-----------|-------------|---------|
+| filterable | ✗ | ✓ | ✓ |
+
+**filterable** — not everywhere either.
+
+<!--
+[5:00 - 5:08]
+
+• filterable also varies
+-->
+
+---
+layout: default
+---
+
+<template #title>
+
+# The Map (WHERE)
+
+</template>
+
+| Feature | Main Page | Admin Panel | Preview |
+|---------|-----------|-------------|---------|
+| persistState | ✗ | ✓ | ✗ |
+
+**persistState** only in one place? **Doesn't belong in component.**
+
+<!--
+[5:08 - 5:20]
 
 • persistState only in one place? doesn't belong in component
 
@@ -744,17 +981,12 @@ layout: default
 
 <template #title>
 
-# Strategy: Two Implementations
+# Strategy: LocalStorageStrategy
 
 </template>
 
-<div class="grid grid-cols-2 gap-4">
-<div>
-
 ```ts [local-storage.ts]
-export class LocalStorageStrategy
-  implements StorageStrategy
-{
+export class LocalStorageStrategy implements StorageStrategy {
   async save(key: string, data: unknown) {
     localStorage.setItem(key, JSON.stringify(data));
   }
@@ -765,13 +997,26 @@ export class LocalStorageStrategy
 }
 ```
 
-</div>
-<div>
+Saves in browser. Works offline.
+
+<!--
+[11:00 - 11:15]
+
+• localStorage — saves in browser, works offline
+-->
+
+---
+layout: default
+---
+
+<template #title>
+
+# Strategy: ServerStorageStrategy
+
+</template>
 
 ```ts [server-storage.ts]
-export class ServerStorageStrategy
-  implements StorageStrategy
-{
+export class ServerStorageStrategy implements StorageStrategy {
   #api = inject(ApiService);
 
   async save(key: string, data: unknown) {
@@ -783,17 +1028,12 @@ export class ServerStorageStrategy
 }
 ```
 
-</div>
-</div>
+Calls API. Syncs across devices.
 
-Same interface. Different "how".
+**Same interface. Different "how".**
 
 <!--
-[11:00 - 11:30]
-
-• Two implementations: localStorage (left) and Server (right)
-
-• localStorage — saves in browser, works offline
+[11:15 - 11:30]
 
 • Server — calls API, syncs across devices
 
@@ -863,9 +1103,7 @@ export class ListComponent {
 
 **Too many tokens.** Strategy solved **HOW**. But what about **WHETHER**?
 
-<v-click>
 <img src="/assets/one-does-not-simply.jpg" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-120 rounded-lg shadow-xl" />
-</v-click>
 
 <!--
 [12:15 - 13:00]
@@ -1052,9 +1290,7 @@ layout: default
 
 Same combo. Three times.
 
-<v-click>
 <img src="/assets/distracted-boyfriend.jpg" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-120 rounded-lg shadow-xl" />
-</v-click>
 
 <!--
 [15:00 - 15:45]
@@ -1162,9 +1398,7 @@ layout: default
 <app-list powerList [items]="data" />
 ```
 
-<v-click>
 <img src="/assets/pam-theyre-different.jpg" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-120 rounded-lg shadow-xl" />
-</v-click>
 
 <!--
 [17:00 - 17:15]
@@ -1229,7 +1463,7 @@ layout: center
 ---
 
 <div class="text-center">
-  <div class="text-gray-400 text-sm uppercase tracking-widest mb-6">The Journey</div>
+  <div class="text-gray-600 text-sm uppercase tracking-widest mb-6">The Journey</div>
   <div class="flex justify-center gap-4">
     <div class="px-4 py-2 rounded-full text-sm font-semibold shadow-lg" style="background: var(--cx-green); color: #111827;">
       ✓ Map
@@ -1260,43 +1494,77 @@ layout: center
 ---
 
 <div class="text-center">
-  <div class="text-gray-400 text-sm uppercase tracking-widest mb-6">Team Superpowers</div>
-  <div class="flex justify-center gap-8 mt-8">
-    <div class="text-center">
-      <div class="text-2xl mb-2">🎯</div>
-      <div class="text-sm text-gray-300">Clear scope</div>
-    </div>
-    <div class="text-center">
-      <div class="text-2xl mb-2">⚡</div>
-      <div class="text-sm text-gray-300">Parallel work</div>
-    </div>
-    <div class="text-center">
-      <div class="text-2xl mb-2">🧪</div>
-      <div class="text-sm text-gray-300">Testable in isolation</div>
-    </div>
-    <div class="text-center">
-      <div class="text-2xl mb-2">📍</div>
-      <div class="text-sm text-gray-300">Single point of change</div>
-    </div>
-    <div class="text-center">
-      <div class="text-2xl mb-2">💬</div>
-      <div class="text-sm text-gray-300">Shared vocabulary</div>
-    </div>
-  </div>
+  <div class="text-8xl mb-8">🎯</div>
+  <div class="text-4xl font-bold mb-4">Clear Scope</div>
+  <div class="text-xl text-gray-600">Know exactly what to extract before starting</div>
 </div>
 
 <!--
-[17:52 - 18:00]
-
-• Each gave us a superpower:
+[17:52 - 17:58]
 
 • Clear scope — know exactly what to extract before starting
+-->
+
+---
+layout: center
+---
+
+<div class="text-center">
+  <div class="text-8xl mb-8">⚡</div>
+  <div class="text-4xl font-bold mb-4">Parallel Work</div>
+  <div class="text-xl text-gray-600">One dev on list, another on header — no waiting</div>
+</div>
+
+<!--
+[17:58 - 18:04]
 
 • Parallel work — one dev on list, another on header, no waiting
+-->
+
+---
+layout: center
+---
+
+<div class="text-center">
+  <div class="text-8xl mb-8">🧪</div>
+  <div class="text-4xl font-bold mb-4">Testable in Isolation</div>
+  <div class="text-xl text-gray-600">Each part testable separately</div>
+</div>
+
+<!--
+[18:04 - 18:10]
 
 • Testable in isolation — each part testable separately
+-->
+
+---
+layout: center
+---
+
+<div class="text-center">
+  <div class="text-8xl mb-8">📍</div>
+  <div class="text-4xl font-bold mb-4">Single Point of Change</div>
+  <div class="text-xl text-gray-600">Add behavior? One place.</div>
+</div>
+
+<!--
+[18:10 - 18:16]
 
 • Single point of change — add behavior? one place
+-->
+
+---
+layout: center
+---
+
+<div class="text-center">
+  <div class="text-8xl mb-8">💬</div>
+  <div class="text-4xl font-bold mb-4">Shared Vocabulary</div>
+  <div class="text-xl text-gray-600">Say "powerList" in daily — everyone knows</div>
+</div>
+
+<!--
+[18:16 - 18:22]
 
 • Shared vocabulary — say "powerList" in daily, everyone knows
 
@@ -1322,36 +1590,65 @@ Each tool has limits.
 -->
 
 ---
-layout: default
+layout: center
 ---
 
-<template #title>
-
-# Guardrails
-
-</template>
-
-| Pattern            | Don't use when...                         |
-| ------------------ | ----------------------------------------- |
-| Content Projection | You need behavior, not structure          |
-| Strategy via DI    | Only one implementation will ever exist   |
-| Directives         | Behavior is exclusive (use Strategy instead) |
-| hostDirectives     | Things are unrelated — don't bundle them  |
+<div class="text-center">
+  <div class="text-gray-600 text-sm uppercase tracking-widest mb-6">Guardrail</div>
+  <div class="text-4xl font-bold mb-6">Content Projection</div>
+  <div class="text-2xl text-red-400">Don't use when you need behavior, not structure</div>
+</div>
 
 <!--
-[18:15 - 18:30]
-
-• Inputs = cheap. Extraction patterns = cost complexity
-
-• Use only when price is already there
-
-• Don't pull heavy artillery if simple input works
+[18:22 - 18:30]
 
 • Content Projection? Structure only. Not behavior
+-->
+
+---
+layout: center
+---
+
+<div class="text-center">
+  <div class="text-gray-600 text-sm uppercase tracking-widest mb-6">Guardrail</div>
+  <div class="text-4xl font-bold mb-6">Strategy via DI</div>
+  <div class="text-2xl text-red-400">Don't use when only one implementation will ever exist</div>
+</div>
+
+<!--
+[18:30 - 18:38]
 
 • Strategy? Not if only one implementation exists
+-->
+
+---
+layout: center
+---
+
+<div class="text-center">
+  <div class="text-gray-600 text-sm uppercase tracking-widest mb-6">Guardrail</div>
+  <div class="text-4xl font-bold mb-6">Directives</div>
+  <div class="text-2xl text-red-400">Don't use when behavior is exclusive (use Strategy instead)</div>
+</div>
+
+<!--
+[18:38 - 18:46]
 
 • Directives? Not for exclusive A-or-B choices
+-->
+
+---
+layout: center
+---
+
+<div class="text-center">
+  <div class="text-gray-600 text-sm uppercase tracking-widest mb-6">Guardrail</div>
+  <div class="text-4xl font-bold mb-6">hostDirectives</div>
+  <div class="text-2xl text-red-400">Don't use when things are unrelated — don't bundle them</div>
+</div>
+
+<!--
+[18:46 - 18:54]
 
 • hostDirectives? Bundle only related things
 
@@ -1391,10 +1688,8 @@ Remember the price we paid?
 -->
 
 ---
-layout: image-right
+layout: section
 ---
-
-::left::
 
 # Decision Framework
 
@@ -1402,46 +1697,95 @@ Inputs are your default. When they fail:
 
 **WHERE, WHAT, HOW, WHETHER, WHICH**
 
-::default::
-
-| The Tell           | Pattern            | Separates   |
-| ------------------ | ------------------ | ----------- |
-| Cross-context drift | Map Feature × Context | The **WHERE** (Map) |
-| Structural flags   | Content Projection | The **WHAT**    |
-| Exclusive alternatives | Strategy via DI    | The **HOW**     |
-| Composable opt-ins | Directives         | The **WHETHER** |
-| Same combo 3x      | hostDirectives     | The **WHICH**    |
-
 <!--
-[19:00 - 19:45]
+[19:00 - 19:10]
 
 • Remember the journey? Map, Extract, Interface, Compose, Bundle
 
-• Here's the summary — take a photo. Five questions: WHERE, WHAT, HOW, WHETHER, WHICH
+• Here's the summary — five questions: WHERE, WHAT, HOW, WHETHER, WHICH
+-->
 
-• Map = WHERE — where is component used, what varies? Matrix
+---
+layout: center
+---
 
-• Each tool answers different question:
+<div class="text-center">
+  <div class="text-gray-600 text-sm uppercase tracking-widest mb-4">The Tell</div>
+  <div class="text-2xl mb-6">Cross-context drift</div>
+  <div class="text-5xl font-bold mb-4" style="color: var(--cx-green);">Map Feature × Context</div>
+  <div class="text-xl text-gray-600">Separates the <strong>WHERE</strong></div>
+</div>
 
-• WHAT — what content? Content Projection
-
-• HOW — how is it done? Strategy
-
-• WHETHER — does it happen at all? Directives
-
-• WHICH — which ones belong together? hostDirectives
-
-• Inputs = home. Stay there
-
-• When it breaks, look for the Tell:
+<!--
+[19:10 - 19:18]
 
 • Component drifting across contexts? Matrix — Map
+-->
+
+---
+layout: center
+---
+
+<div class="text-center">
+  <div class="text-gray-600 text-sm uppercase tracking-widest mb-4">The Tell</div>
+  <div class="text-2xl mb-6">Structural flags</div>
+  <div class="text-5xl font-bold mb-4" style="color: var(--cx-green);">Content Projection</div>
+  <div class="text-xl text-gray-600">Separates the <strong>WHAT</strong></div>
+</div>
+
+<!--
+[19:18 - 19:26]
 
 • Boolean changing structure? Content Projection — Extract
+-->
+
+---
+layout: center
+---
+
+<div class="text-center">
+  <div class="text-gray-600 text-sm uppercase tracking-widest mb-4">The Tell</div>
+  <div class="text-2xl mb-6">Exclusive alternatives</div>
+  <div class="text-5xl font-bold mb-4" style="color: var(--cx-green);">Strategy via DI</div>
+  <div class="text-xl text-gray-600">Separates the <strong>HOW</strong></div>
+</div>
+
+<!--
+[19:26 - 19:34]
 
 • Exclusive alternatives? Strategy — Interface
+-->
+
+---
+layout: center
+---
+
+<div class="text-center">
+  <div class="text-gray-600 text-sm uppercase tracking-widest mb-4">The Tell</div>
+  <div class="text-2xl mb-6">Composable opt-ins</div>
+  <div class="text-5xl font-bold mb-4" style="color: var(--cx-green);">Directives</div>
+  <div class="text-xl text-gray-600">Separates the <strong>WHETHER</strong></div>
+</div>
+
+<!--
+[19:34 - 19:42]
 
 • Optional features? Directives — Compose
+-->
+
+---
+layout: center
+---
+
+<div class="text-center">
+  <div class="text-gray-600 text-sm uppercase tracking-widest mb-4">The Tell</div>
+  <div class="text-2xl mb-6">Same combo 3x</div>
+  <div class="text-5xl font-bold mb-4" style="color: var(--cx-green);">hostDirectives</div>
+  <div class="text-xl text-gray-600">Separates the <strong>WHICH</strong></div>
+</div>
+
+<!--
+[19:42 - 19:50]
 
 • Copy-paste 3x? hostDirectives — Bundle
 

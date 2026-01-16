@@ -42,6 +42,7 @@ const { $page } = useSlideContext();
   position: relative;
   display: flex;
   flex-direction: column;
+  color: var(--cx-text-dark);
 }
 
 .logo {
