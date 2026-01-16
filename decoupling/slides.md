@@ -34,7 +34,7 @@ mdc: true
 <!--
 [0:00 - 0:25] (25s)
 
-• Greeting + hook
+• "Hi friends, today I'm going to talk about how to avoid unnecessary pain by listening to your code"
 
 • QR code to follow along
 
@@ -153,7 +153,7 @@ export class GridComponent<T> {
 <!--
 [1:50 - 2:05] (15s)
 
-• Before theory — let's see what actually happened
+• Before theory, or even practice — let's see what actually happened
 
 • Built a Grid component — started simple: data, loading, options
 -->
