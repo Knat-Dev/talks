@@ -32,7 +32,7 @@
   width: 100%;
   height: 100%;
   background: var(--cx-light-gradient);
-  padding: 4.5rem 4rem 3rem 4rem;
+  padding: 2.5rem 4rem;
   display: flex;
   flex-direction: column;
   position: relative;

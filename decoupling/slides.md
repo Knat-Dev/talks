@@ -116,17 +116,13 @@ Who here has added _"just one more input"_ to a component?
 One more boolean and that's it?
 
 <!--
-[0:55 - 1:50] (55s)
+[0:55 - 1:25] (30s)
 
 • Hands up: who added "just one more input"?
 
 • Hands up: who waited for someone to finish editing the same file?
 
-• That's how God Components are born
-
-• Looking for "tells" — like in poker
-
-• Let's see the component that taught me this
+• Let's see the component that taught me this lesson
 -->
 
 ---
@@ -151,7 +147,7 @@ export class GridComponent<T> {
 ```
 
 <!--
-[1:50 - 2:05] (15s)
+[1:25 - 1:40] (15s)
 
 • Before theory, or even practice — let's see what actually happened
 
@@ -166,16 +162,16 @@ layout: section
 
 Custom templates, row styles, expand/collapse...
 
-## Context menus, column management, persistence...
+## Context menus, column management...
 
 <!--
-[2:05 - 2:25] (20s)
+[1:40 - 2:00] (20s)
 
 • Requirements started coming in...
 
 • Custom templates, row styles, expand/collapse, context menus
 
-• Column management, persistence, global state deps...
+• Column management, global state deps...
 
 • Each one "just one more feature"
 -->
@@ -193,7 +189,7 @@ layout: center
 <img v-click src="/assets/this-is-fine.jpg" class="absolute bottom-8 right-8 w-80 rounded-lg shadow-xl" />
 
 <!--
-[2:25 - 2:50] (25s)
+[2:00 - 2:25] (25s)
 
 • The big one — every team wants to use it, but they all have slightly different needs
 
@@ -211,7 +207,7 @@ layout: center
 </div>
 
 <!--
-[2:50 - 3:05] (15s)
+[2:25 - 2:40] (15s)
 
 • Cognitive Load — hold 2000 lines in your head for any change
 -->
@@ -227,7 +223,7 @@ layout: center
 </div>
 
 <!--
-[3:05 - 3:20] (15s)
+[2:40 - 2:55] (15s)
 
 • Bottleneck — only 2 people "understood" it, rest afraid to touch
 -->
@@ -243,7 +239,7 @@ layout: center
 </div>
 
 <!--
-[3:20 - 3:35] (15s)
+[2:55 - 3:10] (15s)
 
 • Slow Delivery — simple features took weeks, bugs hid in complexity
 -->
@@ -258,7 +254,7 @@ layout: center
 </div>
 
 <!--
-[3:35 - 3:50] (15s)
+[3:10 - 3:25] (15s)
 
 • Technical debt compounds — every shortcut is a tax on tomorrow
 -->
@@ -273,24 +269,25 @@ layout: default
 
 </template>
 
-```ts [list.ts]
-export class ListComponent {
-  items = input<Item[]>([]);
+```ts
+export class ListComponent<T> {
+  items = input<T[]>([]);
 
   showHeader = input(false);
-  multiSelect = input(false);
-  autoSave = input(false);
+  sortable = input(false);
+  filterable = input(false);
+  persistable = input(false);
 }
 ```
 
-Three boolean flags. Looks innocent.
+Four boolean flags. Looks innocent.
 
 <!--
-[3:50 - 4:05] (15s)
+[3:25 - 3:40] (15s)
 
 • Grid too big for slides — built smaller example with same problems
 
-• Three boolean flags — looks innocent, right?
+• Four boolean flags — looks innocent, right?
 
 • But booleans never come alone...
 -->
@@ -305,7 +302,7 @@ layout: default
 
 </template>
 
-```ts [list.ts]
+```ts
 showHeader = input(false);
 headerTitle = input('');
 headerActions = input<Action[]>([]);
@@ -314,7 +311,7 @@ headerActions = input<Action[]>([]);
 One flag → three inputs.
 
 <!--
-[4:05 - 4:20] (15s)
+[3:40 - 3:55] (15s)
 
 • showHeader brings headerTitle, headerActions
 
@@ -327,24 +324,24 @@ layout: default
 
 <template #title>
 
-# Booleans Bring Friends: multiSelect
+# Booleans Bring Friends: sortable
 
 </template>
 
-```ts [list.ts]
-multiSelect = input(false);
-selection = output<Item[]>();
-#selectionService = inject(SelectionService);
+```ts
+sortable = input(false);
+sortKey = input<string>('');
+sortDir = input<'asc' | 'desc'>('asc');
 ```
 
-One flag → output + service.
+One flag → two config inputs.
 
 <!--
-[4:20 - 4:35] (15s)
+[3:55 - 4:05] (10s)
 
-• multiSelect brings selection output, SelectionService
+• sortable brings sortKey, sortDir
 
-• Now we have external dependencies
+• Now we need to know which column and direction
 -->
 
 ---
@@ -353,25 +350,50 @@ layout: default
 
 <template #title>
 
-# Booleans Bring Friends: autoSave
+# Booleans Bring Friends: filterable
 
 </template>
 
-```ts [list.ts]
-autoSave = input(false);
-saveDelay = input(300);
-onSaved = output<void>();
+```ts
+filterable = input(false);
+filterKey = input<string>('');
+filterValue = input<string>('');
+```
+
+One flag → two config inputs.
+
+<!--
+[4:05 - 4:15] (10s)
+
+• filterable brings filterKey, filterValue
+
+• More inputs to configure
+-->
+
+---
+layout: default
+---
+
+<template #title>
+
+# Booleans Bring Friends: persistable
+
+</template>
+
+```ts
+persistable = input(false);
+storageKey = input<string>('');
 #storage = inject(StorageService);
 ```
 
-One flag → config + output + service.
+One flag → config + service.
 
 _"What features am I today?"_
 
 <!--
-[4:35 - 4:50] (15s)
+[4:15 - 4:30] (15s)
 
-• autoSave brings saveDelay, onSaved, StorageService
+• persistable brings storageKey, StorageService
 
 • This component is having an identity crisis
 -->
@@ -391,7 +413,7 @@ layout: default
 Our **Mega List** is becoming one.
 
 <!--
-[4:50 - 5:05] (15s)
+[4:30 - 4:45] (15s)
 
 • God Component — knows too much, does too much
 
@@ -409,7 +431,7 @@ Coupling isn't bad.
 ## Hidden coupling is.
 
 <!--
-[5:05 - 5:40] (35s)
+[4:45 - 5:20] (35s)
 
 • Coupling isn't bad — HIDDEN coupling is
 
@@ -431,7 +453,7 @@ layout: section
 From God Component to clean architecture
 
 <!--
-[5:40 - 5:50] (10s)
+[5:20 - 5:30] (10s)
 
 • Here's the map — five steps from God Component to clean architecture
 -->
@@ -447,7 +469,7 @@ layout: center
 </div>
 
 <!--
-[5:50 - 5:58] (8s)
+[5:30 - 5:38] (8s)
 
 • Map — what varies and where, shooting blind without it
 -->
@@ -463,7 +485,7 @@ layout: center
 </div>
 
 <!--
-[5:58 - 6:06] (8s)
+[5:38 - 5:46] (8s)
 
 • Extract — pull behaviors out of the component
 -->
@@ -479,7 +501,7 @@ layout: center
 </div>
 
 <!--
-[6:06 - 6:14] (8s)
+[5:46 - 5:54] (8s)
 
 • Interface — define contracts for swappable behaviors
 -->
@@ -495,7 +517,7 @@ layout: center
 </div>
 
 <!--
-[6:14 - 6:22] (8s)
+[5:54 - 6:02] (8s)
 
 • Compose — make behaviors optional with directives
 -->
@@ -511,7 +533,7 @@ layout: center
 </div>
 
 <!--
-[6:22 - 6:32] (10s)
+[6:02 - 6:12] (10s)
 
 • Bundle — group repeating patterns with hostDirectives
 
@@ -535,7 +557,7 @@ layout: default
 **items** everywhere? That's the **baseline** — stays in component.
 
 <!--
-[6:32 - 6:45] (13s)
+[6:12 - 6:25] (13s)
 
 • Map tool — simple matrix: rows = features, columns = contexts
 
@@ -559,7 +581,7 @@ layout: default
 **showHeader** varies? Signal for **Content Projection**.
 
 <!--
-[6:45 - 6:55] (10s)
+[6:25 - 6:35] (10s)
 
 • showHeader varies? signal for Content Projection
 -->
@@ -570,22 +592,22 @@ layout: default
 
 <template #title>
 
-# The Map (WHERE) - multiSelect
+# The Map (WHERE) - persistable
 
 </template>
 
 | Feature | Main Page | Admin Panel | Preview |
 |---------|-----------|-------------|---------|
-| multiSelect | Single | Multi | None |
+| persistable | Local | Server | Session |
 
-**multiSelect** varies in **type** — not just on/off. Signal for **Strategy**.
+**persistable** varies in **type** — not just on/off. Signal for **Strategy**.
 
 <!--
-[6:55 - 7:10] (15s)
+[6:35 - 6:50] (15s)
 
-• multiSelect varies — but not boolean! Single, Multi, or None
+• persistable varies — but not boolean! Local, Server, or Session storage
 
-• Different logic, not just toggle — needs Strategy pattern
+• Different implementations, not just toggle — needs Strategy pattern
 -->
 
 ---
@@ -594,44 +616,23 @@ layout: default
 
 <template #title>
 
-# The Map (WHERE) - sortable
+# The Map (WHERE) - Directives
 
 </template>
 
 | Feature | Main Page | Admin Panel | Preview |
 |---------|-----------|-------------|---------|
 | sortable | ✓ | ✓ | ✗ |
+| filterable | ✓ | ✗ | ✗ |
 
-**sortable** varies — opt-in behavior. Signal for **Directives**.
-
-<!--
-[7:10 - 7:20] (10s)
-
-• sortable varies — optional behavior, use Directives
--->
-
----
-layout: default
----
-
-<template #title>
-
-# The Map (WHERE) - autoSave
-
-</template>
-
-| Feature | Main Page | Admin Panel | Preview |
-|---------|-----------|-------------|---------|
-| autoSave | ✗ | ✓ | ✗ |
-
-**autoSave** only in one place? **Doesn't belong in component.**
+**Opt-in behaviors** — varies by context. Signal for **Directives**.
 
 <!--
-[7:20 - 7:35] (15s)
+[6:50 - 7:00] (10s)
 
-• autoSave only in Admin — doesn't belong in component
+• sortable, filterable — optional, vary by context
 
-• Now we have a map — we know what to extract
+• Each one is a candidate for Directives
 -->
 
 ---
@@ -644,10 +645,11 @@ layout: default
 
 </template>
 
-```ts [list.ts] {1-3}
-sortable = input(false);
+```ts {1-4}
 showHeader = input(false);
-persistState = input(false);
+sortable = input(false);
+filterable = input(false);
+persistable = input(false);
 ```
 
 Boolean flags. The component asking _"what features am I?"_
@@ -655,17 +657,17 @@ Boolean flags. The component asking _"what features am I?"_
 But look closer at **The Mega List**...
 
 <!--
-[7:35 - 8:10] (35s)
+[7:00 - 7:35] (35s)
 
-• sortable, showHeader, persistState — each is a feature toggle
+• showHeader, sortable, filterable, persistable — each is a feature toggle
 
 • Component asking "what do you want me to be today?"
 
 • The Tell — like poker, pile of booleans = component trying to be everything
 
-• Notice: storageKey + initialState only relevant when persistState=true — they travel together
+• Notice: storageKey only relevant when persistable=true — they travel together
 
-• One of these flags is an odd bird...
+• But one of these flags is different — showHeader controls STRUCTURE, not behavior...
 -->
 
 ---
@@ -678,14 +680,16 @@ layout: default
 
 </template>
 
-```ts [list.ts]
+```ts
 // From The Mega List:
 showHeader = input(false);
+headerTitle = input('');
+headerActions = input<Action[]>([]);
 ```
 
-```html [list.html]
+```html
 @if (showHeader()) {
-  <app-header />
+  <app-header [title]="headerTitle()" [actions]="headerActions()" />
 }
 <div class="list-body">...</div>
 ```
@@ -693,7 +697,7 @@ showHeader = input(false);
 Why does the **list** decide whether a header exists?
 
 <!--
-[8:10 - 8:50] (40s)
+[7:35 - 8:15] (40s)
 
 • showHeader is different — controls STRUCTURE, not behavior
 
@@ -720,22 +724,22 @@ layout: default
 
 </template>
 
-```html [before]
+```html
 <!-- Before: component decides structure -->
-<app-list [showHeader]="true" />
+<app-list [showHeader]="true" headerTitle="Items" [headerActions]="actions" />
 ```
 
-```html [after]
+```html
 <!-- After: parent decides structure -->
 <app-list>
-  <app-list-header header />
+  <app-list-header title="Items" [actions]="actions" />
 </app-list>
 ```
 
-The **@if** becomes a **slot**. The boolean disappears.
+The **@if** becomes a **slot**. The boolean **and its friends** disappear.
 
 <!--
-[8:50 - 9:30] (40s)
+[8:15 - 8:55] (40s)
 
 • Before: pass true, component renders internally
 
@@ -765,7 +769,7 @@ Separating the <span style="color: var(--cx-green); font-weight: bold;">WHAT</sp
 What content appears. Not how it behaves.
 
 <!--
-[9:30 - 9:50] (20s)
+[8:55 - 9:15] (20s)
 
 • Tool 1: Content Projection — separates the WHAT
 
@@ -785,7 +789,7 @@ layout: section
 "Just one more @if"
 
 <!--
-[9:50 - 9:58] (8s)
+[9:15 - 9:23] (8s)
 
 • The familiar excuse — just add one more conditional
 
@@ -803,7 +807,7 @@ Template spaghetti.
 ## Impossible to test.
 
 <!--
-[9:58 - 10:06] (8s)
+[9:23 - 9:31] (8s)
 
 • Reality: template becomes unreadable
 
@@ -824,11 +828,11 @@ Content Projection solved **WHAT** appears.
 
 But what about **HOW** it behaves?
 
-- _"Single select vs multi select"_
-- _"Click to select vs checkbox"_
+- _"Save to localStorage vs server"_
+- _"Sync across devices vs keep local"_
 
 <!--
-[10:06 - 10:40] (34s)
+[9:31 - 10:05] (34s)
 
 • Good move — extracted structural decision, boolean gone, parent decides
 
@@ -838,7 +842,7 @@ But what about **HOW** it behaves?
 
 • But what about HOW — how things are done?
 
-• Selection logic: single vs multi — completely different algorithms
+• Storage logic: local vs server — completely different implementations
 
 • Need a tool that separates the HOW
 -->
@@ -853,14 +857,14 @@ layout: default
 
 </template>
 
-```ts [list.ts]
-select(item: Item) {
-  if (this.multiSelect()) {
-    // Multi: toggle in set
-    this.selection.update(s => toggle(s, item));
-  } else {
-    // Single: clear and set
-    this.selection.set(new Set([item]));
+```ts
+save(key: string, state: ListState) {
+  if (this.storageMode() === 'local') {
+    localStorage.setItem(key, JSON.stringify(state));
+  } else if (this.storageMode() === 'session') {
+    sessionStorage.setItem(key, JSON.stringify(state));
+  } else if (this.storageMode() === 'server') {
+    this.#http.post('/api/preferences', { key, state });
   }
 }
 ```
@@ -868,77 +872,17 @@ select(item: Item) {
 The component knows **too much** about the "how".
 
 <!--
-[10:40 - 11:05] (25s)
+[10:05 - 10:30] (25s)
 
-• if multiSelect → toggle logic, else → replace logic
+• if local → localStorage, if session → sessionStorage, if server → HTTP call
 
-• Component knows all selection algorithms — knows too much
+• Component knows all storage implementations — knows too much
 
-• What happens when you add range select? Checkbox mode?
+• What happens when you add IndexedDB? Cloud sync?
 
 • More else-if? And another?
 
 • The tell: if-else on implementations = Strategy
--->
-
----
-layout: section
----
-
-<template #title>
-
-# Tool 2: Strategy via DI
-
-</template>
-
-Separating the <span style="color: var(--cx-green); font-weight: bold;">HOW</span>
-
-How it's done. Single or Multi, never both.
-
-<!--
-[11:05 - 11:25] (20s)
-
-• Tool 2: Strategy via DI — separates the HOW
-
-• A or B, pick one, never both together
-
-• Single or Multi selection — only one runs
-
-• Component doesn't know what it got — just asks "give me something that selects"
--->
-
----
-layout: section
----
-
-# The Shortcut
-
-"Just add an if for multi-select"
-
-<!--
-[11:25 - 11:33] (8s)
-
-• The familiar excuse — just check the mode
-
-• One condition, what's the harm?
--->
-
----
-layout: section
----
-
-# The Tax
-
-if-forests.
-
-## Untestable without mocks.
-
-<!--
-[11:33 - 11:41] (8s)
-
-• Reality: conditions multiply
-
-• Every test needs to mock every branch
 -->
 
 ---
@@ -953,20 +897,20 @@ That **if-else** needs to disappear. But where does the decision go?
 
 ::default::
 
-| Context      | Selection |
+| Context      | Storage   |
 | ------------ | --------- |
-| Main Page    | Single    |
-| Admin Panel  | Multi     |
-| Preview      | None      |
+| Main Page    | Local     |
+| Admin Panel  | Server    |
+| Preview      | Session   |
 
 <!--
-[11:41 - 12:00] (19s)
+[11:06 - 11:25] (19s)
 
 • if-else needs to disappear from component — but where to?
 
-• Depends on context: Main=single, Admin=multi, Preview=none
+• Depends on context: Main=local, Admin=server, Preview=session
 
-• Same component, completely different selection behavior
+• Same component, completely different storage behavior
 
 • Before: more ifs, more booleans. Now: component doesn't care
 -->
@@ -981,23 +925,24 @@ layout: default
 
 </template>
 
-```ts [selection-strategy.ts]
-export interface SelectionStrategy {
-  select(item: Item, current: Set<string>): Set<string>;
+```ts
+export interface StorageStrategy {
+  save(key: string, state: ListState): void;
+  load(key: string): ListState | null;
 }
 
-export const SELECTION_STRATEGY =
-  new InjectionToken<SelectionStrategy>('SelectionStrategy');
+export const STORAGE_STRATEGY =
+  new InjectionToken<StorageStrategy>('StorageStrategy');
 ```
 
 <!--
-[12:00 - 12:20] (20s)
+[11:25 - 11:45] (20s)
 
-• Interface: defines WHAT (select), not HOW
+• Interface: defines WHAT (save/load), not HOW
 
 • InjectionToken = our key for DI
 
-• Takes current selection, returns new selection
+• Takes key and state, returns nothing or loaded state
 
 • Just the contract, no implementation yet
 -->
@@ -1008,27 +953,29 @@ layout: default
 
 <template #title>
 
-# Strategy: SingleSelection
+# Strategy: LocalStorage
 
 </template>
 
-```ts [single-selection.ts]
-export class SingleSelection implements SelectionStrategy {
-  select(item: Item, current: Set<string>) {
-    // Clear everything, select only this one
-    return new Set([item.id]);
+```ts
+export class LocalStorage implements StorageStrategy {
+  save(key: string, state: ListState) {
+    localStorage.setItem(key, JSON.stringify(state));
+  }
+  load(key: string) {
+    return JSON.parse(localStorage.getItem(key) ?? 'null');
   }
 }
 ```
 
-Click = replace. Only one item selected.
+Persists across browser sessions. Works offline.
 
 <!--
-[12:20 - 12:35] (15s)
+[11:45 - 12:00] (15s)
 
-• Single selection — click replaces current selection
+• LocalStorage — persists even after browser closes
 
-• Simple, predictable behavior
+• Simple, no server needed, works offline
 -->
 
 ---
@@ -1037,31 +984,33 @@ layout: default
 
 <template #title>
 
-# Strategy: MultiSelection
+# Strategy: ServerStorage
 
 </template>
 
-```ts [multi-selection.ts]
-export class MultiSelection implements SelectionStrategy {
-  select(item: Item, current: Set<string>) {
-    const next = new Set(current);
-    // Toggle: add if missing, remove if present
-    next.has(item.id) ? next.delete(item.id) : next.add(item.id);
-    return next;
+```ts
+export class ServerStorage implements StorageStrategy {
+  #http = inject(HttpClient);
+
+  save(key: string, state: ListState) {
+    this.#http.post('/api/preferences', { key, state });
+  }
+  load(key: string) {
+    return this.#http.get<ListState>(`/api/preferences/${key}`);
   }
 }
 ```
 
-Click = toggle. Multiple items selected.
+Syncs across devices. Requires authentication.
 
 **Same interface. Different "how".**
 
 <!--
-[12:35 - 12:55] (20s)
+[12:00 - 12:20] (20s)
 
-• Multi selection — click toggles item in set
+• ServerStorage — syncs to backend, available on any device
 
-• Same interface exactly — list calls select, doesn't know which strategy
+• Same interface exactly — directive calls save/load, doesn't know which strategy
 -->
 
 ---
@@ -1074,12 +1023,12 @@ layout: default
 
 </template>
 
-```ts [admin-panel.ts]
+```ts
 @Component({
   providers: [
     {
-      provide: SELECTION_STRATEGY,
-      useClass: MultiSelection,
+      provide: STORAGE_STRATEGY,
+      useClass: ServerStorage,
     },
   ],
 })
@@ -1089,21 +1038,83 @@ export class AdminPanel {}
 **Zero if-statements.** Context decides, not component.
 
 <!--
-[12:55 - 13:40] (45s)
+[12:20 - 13:05] (45s)
 
 • Decision lives in PROVIDER
 
-• AdminPanel says: "below me, anyone asking for Selection gets MultiSelection"
+• AdminPanel says: "below me, anyone asking for Storage gets ServerStorage"
 
 • Angular's power: hierarchical injection — affects only subtree
 
 • Zero if-statements in component
 
-• Pro tip: NoopSelection at root — nothing breaks by default, override where needed
+• Pro tip: LocalStorage at root — works by default, override where needed
 
 • Strategy = exclusive choice. Composition = Directives
 
 • This is VISIBLE coupling
+-->
+
+---
+layout: section
+---
+
+<template #title>
+
+# Tool 2: Strategy via DI
+
+</template>
+
+Separating the <span style="color: var(--cx-green); font-weight: bold;">HOW</span>
+
+How it's done. Local or Server, never both.
+
+<!--
+[13:05 - 13:25] (20s)
+
+• Tool 2: Strategy Pattern via DI
+
+• Separates the HOW — not if, but WHICH implementation
+
+• When behavior varies by context, strategy prevents if-cascades
+
+• Classic pattern from Gang of Four — Angular makes it elegant via DI
+-->
+
+---
+layout: section
+---
+
+# The Shortcut
+
+"Just add an if for each storage type"
+
+<!--
+[13:25 - 13:33] (8s)
+
+• The tempting path — if local do this, if server do that
+
+• We all know where this leads
+-->
+
+---
+layout: section
+---
+
+# The Tax
+
+if-forests.
+
+## Untestable without mocks.
+
+<!--
+[13:33 - 13:41] (8s)
+
+• if-else branches multiply — add cloud? another branch everywhere
+
+• Testing requires mocking everything to hit each branch
+
+• Can't reason about code without tracing all paths
 -->
 
 ---
@@ -1116,9 +1127,9 @@ layout: default
 
 </template>
 
-```ts [list.ts]
+```ts
 export class ListComponent {
-  #selection = inject(SELECTION_STRATEGY);
+  #storage = inject(STORAGE_STRATEGY);
   #sorter = inject(SORT_STRATEGY);
   #filter = inject(FILTER_STRATEGY);
   // ... and 5 more tokens
@@ -1130,7 +1141,7 @@ export class ListComponent {
 <img v-click src="/assets/one-does-not-simply.jpg" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-120 rounded-lg shadow-xl" />
 
 <!--
-[13:40 - 14:25] (45s)
+[13:41 - 14:26] (45s)
 
 • Strategy worked — HOW is out, zero ifs
 
@@ -1138,7 +1149,7 @@ export class ListComponent {
 
 • 3 tokens here, 5 more off-slide — component injects ALL, always, even when not needed
 
-• What if sorting is optional? Filtering not relevant?
+• What if sorting is optional? Storage not relevant?
 
 • [click] One does not simply inject everything
 
@@ -1147,66 +1158,6 @@ export class ListComponent {
 • New dev opens file — no clue what this list does without reading code
 
 • Strategy solved HOW — need tool for WHETHER, and it must be VISIBLE
--->
-
----
-layout: section
----
-
-<template #title>
-
-# Tool 3: Directives
-
-</template>
-
-Separating the <span style="color: var(--cx-green); font-weight: bold;">WHETHER</span>
-
-Is it on or off? Composable opt-ins.
-
-<!--
-[14:25 - 14:45] (20s)
-
-• Tool 3: Directives — separates the WHETHER
-
-• Recap: Content Projection = WHAT, Strategy = HOW
-
-• Directives fix WHETHER — injection moves to directive
-
-• No directive? No injection. Exists or doesn't
--->
-
----
-layout: section
----
-
-# The Shortcut
-
-"Just inject it everywhere"
-
-<!--
-[14:45 - 14:53] (8s)
-
-• The familiar excuse — inject all services, check flags later
-
-• Easier than thinking about what's actually needed
--->
-
----
-layout: section
----
-
-# The Tax
-
-Hidden features.
-
-## Null-check hell.
-
-<!--
-[14:53 - 15:01] (8s)
-
-• Reality: can't tell what's active without reading code
-
-• Every service needs null checks and guards
 -->
 
 ---
@@ -1219,9 +1170,9 @@ layout: default
 
 </template>
 
-```ts [persistable.ts]
-@Directive({ selector: 'app-list[persistable]' })
-export class Persistable {
+```ts
+@Directive({ selector: 'app-list[appListPersistable]' })
+export class AppListPersistable {
   #list = inject(ListComponent);
   #storage = inject(STORAGE_STRATEGY);
   storageKey = input.required<string>();
@@ -1238,9 +1189,9 @@ export class Persistable {
 Directive owns persistence. List doesn't know it's being saved.
 
 <!--
-[15:01 - 15:40] (39s)
+[15:02 - 15:41] (39s)
 
-• Selector: `app-list[persistable]` — no attribute = doesn't exist, zero overhead
+• Selector: `app-list[appListPersistable]` — no attribute = doesn't exist, zero overhead
 
 • Remember the problem? List injected STORAGE_STRATEGY even when not needed
 
@@ -1263,34 +1214,34 @@ layout: default
 
 </template>
 
-```html [app.html]
+```html
 <!-- Simple -->
 <app-list [items]="data" />
 
 <!-- With persistence -->
-<app-list persistable storageKey="admin-list" [items]="data" />
+<app-list appListPersistable storageKey="admin-list" [items]="data" />
 
 <!-- Full-featured -->
-<app-list sortable sortKey="date" sortDir="desc"
-          filterable persistable storageKey="main" [items]="data" />
+<app-list appListSortable sortKey="date" sortDir="desc"
+          appListFilterable appListPersistable storageKey="main" [items]="data" />
 ```
 
 **Visible in the template.** Look at the HTML, know what it does.
 
 <!--
-[15:40 - 16:20] (40s)
+[15:41 - 16:21] (40s)
 
 • Simple list? Nothing. Zero unnecessary injections
 
-• Want persistence? Add `persistable` — directive brings storageKey
+• Want persistence? Add `appListPersistable` — directive brings storageKey
 
-• STORAGE_STRATEGY injected ONLY when persistable exists
+• STORAGE_STRATEGY injected ONLY when appListPersistable exists
 
 • Simple list? No storage service. No null checks
 
 • Everything visible — new dev sees EXACTLY what this list does
 
-• Each directive independent — combine in any order, each page picks what it needs
+• Each directive independent — combine in any order
 
 • This is the visibility payoff
 -->
@@ -1305,15 +1256,15 @@ layout: default
 
 </template>
 
-```html [scattered across pages]
+```html
 <!-- Page A -->
-<app-list sortable filterable persistable [items]="a" />
+<app-list appListSortable appListFilterable appListPersistable [items]="a" />
 
 <!-- Page B -->
-<app-list sortable filterable persistable [items]="b" />
+<app-list appListSortable appListFilterable appListPersistable [items]="b" />
 
 <!-- Page C -->
-<app-list sortable filterable persistable [items]="c" />
+<app-list appListSortable appListFilterable appListPersistable [items]="c" />
 ```
 
 Same combo. Three times.
@@ -1321,7 +1272,7 @@ Same combo. Three times.
 <img v-click src="/assets/distracted-boyfriend.jpg" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-120 rounded-lg shadow-xl" />
 
 <!--
-[16:20 - 17:00] (40s)
+[16:21 - 17:01] (40s)
 
 • Three different pages, exact same combo — copy-paste
 
@@ -1344,6 +1295,8 @@ layout: section
 
 </template>
 
+One time is just code.
+
 Two times is coincidence.
 
 **Three times is a concept.**
@@ -1351,7 +1304,7 @@ Two times is coincidence.
 ## Name it.
 
 <!--
-[17:00 - 17:40] (40s)
+[17:01 - 17:41] (40s)
 
 • Once = code. Twice = coincidence. Three times = concept — NAME IT
 
@@ -1365,6 +1318,66 @@ Two times is coincidence.
 -->
 
 ---
+layout: section
+---
+
+<template #title>
+
+# Tool 3: Directives
+
+</template>
+
+Separating the <span style="color: var(--cx-green); font-weight: bold;">WHETHER</span>
+
+Is it on or off? Composable opt-ins.
+
+<!--
+[17:41 - 18:01] (20s)
+
+• Tool 3: Directives — separates the WHETHER
+
+• Recap: Content Projection = WHAT, Strategy = HOW
+
+• Directives fix WHETHER — injection moves to directive
+
+• No directive? No injection. Exists or doesn't
+-->
+
+---
+layout: section
+---
+
+# The Shortcut
+
+"Just inject it everywhere"
+
+<!--
+[18:01 - 18:09] (8s)
+
+• The familiar excuse — inject all services, check flags later
+
+• Easier than thinking about what's actually needed
+-->
+
+---
+layout: section
+---
+
+# The Tax
+
+Hidden features.
+
+## Null-check hell.
+
+<!--
+[18:09 - 18:17] (8s)
+
+• Reality: can't tell what's active without reading code
+
+• Every service needs null checks and guards
+-->
+
+---
 layout: default
 ---
 
@@ -1374,26 +1387,26 @@ layout: default
 
 </template>
 
-```ts [power-list.ts]
+```ts
 @Directive({
-  selector: 'app-list[powerList]',
+  selector: 'app-list[appListPowerList]',
   hostDirectives: [
-    { directive: Sortable, inputs: ['sortKey', 'sortDir'] },
-    { directive: Filterable, inputs: ['filterKey'] },
-    Persistable,
+    { directive: AppListSortable, inputs: ['sortKey', 'sortDir'] },
+    { directive: AppListFilterable, inputs: ['filterKey'] },
+    AppListPersistable,
   ],
 })
-export class PowerList {}
+export class AppListPowerList {}
 ```
 
 Forward inputs explicitly. **No magic.**
 
 <!--
-[17:40 - 18:20] (40s)
+[18:17 - 18:57] (40s)
 
 • Angular has `hostDirectives`
 
-• PowerList bundles all three — one attribute brings the whole package
+• AppListPowerList bundles all three — one directive brings the whole package
 
 • Trade-off: lose template visibility, gain named concept + single update point
 
@@ -1418,26 +1431,26 @@ layout: default
 
 </template>
 
-```html [app.html]
-<!-- Before: 3 attributes -->
-<app-list sortable filterable persistable [items]="data" />
+```html
+<!-- Before: 3 directives -->
+<app-list appListSortable appListFilterable appListPersistable [items]="data" />
 
 <!-- After: 1 named concept -->
-<app-list powerList [items]="data" />
+<app-list appListPowerList [items]="data" />
 ```
 
 <img v-click src="/assets/drake-coupling.jpg" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-120 rounded-lg shadow-xl" />
 
 <!--
-[18:20 - 18:40] (20s)
+[18:57 - 19:17] (20s)
 
-• Before: grocery list of attributes. After: `powerList`
+• Before: grocery list of directives. After: `appListPowerList`
 
 • [click] Drake approves
 
 • Code runs same thing. In your head? Different world
 
-• New dev joins, sees `powerList` — understands immediately
+• New dev joins, sees `appListPowerList` — understands immediately
 
 • Turned a list of things into a concept with meaning
 -->
@@ -1452,38 +1465,34 @@ layout: default
 
 </template>
 
-```ts [auto-save.ts]
+```ts
 @Directive({
-  selector: 'app-list[autoSave]',
-  hostDirectives: [StateTracker, Debouncer, LocalStorage],
+  selector: 'app-list[appListPersistSelection]',
+  hostDirectives: [AppListSelectable, AppListPersistable],
 })
-export class AutoSaveCoordinator {
-  #tracker = inject(StateTracker);   // 1. Emits changes
-  #wait = inject(Debouncer);         // 2. Handles timing
-  #disk = inject(LocalStorage);      // 3. Handles writing
+export class AppListPersistSelection {
+  #selectable = inject(AppListSelectable);
+  #persistable = inject(AppListPersistable);
 
   constructor() {
-    // The Glue: Connect A → B → C
-    effect(() => {
-      const state = this.#tracker.changes();
-      this.#wait.run(() => this.#disk.save(state));
-    });
+    // The Glue: selection changes → persist
+    effect(() => this.#persistable.save(this.#selectable.selection()));
   }
 }
 ```
 
-The **Glue**. When A, B, and C **must** work together.
+The **Glue**. Selectable doesn't know Persistable. This connects them.
 
 <!--
-[18:40 - 19:15] (35s)
+[19:17 - 19:52] (35s)
 
 • Last pattern: Coordinator — the glue
 
-• Product asks: "auto-save, but only when state changes, with debounce"
+• Product asks: "remember which items user selected"
 
-• Three separate concerns: tracking, timing, storage — they don't know each other
+• Two independent directives: Selectable tracks selection, Persistable saves state
 
-• Coordinator connects them: "when state changes → wait → save"
+• Neither knows about the other — Coordinator connects them
 
 • This IS coupling — but intentional. Give it a home, a name, write a test
 -->
@@ -1514,7 +1523,7 @@ layout: center
 </div>
 
 <!--
-[19:15 - 19:22] (7s)
+[19:52 - 19:59] (7s)
 
 • Five steps — journey complete
 -->
@@ -1530,7 +1539,7 @@ layout: center
 </div>
 
 <!--
-[19:22 - 19:30] (8s)
+[19:59 - 20:07] (8s)
 
 • Clear scope — know exactly what to extract before starting
 -->
@@ -1546,7 +1555,7 @@ layout: center
 </div>
 
 <!--
-[19:30 - 19:38] (8s)
+[20:07 - 20:15] (8s)
 
 • Parallel work — one dev on list, another on header, no waiting
 -->
@@ -1562,7 +1571,7 @@ layout: center
 </div>
 
 <!--
-[19:38 - 19:46] (8s)
+[20:15 - 20:23] (8s)
 
 • Testable in isolation — each part testable separately
 -->
@@ -1578,7 +1587,7 @@ layout: center
 </div>
 
 <!--
-[19:46 - 19:54] (8s)
+[20:23 - 20:31] (8s)
 
 • Single point of change — add behavior? one place
 -->
@@ -1590,13 +1599,13 @@ layout: center
 <div class="text-center">
   <div class="text-8xl mb-8">💬</div>
   <div class="text-4xl font-bold mb-4">Shared Vocabulary</div>
-  <div class="text-xl text-gray-600">Say "powerList" in daily — everyone knows</div>
+  <div class="text-xl text-gray-600">Say "PowerList" in daily — everyone knows</div>
 </div>
 
 <!--
-[19:54 - 20:05] (11s)
+[20:31 - 20:42] (11s)
 
-• Shared vocabulary — say "powerList" in daily, everyone knows
+• Shared vocabulary — say "PowerList" in daily, everyone knows
 
 • Now let's set guardrails
 -->
@@ -1614,7 +1623,7 @@ layout: section
 Each tool has limits.
 
 <!--
-[20:05 - 20:15] (10s)
+[20:42 - 20:52] (10s)
 
 • When NOT to use? Let's set boundaries
 -->
@@ -1630,7 +1639,7 @@ layout: center
 </div>
 
 <!--
-[20:15 - 20:25] (10s)
+[20:52 - 21:02] (10s)
 
 • Content Projection? Structure only. Not behavior
 -->
@@ -1646,7 +1655,7 @@ layout: center
 </div>
 
 <!--
-[20:25 - 20:35] (10s)
+[21:02 - 21:12] (10s)
 
 • Strategy? Not if only one implementation exists
 -->
@@ -1662,7 +1671,7 @@ layout: center
 </div>
 
 <!--
-[20:35 - 20:45] (10s)
+[21:12 - 21:22] (10s)
 
 • Directives? Not for exclusive A-or-B choices
 -->
@@ -1678,7 +1687,7 @@ layout: center
 </div>
 
 <!--
-[20:45 - 20:58] (13s)
+[21:22 - 21:35] (13s)
 
 • hostDirectives? Bundle only related things
 
@@ -1698,7 +1707,7 @@ layout: section
 Remember the price we paid?
 
 <!--
-[20:58 - 21:40] (42s)
+[21:35 - 22:17] (42s)
 
 • Remember the price we paid?
 
@@ -1728,7 +1737,7 @@ Inputs are your default. When they fail:
 **WHERE, WHAT, HOW, WHETHER, WHICH**
 
 <!--
-[21:40 - 21:52] (12s)
+[22:17 - 22:29] (12s)
 
 • Remember the journey? Map, Extract, Interface, Compose, Bundle
 
@@ -1747,7 +1756,7 @@ layout: center
 </div>
 
 <!--
-[21:52 - 22:02] (10s)
+[22:29 - 22:39] (10s)
 
 • Component drifting across contexts? Matrix — Map
 -->
@@ -1764,7 +1773,7 @@ layout: center
 </div>
 
 <!--
-[22:02 - 22:12] (10s)
+[22:39 - 22:49] (10s)
 
 • Boolean changing structure? Content Projection — Extract
 -->
@@ -1781,7 +1790,7 @@ layout: center
 </div>
 
 <!--
-[22:12 - 22:22] (10s)
+[22:49 - 22:59] (10s)
 
 • Exclusive alternatives? Strategy — Interface
 -->
@@ -1798,7 +1807,7 @@ layout: center
 </div>
 
 <!--
-[22:22 - 22:32] (10s)
+[22:59 - 23:09] (10s)
 
 • Optional features? Directives — Compose
 -->
@@ -1815,7 +1824,7 @@ layout: center
 </div>
 
 <!--
-[22:32 - 22:45] (13s)
+[23:09 - 23:22] (13s)
 
 • Copy-paste 3x? hostDirectives — Bundle
 
@@ -1839,7 +1848,7 @@ Good abstractions aren't chosen.
 <img src="/assets/qr-slides.png" class="absolute bottom-8 right-8 w-28 opacity-80" />
 
 <!--
-[22:45 - 23:55] (70s)
+[23:22 - 24:32] (70s)
 
 • "Good abstractions aren't chosen. They're discovered."
 
@@ -1885,7 +1894,7 @@ layout: end
 <div class="text-left mt-4 text-3xl font-bold">Questions?</div>
 
 <!--
-[23:55 - 24:10] (15s)
+[24:32 - 24:47] (15s)
 
 • Thank you all
 
