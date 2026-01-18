@@ -383,10 +383,11 @@ layout: default
 ```ts
 persistable = input(false);
 storageKey = input<string>('');
-#storage = inject(StorageService);
+storageMode = input<'local' | 'session' | 'server'>('local');
+#http = inject(HttpClient);
 ```
 
-One flag → config + service.
+One flag → config + mode + service.
 
 _"What features am I today?"_
 
@@ -760,7 +761,7 @@ layout: section
 
 <template #title>
 
-# Tool 1: Content Projection
+# Content Projection
 
 </template>
 
@@ -1050,7 +1051,7 @@ export class AdminPanel {}
 
 • Pro tip: LocalStorage at root — works by default, override where needed
 
-• Strategy = exclusive choice. Composition = Directives
+• Strategy = exclusive choice. A or B, never both.
 
 • This is VISIBLE coupling
 -->
@@ -1061,7 +1062,7 @@ layout: section
 
 <template #title>
 
-# Tool 2: Strategy via DI
+# Strategy via DI
 
 </template>
 
@@ -1323,7 +1324,7 @@ layout: section
 
 <template #title>
 
-# Tool 3: Directives
+# Directives
 
 </template>
 
@@ -1711,15 +1712,13 @@ Remember the price we paid?
 
 • Remember the price we paid?
 
-• Cognitive Load — now each tool does one thing. Can hold in head
+• Cognitive Load
 
-• Bottleneck — now everyone can work on their directive. No queue for same file
+• Bottleneck 
 
-• Slow Delivery — now strategy change = one file. Not PR touching everywhere
+• Slow Delivery
 
 • My metric: how many places to touch for small change. Went from "many" to "one"
-
-• This wasn't about patterns
 
 • It was about freeing the team
 
