@@ -7,8 +7,7 @@ info: |
 
   Dor Peled · @Knat-Dev
 
-  Runtime: ~2,700 words in speaker notes.
-  120 wpm (with pauses) = ~22 min.
+  Runtime: ~25 min content + 5 min Q&A = 30 min total
 layout: a-main-cover-2
 highlighter: shiki
 transition: slide-left
@@ -23,27 +22,23 @@ mdc: true
   <img src="/assets/qr-slides.png" class="w-48 rounded-lg shadow-lg border-4 border-white" />
   <div class="text-center mt-4">
     <div class="text-xl font-bold text-white">slides.knat.dev</div>
-    <div class="text-white/70 text-sm mt-1">Follow along</div>
+    <div class="text-white/90 text-sm mt-1">Follow along</div>
   </div>
 </template>
 
-<div class="absolute bottom-[80px] left-[80px] flex items-center gap-3">
-  <img src="/assets/profile.jpg" class="w-12 h-12 rounded-full object-cover border-2 border-white/50" />
-  <div class="text-white/80 text-sm flex items-center gap-1">Dor Peled <span class="opacity-50">·</span> <span class="text-xs opacity-70">@Knat-Dev</span></div>
+<div class="absolute bottom-[30px] left-[80px] flex items-center gap-3">
+  <img src="/assets/profile.jpg" class="w-24 h-24 rounded-full object-cover border-2 border-white/50" />
+  <div class="text-white/80 text-2xl flex items-center gap-1">Dor Peled <span class="opacity-50">·</span> <span class="text-xl opacity-90">@Knat-Dev</span></div>
 </div>
 
 <!--
-BEATS:<br>• ברכה + הוק<br>• QR code לעקוב<br>• מעבר לאבאוט מי
+[0:00 - 0:25] (25s)
 
-[0:00 - 0:20]
+• "Hi friends, today I'm going to talk about how to avoid unnecessary pain by listening to your code"
 
-שלום לכולם!
+• QR code to follow along
 
-היום נדבר על איך מזהים שהקוד מתחיל להסתבך — ומה עושים כשהוא נהיה bottleneck.
-
-מי שרוצה לעקוב מהנייד — תנו סריקה ל-QR.
-
-קצת עליי...
+• Transition to about me
 -->
 
 ---
@@ -62,9 +57,9 @@ layout: default
 
   <!-- Name & Role -->
   <div class="shrink-0">
-    <div class="font-bold text-2xl text-gray-800 flex items-center gap-2">Dor Peled <span class="text-gray-400 font-normal">·</span> <span class="text-lg font-normal text-gray-500">@Knat-Dev</span></div>
+    <div class="font-bold text-2xl text-gray-800 flex items-center gap-2">Dor Peled <span class="text-gray-600 font-normal">·</span> <span class="text-lg font-normal text-gray-700">@Knat-Dev</span></div>
     <div class="text-lg text-gray-600">Software Engineer @ Coralogix</div>
-    <div class="text-sm text-gray-500 mt-1">
+    <div class="text-sm text-gray-700 mt-1">
       Angular, large codebases, and hard trade-offs
     </div>
     <div class="flex gap-4 mt-4 text-lg">
@@ -97,17 +92,13 @@ layout: default
 </div>
 
 <!--
-BEATS:<br>• היכרות קצרה — דור, Coralogix, Angular בקודבייס גדול<br>• מחוץ לעבודה — גיטרה, מטאל, פנטזיה<br>• הקשר בין מטאל לקוד — טעם, איטרציה, זיהוי של "לא נכון"<br>• מעבר לתוכן
+[0:25 - 0:55] (30s)
 
-[0:20 - 0:45]
+• Quick intro — Dor, Coralogix, Angular in large codebase
 
-אני דור, מהנדס בקורלוג'יקס.
-חיי ונושם קוד, כמעט תמיד עובד על פרוייקט חדש בצד.
+• Outside work — guitar, metal, fantasy
 
-מחוץ לעבודה — אני מנגן גיטרה כבר מעל 20 שנה.
-ניגנתי בלהקות מטאל, כתבתי והקלטתי מוזיקה.
-
-בואו נצלול.
+• Let's dive in
 -->
 
 ---
@@ -125,25 +116,13 @@ Who here has added _"just one more input"_ to a component?
 One more boolean and that's it?
 
 <!--
-BEATS:<br>• הרמת ידיים: מי הוסיף "רק עוד input אחד"?<br>• הרמת ידיים: מי חיכה שמישהו אחר יסיים באותו קובץ?<br>• ככה מתחיל Mega Component<br>• מחפשים "tells" — כמו בפוקר
+[0:55 - 1:25] (30s)
 
-[0:30 - 1:30]
+• Hands up: who added "just one more input"?
 
-מי פה הוסיף פעם "רק עוד input אחד" לקומפוננטה? עוד בוליאן קטן וזהו? בהרמת יד.
+• Hands up: who waited for someone to finish editing the same file?
 
-[מחכה לידיים]
-
-ומי מכם פעם חיכה שמישהו אחר יסיים לעבוד על אותו קובץ... כי לא הייתה לכם ברירה?
-
-[מחכה]
-
-כן, גם אני. ככה נולד Mega Component. לא מתוך כוונה רעה — מדרישות פיצ'ר הגיוניות לגמרי.
-
-היום אנחנו מחפשים סימנים מוקדמים. אתם רואים קוד ומרגישים שהוא לא בשליטה, אבל קשה להסביר למה.
-
-בואו נראה את הקומפוננטה שלימדה אותי את כל זה.
-
-[מבט לקהל — קשר עין]
+• Let's see the component that taught me this lesson
 -->
 
 ---
@@ -156,9 +135,6 @@ layout: default
 
 </template>
 
-<div class="grid grid-cols-2 gap-12 mt-8">
-<div>
-
 **Started simple...**
 
 ```ts
@@ -170,109 +146,117 @@ export class GridComponent<T> {
 }
 ```
 
-</div>
-<div>
-
-**Then requirements came...**
-
-<v-clicks>
-
-- Custom templates
-- Row styles
-- Expand / Collapse
-- Context menu
-- Lazy loading
-- Persistence
-- Global state deps...
-- "Make it generic & reusable"
-
-</v-clicks>
-
-</div>
-</div>
-
-<img v-click src="/assets/this-is-fine.jpg" class="absolute top-10 right-10 w-96 rounded-lg shadow-xl" />
-
 <!--
-[1:30 - 2:30]
+[1:25 - 1:40] (15s)
 
-לפני שנתחיל עם התיאוריה, בואו נראה תכלס מה קרה.
+• Before theory, or even practice — let's see what actually happened
 
-בעבודה בניתי קומפוננטת Grid. בהתחלה זה היה פשוט, תראו פה משמאל: היו לנו שלושה inputs, data, loading ו-options, וזהו.
-
-ואז הגיעו הדרישות...
-
-[click] Custom templates - תבניות מותאמות לתאים שונים
-
-[click] Row styles - סטיילים לשורות
-
-[click] Expand/Collapse - להרחיב ולכווץ שורות
-
-[click] Context menu - תפריט קונטקסט
-
-[click] Lazy loading - טעינה מדורגת מהשרת
-
-[click] Persistence - שמירת מצב
-
-[click] Global state deps - תלויות בסטייט גלובלי
-
-[click] Make it generic & reusable - צוותים אחרים ראו, רצו, וביקשו "תעשו את זה גנרי לכל החברה"
-
-[click] מי פה תחזק פעם קומפוננטה כזו? אני אגיד לכם מה קרה לנו.
+• Built a Grid component — started simple: data, loading, options
 -->
 
 ---
-layout: default
+layout: section
 ---
 
-<template #title>
+# Then Requirements Came...
 
-# The Price We Paid
+Custom templates, row styles, expand/collapse...
 
-</template>
+## Context menus, column management...
 
-<div class="grid grid-cols-3 gap-6 mt-8">
+<!--
+[1:40 - 2:00] (20s)
+
+• Requirements started coming in...
+
+• Custom templates, row styles, expand/collapse, context menus
+
+• Column management, global state deps...
+
+• Each one "just one more feature"
+-->
+
+---
+layout: center
+---
 
 <div class="text-center">
-<div class="text-4xl mb-3">🧠</div>
-<div class="font-bold text-red-400">Cognitive Load</div>
-<div class="text-sm text-gray-400 mt-2">Had to hold the entire Grid in your head to make any change</div>
+  <div class="text-2xl text-gray-700 mb-8">And then...</div>
+  <div class="text-5xl font-bold">"Make it generic & reusable"</div>
+  <div class="text-xl text-gray-600 mt-4">across the entire company</div>
 </div>
+
+<img v-click src="/assets/this-is-fine.jpg" class="absolute bottom-8 right-8 w-80 rounded-lg shadow-xl" />
+
+<!--
+[2:00 - 2:25] (25s)
+
+• The big one — every team wants to use it, but they all have slightly different needs
+
+• [click] Who maintained something like this? Let me tell you what happened
+-->
+
+---
+layout: center
+---
 
 <div class="text-center">
-<div class="text-4xl mb-3">🚧</div>
-<div class="font-bold text-red-400">Bottleneck</div>
-<div class="text-sm text-gray-400 mt-2">Only 2 people "understood" it. Everyone else was afraid to touch it</div>
-</div>
-
-<div class="text-center">
-<div class="text-4xl mb-3">🐌</div>
-<div class="font-bold text-red-400">Slow Delivery</div>
-<div class="text-sm text-gray-400 mt-2">Simple features took weeks. Bugs hid in the complexity</div>
-</div>
-
-</div>
-
-<div v-click class="text-center mt-12 text-xl">
-  <span class="text-gray-400">Technical debt</span> <span class="text-red-400 font-bold">compounds</span><span class="text-gray-400">. Every shortcut today is a tax on every change tomorrow.</span>
+  <div class="text-8xl mb-8">🧠</div>
+  <div class="text-4xl font-bold text-red-400 mb-4">Cognitive Load</div>
+  <div class="text-xl text-gray-600">Had to hold the entire Grid in your head to make any change</div>
 </div>
 
 <!--
-[2:30 - 3:30]
+[2:25 - 2:40] (15s)
 
-הנה מה שזה עלה לנו.
+• Cognitive Load — hold 2000 lines in your head for any change
+-->
 
-Cognitive Load — כדי לעשות שינוי קטן, היית צריך להחזיק בראש את כל הגריד. 2000 שורות.
+---
+layout: center
+---
 
-Bottleneck — רק שניים מהצוות "הבינו" את הקוד. כל השאר פחדו לגעת.
+<div class="text-center">
+  <div class="text-8xl mb-8">🚧</div>
+  <div class="text-4xl font-bold text-red-400 mb-4">Bottleneck</div>
+  <div class="text-xl text-gray-600">Only 2 people "understood" it. Everyone else was afraid to touch it</div>
+</div>
 
-Slow Delivery — פיצ'רים פשוטים לקחו שבועות. באגים התחבאו במורכבות.
+<!--
+[2:40 - 2:55] (15s)
 
-[click]
+• Bottleneck — only 2 people "understood" it, rest afraid to touch
+-->
 
-Technical debt מצטבר. כל קיצור דרך היום הוא מס על כל שינוי מחר.
+---
+layout: center
+---
 
-זה מה שזה עולה.
+<div class="text-center">
+  <div class="text-8xl mb-8">🐌</div>
+  <div class="text-4xl font-bold text-red-400 mb-4">Slow Delivery</div>
+  <div class="text-xl text-gray-600">Simple features took weeks. Bugs hid in the complexity</div>
+</div>
+
+<!--
+[2:55 - 3:10] (15s)
+
+• Slow Delivery — simple features took weeks, bugs hid in complexity
+-->
+
+---
+layout: center
+---
+
+<div class="text-center text-3xl">
+  <span class="text-gray-600">Technical debt</span> <span class="text-red-400 font-bold">compounds</span><span class="text-gray-600">.</span>
+  <div class="mt-6 text-xl text-gray-700">Every shortcut today is a tax on every change tomorrow.</div>
+</div>
+
+<!--
+[3:10 - 3:25] (15s)
+
+• Technical debt compounds — every shortcut is a tax on tomorrow
 -->
 
 ---
@@ -285,49 +269,134 @@ layout: default
 
 </template>
 
-```ts [list.ts]
-export class ListComponent {
-  items = input<Item[]>([]);
-  // ... loading, error, etc.
-  sortable = input(false);       // flag
-  showHeader = input(false);     // flag
-  persistState = input(false);   // flag + friends below
+```ts
+export class ListComponent<T> {
+  items = input<T[]>([]);
 
-  storageKey = input<string>();  // only if persistState
-  #storage = inject(StorageService);
-  // ... more services
+  showHeader = input(false);
+  sortable = input(false);
+  filterable = input(false);
+  persistable = input(false);
 }
 ```
+
+Four boolean flags. Looks innocent.
+
+<!--
+[3:25 - 3:40] (15s)
+
+• Grid too big for slides — built smaller example with same problems
+
+• Four boolean flags — looks innocent, right?
+
+• But booleans never come alone...
+-->
+
+---
+layout: default
+---
+
+<template #title>
+
+# Booleans Bring Friends: showHeader
+
+</template>
+
+```ts
+showHeader = input(false);
+headerTitle = input('');
+headerActions = input<Action[]>([]);
+```
+
+One flag → three inputs.
+
+<!--
+[3:40 - 3:55] (15s)
+
+• showHeader brings headerTitle, headerActions
+
+• One boolean → three inputs to configure
+-->
+
+---
+layout: default
+---
+
+<template #title>
+
+# Booleans Bring Friends: sortable
+
+</template>
+
+```ts
+sortable = input(false);
+sortKey = input<string>('');
+sortDir = input<'asc' | 'desc'>('asc');
+```
+
+One flag → two config inputs.
+
+<!--
+[3:55 - 4:05] (10s)
+
+• sortable brings sortKey, sortDir
+
+• Now we need to know which column and direction
+-->
+
+---
+layout: default
+---
+
+<template #title>
+
+# Booleans Bring Friends: filterable
+
+</template>
+
+```ts
+filterable = input(false);
+filterKey = input<string>('');
+filterValue = input<string>('');
+```
+
+One flag → two config inputs.
+
+<!--
+[4:05 - 4:15] (10s)
+
+• filterable brings filterKey, filterValue
+
+• More inputs to configure
+-->
+
+---
+layout: default
+---
+
+<template #title>
+
+# Booleans Bring Friends: persistable
+
+</template>
+
+```ts
+persistable = input(false);
+storageKey = input<string>('');
+storageMode = input<'local' | 'session' | 'server'>('local');
+#http = inject(HttpClient);
+```
+
+One flag → config + mode + service.
 
 _"What features am I today?"_
 
 <!--
-BEATS:<br>• הגריד גדול מדי — בניתי גרסה מוקטנת עם אותן טעויות<br>• Inputs למידע, פלאגים לפיצ'רים<br>• Inputs שתלויים אחד בשני, סרוויסים בשימוש חלקי<br>• תבנית ה-Mega Component<br>• שואל "מה אני היום?" במקום פשוט להיות רשימה
+[4:15 - 4:30] (15s)
 
-[3:30 - 4:15]
+• persistable brings storageKey, StorageService
 
-הגריד גדול מדי לסלייד, אז בואו נבנה דוגמה קטנה יותר שמראה את אותן בעיות בדיוק.
-
-לפני שנסתכל על הקוד, אני רוצה שתחשבו על הקודבייס שלכם.
-
-תדמיינו את הקומפוננטה ההיא. אתם יודעים על מי אני מדבר.
-זו עם 15 inputs.
-זו שכל PR נוגע בה.
-זו שמפתחים חדשים שואלים "אני באמת צריך לשנות את זה?"
-
-יש לכם אותה בראש?
-
-עכשיו תסתכלו על זה.
-
-Inputs לדאטה... סבבה, אבל גם inputs ל-flags של מיון, ל-storage keys, סרוויסים שמוזרקים אבל נוגעים בהם רק במסלולים מסוימים.
-
-תראו את persistState, הוא לא בא לבד, הוא גורר איתו את storageKey, את initialState, ועוד סרוויס, הם באים בחבילה.
-
-זה לגמרי Mega Component. הוא שואל כל בוקר: "איזה פיצ'רים בא לכם שאני אהיה היום?" במקום פשוט להיות רשימה.
-
-מהרגע הזה מתחילים merge conflicts, פחד לגעת, ומפתחים שמחכים לאותו קובץ.
-
-בואו נפרק את זה לגורמים.
+• This component is having an identity crisis
 -->
 
 ---
@@ -336,84 +405,20 @@ layout: default
 
 <template #title>
 
-# The Journey
+# God Component
 
 </template>
 
-From Mega Component to clean architecture:
+> A component that knows too much or does too much. It violates the single responsibility principle by handling multiple concerns that should be separated.
 
-<v-clicks>
-
-1. **Map** - The **WHERE** (Identify context)
-2. **Extract** - The **WHAT** (Content Projection)
-3. **Interface** - The **HOW** (Strategy via DI)
-4. **Compose** - The **WHETHER** (Directives)
-5. **Name** - The **NAME** (hostDirectives)
-
-</v-clicks>
+Our **Mega List** is becoming one.
 
 <!--
-BEATS:<br>• המפה שלנו — חמישה צעדים<br>• Map → Extract → Interface → Compose → Name<br>• נעבור על כל אחד בפירוט
+[4:30 - 4:45] (15s)
 
-[4:15 - 4:45]
+• God Component — knows too much, does too much
 
-לפני שנצלול, הנה המפה.
-
-חמישה צעדים, מ-Mega Component לארכיטקטורה נקייה:
-
-[click] Map — למפות מה משתנה ואיפה. בלי זה אתם יורים בחושך.
-
-[click] Extract — להוציא התנהגויות החוצה מהקומפוננטה.
-
-[click] Interface — להגדיר חוזים להתנהגויות שמחליפות אחת את השנייה.
-
-[click] Compose — להפוך התנהגויות לאופציונליות עם דירקטיבות.
-
-[click] Name — לקבץ דפוסים חוזרים עם hostDirectives.
-
-זו הדרך שלנו. בואו נתחיל עם Map.
-
-[פאוזה קצרה — לתת להם לספוג את המפה]
--->
-
----
-layout: default
----
-
-<template #title>
-
-# The Map (WHERE)
-
-</template>
-
-| Feature | Main Page | Admin Panel | Preview |
-|---------|-----------|-------------|---------|
-| items | ✓ | ✓ | ✓ |
-| showHeader | ✓ | ✗ | ✓ |
-| sortable | ✓ | ✓ | ✗ |
-| filterable | ✗ | ✓ | ✓ |
-| persistState | ✗ | ✓ | ✗ |
-
-**Baseline** = always there. **The rest** = opt-in.
-
-<!--
-BEATS:<br>• הכלי של Map — מטריצת פיצ'ר × קונטקסט<br>• items בכולם = baseline, נשאר בקומפוננטה<br>• showHeader משתנה = Content Projection<br>• persistState רק במקום אחד = Strategy או Directive<br>• עכשיו יודעים מה לחלץ ולאן
-
-[4:45 - 5:15]
-
-הנה הכלי של Map — מטריצה פשוטה.
-
-שורות = פיצ'רים. עמודות = איפה הרשימה בשימוש.
-
-items בכל מקום? זה הבסיס, נשאר בקומפוננטה.
-
-showHeader משתנה בין דפים? זה סימן ל-Content Projection.
-
-persistState רק בדף אחד? זה לא צריך להיות בקומפוננטה בכלל.
-
-עכשיו יש לנו מפה. אנחנו יודעים מה לחלץ.
-
-[פאוזה — לתת להם לספוג]
+• Our Mega List is becoming one
 -->
 
 ---
@@ -427,67 +432,208 @@ Coupling isn't bad.
 ## Hidden coupling is.
 
 <!--
-BEATS:<br>• צימוד (Coupling) הוא לא רע — צימוד *נסתר* הוא הבעיה<br>• תלויות גלויות (inputs, constructors) = קל לנהל<br>• קבור בתוך פלאגים/טמפלטים = אובדן שליטה<br>• שאלה: איך הופכים coupling לגלוי?<br>• Inputs הם ברירת המחדל, שלוש תבניות חילוץ כשזה נכשל
+[4:45 - 5:20] (35s)
 
-[5:15 - 5:45]
+• Coupling isn't bad — HIDDEN coupling is
 
-עכשיו שיש לנו מפה, בואו נדבר על מה אנחנו מחפשים.
+• Visible deps (inputs, constructor) = manageable
 
-צימוד זה לא דבר רע. Coupling זה חלק טבעי מהמערכת. קומפוננטות צריכות לדבר. דאטה עובר, איוונטים עולים. הכל טוב.
+• Buried in flags/templates = lose control, touch here, breaks there
 
-הבעיה היא כשהצימוד מוסתר, HIDDEN coupling.
+• Question: not "remove coupling" but "make it VISIBLE"
 
-כשאני רואה את ה-dependencies, ב-inputs, ב-constructor, אני יכול לנהל אותם, אני מבין מי נגד מי.
-
-אבל כשזה קבור בתוך boolean flags? מפוזר בתוך ה-template? שם אתם מאבדים שליטה, נוגעים פה, נשבר שם.
-
-אז השאלה היא לא "איך מעיפים את הצימוד?", אלא "איך הופכים אותו לגלוי (VISIBLE)?"
-
-Inputs הם ברירת המחדל שלכם. תישארו שם כמה שאפשר. אבל כשהם כבר לא מספיקים, יש לכם שלושה דפוסי חילוץ. כל אחד חושף סוג אחר של צימוד.
-
-[חד וברור — זה המסר המרכזי]
+• Inputs = your default, extraction patterns when they fail
 -->
 
 ---
-layout: image-right
+layout: section
 ---
 
-::left::
+# The Journey
 
-# Three Extraction Patterns
-
-Inputs are your default.
-
-**When they fail, reach for these.**
-
-::default::
-
-| The Tell            | Pattern            |
-| ------------------- | ------------------ |
-| Structural flags    | Content Projection |
-| Behavioral bundles  | Strategy via DI    |
-| Composable opt-ins  | Directives         |
+From God Component to clean architecture
 
 <!--
-BEATS:<br>• שלוש תבניות חילוץ — אתם מכירים אותן, החכמה היא מתי<br>• Inputs = default, visible coupling<br>• Structural flags ← Content Projection<br>• Behavioral bundles ← Strategy via DI<br>• Composable opt-ins ← Directives<br>• נזהה את ה-tell ביחד
+[5:20 - 5:30] (10s)
 
-[5:45 - 6:30]
+• Here's the map — five steps from God Component to clean architecture
+-->
 
-שלושה דפוסים, אתם מכירים את כולם, החכמה היא לדעת מתי לשלוף אותם.
+---
+layout: center
+---
 
-Inputs זה הבסיס, הם מייצרים VISIBLE coupling, תישארו שם כל עוד זה עובד.
+<div class="text-center">
+  <div class="text-6xl font-bold mb-4">1. Map</div>
+  <div class="text-2xl text-gray-600">The <span style="color: var(--cx-green); font-weight: bold;">WHERE</span></div>
+  <div class="text-xl text-gray-700 mt-4">Identify context</div>
+</div>
 
-אבל שימו לב ל-Tells:
+<!--
+[5:30 - 5:38] (8s)
 
-Structural flags — בוליאנים שמשנים את ה-DOM? פה עוברים ל-content projection. תחלצו את ה-@if.
+• Map — what varies and where, shooting blind without it
+-->
 
-Behavioral bundles — פלאג שסוחב איתו לוגיקה וסרוויסים? Strategy via DI. תנו ל-injector לשבור את הראש.
+---
+layout: center
+---
 
-Composable opt-ins — התנהגויות שאפשר להוסיף אחת על השנייה? Directives. שיהיה גלוי בטמפלט.
+<div class="text-center">
+  <div class="text-6xl font-bold mb-4">2. Extract</div>
+  <div class="text-2xl text-gray-600">The <span style="color: var(--cx-green); font-weight: bold;">WHAT</span></div>
+  <div class="text-xl text-gray-700 mt-4">Content Projection</div>
+</div>
 
-אנחנו נעבור על כל אחת. נלמד לזהות את ה-tell.
+<!--
+[5:38 - 5:46] (8s)
 
-[הצבעה קצרה על כל שורה וממשיכים]
+• Extract — pull behaviors out of the component
+-->
+
+---
+layout: center
+---
+
+<div class="text-center">
+  <div class="text-6xl font-bold mb-4">3. Interface</div>
+  <div class="text-2xl text-gray-600">The <span style="color: var(--cx-green); font-weight: bold;">HOW</span></div>
+  <div class="text-xl text-gray-700 mt-4">Strategy via DI</div>
+</div>
+
+<!--
+[5:46 - 5:54] (8s)
+
+• Interface — define contracts for swappable behaviors
+-->
+
+---
+layout: center
+---
+
+<div class="text-center">
+  <div class="text-6xl font-bold mb-4">4. Compose</div>
+  <div class="text-2xl text-gray-600">The <span style="color: var(--cx-green); font-weight: bold;">WHETHER</span></div>
+  <div class="text-xl text-gray-700 mt-4">Directives</div>
+</div>
+
+<!--
+[5:54 - 6:02] (8s)
+
+• Compose — make behaviors optional with directives
+-->
+
+---
+layout: center
+---
+
+<div class="text-center">
+  <div class="text-6xl font-bold mb-4">5. Bundle</div>
+  <div class="text-2xl text-gray-600">The <span style="color: var(--cx-green); font-weight: bold;">WHICH</span></div>
+  <div class="text-xl text-gray-700 mt-4">hostDirectives</div>
+</div>
+
+<!--
+[6:02 - 6:12] (10s)
+
+• Bundle — group repeating patterns with hostDirectives
+
+• Let's start with Map
+-->
+
+---
+layout: default
+---
+
+<template #title>
+
+# The Map (WHERE) - items
+
+</template>
+
+| Feature | Main Page | Admin Panel | Preview |
+|---------|-----------|-------------|---------|
+| items | ✓ | ✓ | ✓ |
+
+**items** everywhere? That's the **baseline** — stays in component.
+
+<!--
+[6:12 - 6:25] (13s)
+
+• Map tool — simple matrix: rows = features, columns = contexts
+
+• items everywhere? baseline — stays in component
+-->
+
+---
+layout: default
+---
+
+<template #title>
+
+# The Map (WHERE) - showHeader
+
+</template>
+
+| Feature | Main Page | Admin Panel | Preview |
+|---------|-----------|-------------|---------|
+| showHeader | ✓ | ✗ | ✓ |
+
+**showHeader** varies? Signal for **Content Projection**.
+
+<!--
+[6:25 - 6:35] (10s)
+
+• showHeader varies? signal for Content Projection
+-->
+
+---
+layout: default
+---
+
+<template #title>
+
+# The Map (WHERE) - persistable
+
+</template>
+
+| Feature | Main Page | Admin Panel | Preview |
+|---------|-----------|-------------|---------|
+| persistable | Local | Server | Session |
+
+**persistable** varies in **type** — not just on/off. Signal for **Strategy**.
+
+<!--
+[6:35 - 6:50] (15s)
+
+• persistable varies — but not boolean! Local, Server, or Session storage
+
+• Different implementations, not just toggle — needs Strategy pattern
+-->
+
+---
+layout: default
+---
+
+<template #title>
+
+# The Map (WHERE) - Directives
+
+</template>
+
+| Feature | Main Page | Admin Panel | Preview |
+|---------|-----------|-------------|---------|
+| sortable | ✓ | ✓ | ✗ |
+| filterable | ✓ | ✗ | ✗ |
+
+**Opt-in behaviors** — varies by context. Signal for **Directives**.
+
+<!--
+[6:50 - 7:00] (10s)
+
+• sortable, filterable — optional, vary by context
+
+• Each one is a candidate for Directives
 -->
 
 ---
@@ -500,10 +646,11 @@ layout: default
 
 </template>
 
-```ts [list.ts] {1-3}
-sortable = input(false);
+```ts {1-4}
 showHeader = input(false);
-persistState = input(false);
+sortable = input(false);
+filterable = input(false);
+persistable = input(false);
 ```
 
 Boolean flags. The component asking _"what features am I?"_
@@ -511,21 +658,17 @@ Boolean flags. The component asking _"what features am I?"_
 But look closer at **The Mega List**...
 
 <!--
-BEATS:<br>• Boolean flags = feature toggles, הקומפוננטה שואלת "מה אני?"<br>• זה ה-tell — כמו בפוקר<br>• אבל האמת עמוקה יותר: חלק מה-inputs "מטיילים" ביחד (storageKey + persistState)<br>• נתחיל פשוט: פלאג אחד שלא דומה לאחרים
+[7:00 - 7:35] (35s)
 
-[6:30 - 7:15]
+• showHeader, sortable, filterable, persistable — each is a feature toggle
 
-תראו את אלה, sortable, showHeader, persistState.
+• Component asking "what do you want me to be today?"
 
-כל אחד מהם הוא feature toggle. הקומפוננטה שואלת: "מה בא לכם שאני אהיה היום?"
+• The Tell — like poker, pile of booleans = component trying to be everything
 
-זה ה-Tell. כמו בפוקר. כשיש ערימה של בוליאנים הקומפוננטה בדיכאון, היא מנסה להיות הכל.
+• Notice: storageKey only relevant when persistable=true — they travel together
 
-אבל שימו לב — זה רק קצה הקרחון. תסתכלו שוב על ה-Mega List. רואים ש-storageKey ו-initialState רלוונטיים רק כש-persistState הוא true? הם "מטיילים" ביחד.
-
-נתחיל פשוט. אחד הפלאגים האלה הוא עוף מוזר.
-
-[פאוזה דרמטית]
+• But one of these flags is different — showHeader controls STRUCTURE, not behavior...
 -->
 
 ---
@@ -538,14 +681,16 @@ layout: default
 
 </template>
 
-```ts [list.ts]
+```ts
 // From The Mega List:
 showHeader = input(false);
+headerTitle = input('');
+headerActions = input<Action[]>([]);
 ```
 
-```html [list.html]
+```html
 @if (showHeader()) {
-  <app-header />
+  <app-header [title]="headerTitle()" [actions]="headerActions()" />
 }
 <div class="list-body">...</div>
 ```
@@ -553,37 +698,21 @@ showHeader = input(false);
 Why does the **list** decide whether a header exists?
 
 <!--
-BEATS:<br>• showHeader הוא שונה — הוא שולט ב-STRUCTURE, לא בהתנהגות<br>• @if בטמפלט שמרנדר את ההדר<br>• למה הרשימה מחליטה? זו העבודה של ה-parent<br>• בונוס: תלויות נקיות יותר — הרשימה לא עושה import להדר<br>• החילוץ הכי פשוט
+[7:35 - 8:15] (40s)
 
-[7:15 - 7:45]
+• showHeader is different — controls STRUCTURE, not behavior
 
-בואו נתחיל עם showHeader. הוא שונה מ-sortable.
+• @if in template decides if Header renders
 
-הוא לא משנה התנהגות, הוא משנה מבנה — Structure — מה קיים ב-DOM.
+• Next request: "show icon only on Thursdays", "header only for US"...
 
-תראו את זה. showHeader, ובטמפלט? @if שמחליט אם לרנדר Header.
+• How many inputs? How many @ifs until it breaks?
 
-[פאוזה — מסתכל על הקהל]
+• Component asks "how should I look?" — not its job
 
-עכשיו, מה קורה כשהבקשה הבאה מגיעה?
+• Why should the list decide if it has a header?
 
-"תציג אייקון רק בימי חמישי."
-"תציג את ההדר רק ללקוחות מארה"ב."
-"תציג באנר רק בתקופת מבצעים."
-
-כמה inputs נוסיף?
-כמה @ifs עד שזה נשבר?
-כמה תנאים עד שנודה שהקומפוננטה הזו יודעת יותר מדי?
-
-[פאוזה — לתת להם להרגיש]
-
-הקומפוננטה שואלת: "איך אני אמור להיראות?"
-אבל זו לא העבודה שלה.
-
-למה שהרשימה תחליט אם יש לה כותרת?
-זה לא דאטה. זו לא התנהגות. זו אחריות של מי שמשתמש בה.
-
-בואו נחלץ את ה-@if.
+• Let's extract the @if
 -->
 
 ---
@@ -596,36 +725,34 @@ layout: default
 
 </template>
 
-```html [before]
+```html
 <!-- Before: component decides structure -->
-<app-list [showHeader]="true" />
+<app-list [showHeader]="true" headerTitle="Items" [headerActions]="actions" />
 ```
 
-```html [after]
+```html
 <!-- After: parent decides structure -->
 <app-list>
-  <app-list-header header />
+  <app-list-header title="Items" [actions]="actions" />
 </app-list>
 ```
 
-The **@if** becomes a **slot**. The boolean disappears.
+The **@if** becomes a **slot**. The boolean **and its friends** disappear.
 
 <!--
-BEATS:<br>• Before: showHeader=true, קומפוננטה מרנדרת פנימית<br>• After: בלי בוליאני, ה-parent מזריק או לא<br>• @if ← ng-content slot, הבוליאני נעלם<br>• Content projection = חילוץ החלטות מבניות (structural)
+[8:15 - 8:55] (40s)
 
-[7:45 - 8:15]
+• Before: pass true, component renders internally
 
-תראו מה קורה כשהוצאנו את ה-if החוצה.
+• After: no boolean, parent just... puts header there, or doesn't
 
-לפני: מעבירים true, הקומפוננטה מרנדרת מבפנים.
+• @if becomes ng-content — boolean evaporates
 
-אחרי: אין בוליאני, ה-parent פשוט... שם את ההדר שם, או שלא.
+• Content projection = what happens when you stop making structural decisions inside
 
-ה-@if הפך ל-ng-content, הבוליאני התאדה.
+• Aha moment: projected content is just an @if you pulled out
 
-Content projection זה לא פיצ'ר עיצובי, זה מה שקורה כשאתם מפסיקים לקבל החלטות מבניות בתוך הקומפוננטה.
-
-[זה רגע ה"אהה!" — תוכן מוזרק הוא פשוט if שהוצאנו החוצה]
+• Not every @if — only structural ones. Loading states, null guards stay inside
 -->
 
 ---
@@ -634,7 +761,7 @@ layout: section
 
 <template #title>
 
-# Tool 1: Content Projection
+# Content Projection
 
 </template>
 
@@ -642,59 +769,50 @@ Separating the <span style="color: var(--cx-green); font-weight: bold;">WHAT</sp
 
 What content appears. Not how it behaves.
 
-<div class="text-sm text-gray-500 mt-8">
-  <span class="text-yellow-500">Short term:</span> "Just one more @if"
-  <span class="mx-4">→</span>
-  <span class="text-red-400">Long term:</span> Template spaghetti, impossible to test
-</div>
-
 <!--
-BEATS:<br>• כלי 1: Content Projection — מפריד את ה-WHAT<br>• כש-inputs שולטים ב-STRUCTURE (איזה DOM קיים)<br>• Short term: עוד @if אחד. Long term: template spaghetti<br>• הקומפוננטה בבעלות על ה-layout, אתם בבעלות על ה-content
+[8:55 - 9:15] (20s)
 
-[8:15 - 8:45]
+• Tool 1: Content Projection — separates the WHAT
 
-כלי ראשון, Content projection. זה מפריד את ה-WHAT — מה התוכן שמופיע.
+• When inputs control STRUCTURE (what DOM exists)
 
-מה המחיר אם לא נעשה את זה? בטווח הקצר, "רק עוד @if אחד". בטווח הארוך? Template spaghetti, בלתי אפשרי לבדוק.
+• Like a picture frame — frame owns size/shape, you choose the picture
 
-כמו מסגרת לתמונה, המסגרת קובעת את הגודל והצורה, אתם בוחרים את התמונה.
-
-הקומפוננטה אחראית על ה-layout, אתם אחראים על ה-content.
-
-[מהר — מכינים את הקוד]
+• Component owns layout, you own content
 -->
 
 ---
-layout: default
+layout: section
 ---
 
-<template #title>
+# The Shortcut
 
-# Content Projection
-
-</template>
-
-```html [card.html]
-<div class="header">
-  <ng-content select="[header]" />
-</div>
-<ng-content />
-```
-
-Card owns layout. Consumer owns content via ng-content.
+"Just one more @if"
 
 <!--
-BEATS:<br>• שני סלוטים: הדר + ברירת מחדל<br>• "אני אטפל במעטפת, אתם תחליטו על התוכן"<br>• כרטיסים, מודאלים, פאנלים — המעטפת עקבית, התוכן משתנה
+[9:15 - 9:23] (8s)
 
-[8:45 - 9:15]
+• The familiar excuse — just add one more conditional
 
-שני סלוטים, אחד ל-header ואחד לכל השאר.
+• Seems harmless in the moment
+-->
 
-הקומפוננטה אומרת: "אני אסגור לכם את הפינה של המעטפת (wrapper). שימו בפנים מה שבא לכם."
+---
+layout: section
+---
 
-Cards, Modals, Panels. המעטפת קבועה, התוכן משתנה.
+# The Tax
 
-[מהר — הקוד ברור]
+Template spaghetti.
+
+## Impossible to test.
+
+<!--
+[9:23 - 9:31] (8s)
+
+• Reality: template becomes unreadable
+
+• Testing requires mocking every branch
 -->
 
 ---
@@ -712,31 +830,22 @@ Content Projection solved **WHAT** appears.
 But what about **HOW** it behaves?
 
 - _"Save to localStorage vs server"_
-- _"Persist state when flag is true"_
+- _"Sync across devices vs keep local"_
 
 <!--
-BEATS:<br>• הצלחנו עם WHAT — עכשיו נחשף ה-HOW<br>• Content projection = אלמנטים ב-DOM בלבד<br>• אי אפשר לעשות ng-content ל-HttpClient<br>• ההצלחה חשפה תקרה חדשה
+[9:31 - 10:05] (34s)
 
-[9:15 - 9:45]
+• Good move — extracted structural decision, boolean gone, parent decides
 
-רגע. עשינו מהלך טוב. הוצאנו החלטה מבנית החוצה, הבוליאני נעלם, ה-parent מחליט.
+• But success revealed a new ceiling
 
-[פאוזה]
+• Content Projection solves WHAT — what appears
 
-ואז קרה משהו צפוי.
-ההצלחה הזו חשפה תקרה חדשה.
+• But what about HOW — how things are done?
 
-אנחנו יודעים עכשיו ש-Content Projection פותר את ה-WHAT — מה מופיע.
-אבל מה עם ה-HOW — איך הדברים נעשים?
+• Storage logic: local vs server — completely different implementations
 
-מישהו פה ניסה פעם לעשות ng-content ל-HttpClient?
-
-[חיוך]
-
-לא עובד. ng-content זה ל-DOM. לא להתנהגות.
-
-אם WHAT פתרנו, עכשיו צריך כלי שמפריד את ה-HOW.
-וזה מה ששלח אותנו לחפש את הכלי הבא.
+• Need a tool that separates the HOW
 -->
 
 ---
@@ -749,12 +858,14 @@ layout: default
 
 </template>
 
-```ts [list.ts]
-save(state: ListState) {
-  if (this.isProd()) {
-    this.api.post('/preferences', state);
-  } else {
-    this.mockApi.save(state); // dev mode
+```ts
+save(key: string, state: ListState) {
+  if (this.storageMode() === 'local') {
+    localStorage.setItem(key, JSON.stringify(state));
+  } else if (this.storageMode() === 'session') {
+    sessionStorage.setItem(key, JSON.stringify(state));
+  } else if (this.storageMode() === 'server') {
+    this.#http.post('/api/preferences', { key, state });
   }
 }
 ```
@@ -762,65 +873,17 @@ save(state: ListState) {
 The component knows **too much** about the "how".
 
 <!--
-BEATS:<br>• if-else על מימוש — הקומפוננטה מכירה את כל האופציות<br>• Prod = API אמיתי, Dev = Mock<br>• מה קורה כשמוסיפים אופציה שלישית? רביעית?<br>• זה ה-tell של Strategy
+[10:05 - 10:30] (25s)
 
-[9:45 - 10:00]
+• if local → localStorage, if session → sessionStorage, if server → HTTP call
 
-תסתכלו על זה.
+• Component knows all storage implementations — knows too much
 
-if isProd — שמור ל-API אמיתי.
-else — שמור ל-Mock.
+• What happens when you add IndexedDB? Cloud sync?
 
-הקומפוננטה מכירה את כל האופציות. היא יודעת יותר מדי.
+• More else-if? And another?
 
-מה קורה כשמוסיפים staging? Testing? עוד סביבה?
-עוד else-if? ועוד אחד?
-
-זה ה-tell. כשיש לכם if-else על מימושים שונים — זה Strategy.
--->
-
----
-layout: section
----
-
-<template #title>
-
-# Tool 2: Strategy via DI
-
-</template>
-
-Separating the <span style="color: var(--cx-green); font-weight: bold;">HOW</span>
-
-How it's done. A or B, never both.
-
-<div class="text-sm text-gray-500 mt-8">
-  <span class="text-yellow-500">Short term:</span> "Just add an if for server mode"
-  <span class="mx-4">→</span>
-  <span class="text-red-400">Long term:</span> if-forests, untestable without mocks
-</div>
-
-<!--
-BEATS:<br>• כלי 2: Strategy via DI — מפריד את ה-HOW<br>• או א' או ב', לעולם לא שניהם<br>• Short term: עוד if לשרת. Long term: יערות של if-ים<br>• הקומפוננטה לא יודעת מה היא קיבלה — ה-DI מספק<br>• אפס if-statements, ההחלטה חיה במקום אחר
-
-[10:00 - 10:30]
-
-כלי שני, Strategy via DI. זה מפריד את ה-HOW — איך הדברים נעשים.
-
-מה המחיר? בטווח הקצר, "רק עוד if לשרת". בטווח הארוך? יערות של if-ים, אי אפשר לבדוק בלי mocks מורכבים.
-
-Content Projection הפריד את ה-WHAT — מה מופיע. Strategy מפריד את ה-HOW — איך זה עובד.
-
-או A או B, תבחרו אחד, בחיים לא שניהם ביחד.
-
-Server או LocalStorage, פרודקשן או Mock, רק מימוש אחד רץ.
-
-הקומפוננטה לא יודעת מה זה. היא רק מבקשת: "תביאו לי משהו שיודע לשמור". ה-DI מזריק לה את המימוש הנכון.
-
-בלי if-ים בקומפוננטה. ההחלטה קרתה עוד לפני שהיא נוצרה.
-
-בואו נראה קוד.
-
-[מכינים את הדוגמה]
+• The tell: if-else on implementations = Strategy
 -->
 
 ---
@@ -835,28 +898,22 @@ That **if-else** needs to disappear. But where does the decision go?
 
 ::default::
 
-| Context     | Storage    |
-| ----------- | ---------- |
-| Production  | Real API   |
-| Development | Mock API   |
-| Testing     | In-memory  |
+| Context      | Storage   |
+| ------------ | --------- |
+| Main Page    | Local     |
+| Admin Panel  | Server    |
+| Preview      | Session   |
 
 <!--
-BEATS:<br>• ה-if-else צריך להיעלם<br>• ה"לאן" תלוי בקונטקסט: Production=API אמיתי, Dev=Mock, Testing=In-memory<br>• אותה קומפוננטה, התנהגות שונה<br>• פעם: עוד בוליאנים. היום: לקומפוננטה לא אכפת
+[11:06 - 11:25] (19s)
 
-[10:30 - 10:45]
+• if-else needs to disappear from component — but where to?
 
-ה-if-else הזה צריך להיעלם מהקומפוננטה.
+• Depends on context: Main=local, Admin=server, Preview=session
 
-אבל לאן? תלוי בקונטקסט.
+• Same component, completely different storage behavior
 
-Production? API אמיתי. Development? Mock. Testing? In-memory.
-
-אותה קומפוננטה בדיוק, התנהגות שונה לגמרי.
-
-פעם היינו מוסיפים עוד if, עוד בוליאני, היום? לקומפוננטה פשוט לא אכפת.
-
-[מכינים את הפתרון]
+• Before: more ifs, more booleans. Now: component doesn't care
 -->
 
 ---
@@ -869,10 +926,10 @@ layout: default
 
 </template>
 
-```ts [storage-strategy.ts]
+```ts
 export interface StorageStrategy {
-  save(key: string, data: unknown): Promise<void>;
-  load<T>(key: string): Promise<T | null>;
+  save(key: string, state: ListState): void;
+  load(key: string): ListState | null;
 }
 
 export const STORAGE_STRATEGY =
@@ -880,19 +937,15 @@ export const STORAGE_STRATEGY =
 ```
 
 <!--
-BEATS:<br>• ממשק (Interface): מה (save/load), לא איך<br>• InjectionToken = מפתח לחיפוש<br>• (Promise לסליידים, גם Observable עובד)<br>• רק החוזה, עוד אין מימוש
+[11:25 - 11:45] (20s)
 
-[10:45 - 11:00]
+• Interface: defines WHAT (save/load), not HOW
 
-דבר ראשון, Interface, מגדירים "מה", save ו-load, לא "איך".
+• InjectionToken = our key for DI
 
-InjectionToken זה המפתח שלנו ל-DI.
+• Takes key and state, returns nothing or loaded state
 
-הערה קטנה, שמתי Promise שיהיה קריא בסלייד, Observable זה אותו רעיון בדיוק.
-
-כרגע יש לנו רק חוזה, אין מימוש.
-
-[קצר ולעניין]
+• Just the contract, no implementation yet
 -->
 
 ---
@@ -901,62 +954,64 @@ layout: default
 
 <template #title>
 
-# Strategy: Two Implementations
+# Strategy: LocalStorage
 
 </template>
 
-<div class="grid grid-cols-2 gap-4">
-<div>
-
-```ts [local-storage.ts]
-export class LocalStorageStrategy
-  implements StorageStrategy
-{
-  async save(key: string, data: unknown) {
-    localStorage.setItem(key, JSON.stringify(data));
+```ts
+export class LocalStorage implements StorageStrategy {
+  save(key: string, state: ListState) {
+    localStorage.setItem(key, JSON.stringify(state));
   }
-  async load<T>(key: string) {
-    const item = localStorage.getItem(key);
-    return item ? JSON.parse(item) as T : null;
+  load(key: string) {
+    return JSON.parse(localStorage.getItem(key) ?? 'null');
   }
 }
 ```
 
-</div>
-<div>
-
-```ts [server-storage.ts]
-export class ServerStorageStrategy
-  implements StorageStrategy
-{
-  #api = inject(ApiService);
-
-  async save(key: string, data: unknown) {
-    await firstValueFrom(this.#api.post(...));
-  }
-  async load<T>(key: string) {
-    return firstValueFrom(this.#api.get(...));
-  }
-}
-```
-
-</div>
-</div>
-
-Same interface. Different "how".
+Persists across browser sessions. Works offline.
 
 <!--
-BEATS:<br>• שני מימושים — localStorage ו-Server<br>• אותו ממשק, "איך" שונה<br>• הרשימה לא יודעת מה היא קיבלה
+[11:45 - 12:00] (15s)
 
-[11:00 - 11:30]
+• LocalStorage — persists even after browser closes
 
-שני מימושים. משמאל localStorage — שומר בדפדפן, עובד Offline.
+• Simple, no server needed, works offline
+-->
 
-מימין Server — פונה ל-API, מסנכרן בין מכשירים.
+---
+layout: default
+---
 
-אותו ממשק בדיוק. הרשימה קוראת ל-save, היא לא יודעת לאן זה הולך.
+<template #title>
 
-[ממשיכים]
+# Strategy: ServerStorage
+
+</template>
+
+```ts
+export class ServerStorage implements StorageStrategy {
+  #http = inject(HttpClient);
+
+  save(key: string, state: ListState) {
+    this.#http.post('/api/preferences', { key, state });
+  }
+  load(key: string) {
+    return this.#http.get<ListState>(`/api/preferences/${key}`);
+  }
+}
+```
+
+Syncs across devices. Requires authentication.
+
+**Same interface. Different "how".**
+
+<!--
+[12:00 - 12:20] (20s)
+
+• ServerStorage — syncs to backend, available on any device
+
+• Same interface exactly — directive calls save/load, doesn't know which strategy
 -->
 
 ---
@@ -969,40 +1024,98 @@ layout: default
 
 </template>
 
-```ts [admin-dashboard.ts]
+```ts
 @Component({
   providers: [
     {
       provide: STORAGE_STRATEGY,
-      useClass: ServerStorageStrategy,
+      useClass: ServerStorage,
     },
   ],
 })
-export class AdminDashboard {}
+export class AdminPanel {}
 ```
 
 **Zero if-statements.** Context decides, not component.
 
 <!--
-BEATS:<br>• ההחלטה חיה ב-PROVIDER<br>• מפתח: פרוביידר שמוגבל לעץ התחתון (subtree) — הזרקה היררכית<br>• אפס if-statements בקומפוננטה<br>• טיפ למקצוענים: NoopStrategy בשורש, לדרוס לפי קונטקסט<br>• Strategy = בחירה בין אפשרויות. Opt-in = directives<br>• זה צימוד גלוי (visible coupling)
+[12:20 - 13:05] (45s)
 
-[11:30 - 12:15]
+• Decision lives in PROVIDER
 
-פה ההחלטה עוברת ל-provider.
+• AdminPanel says: "below me, anyone asking for Storage gets ServerStorage"
 
-ה-AdminDashboard אומר: "תחתיי, כל מי שמבקש Storage — מקבל ServerStorageStrategy."
+• Angular's power: hierarchical injection — affects only subtree
 
-וזה הקטע החזק של Angular, הזרקה היררכית, זה משפיע רק על העץ שמתחת לקומפוננטה הזאת.
+• Zero if-statements in component
 
-אפס if-ים בקומפוננטה.
+• Pro tip: LocalStorage at root — works by default, override where needed
 
-טיפ של אלופים, תשימו NoopStrategy ברוט של האפליקציה, ככה כברירת מחדל שום דבר לא נשבר, ורק איפה שצריך, דורסים.
+• Strategy = exclusive choice. A or B, never both.
 
-חשוב לזכור, Strategy זה למימושים אקסקלוסיביים, או זה או זה, אם אתם רוצים להוסיף התנהגויות, Composition, לזה יש Directives.
+• This is VISIBLE coupling
+-->
 
-זה Visible Coupling, אני מסתכל על הקוד ומבין בדיוק מה קורה.
+---
+layout: section
+---
 
-[להדגיש: scoped providers, אפס if-statements]
+<template #title>
+
+# Strategy via DI
+
+</template>
+
+Separating the <span style="color: var(--cx-green); font-weight: bold;">HOW</span>
+
+How it's done. Local or Server, never both.
+
+<!--
+[13:05 - 13:25] (20s)
+
+• Tool 2: Strategy Pattern via DI
+
+• Separates the HOW — not if, but WHICH implementation
+
+• When behavior varies by context, strategy prevents if-cascades
+
+• Classic pattern from Gang of Four — Angular makes it elegant via DI
+-->
+
+---
+layout: section
+---
+
+# The Shortcut
+
+"Just add an if for each storage type"
+
+<!--
+[13:25 - 13:33] (8s)
+
+• The tempting path — if local do this, if server do that
+
+• We all know where this leads
+-->
+
+---
+layout: section
+---
+
+# The Tax
+
+if-forests.
+
+## Untestable without mocks.
+
+<!--
+[13:33 - 13:41] (8s)
+
+• if-else branches multiply — add cloud? another branch everywhere
+
+• Testing requires mocking everything to hit each branch
+
+• Can't reason about code without tracing all paths
 -->
 
 ---
@@ -1015,7 +1128,7 @@ layout: default
 
 </template>
 
-```ts [list.ts]
+```ts
 export class ListComponent {
   #storage = inject(STORAGE_STRATEGY);
   #sorter = inject(SORT_STRATEGY);
@@ -1026,119 +1139,26 @@ export class ListComponent {
 
 **Too many tokens.** Strategy solved **HOW**. But what about **WHETHER**?
 
-<v-click>
-<img src="/assets/one-does-not-simply.jpg" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-120 rounded-lg shadow-xl" />
-</v-click>
+<img v-click src="/assets/one-does-not-simply.jpg" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-120 rounded-lg shadow-xl" />
 
 <!--
-BEATS:<br>• Strategy עבד — עכשיו נחשפה בעיה חדשה<br>• יותר מדי tokens מוזרקים תמיד<br>• אי אפשר לראות בטמפלט מה דלוק<br>• Strategy מחליף, Directives מוסיפים
+[13:41 - 14:26] (45s)
 
-[12:15 - 13:00]
+• Strategy worked — HOW is out, zero ifs
 
-Strategy עבד. ה-HOW יצא מהקומפוננטה. אפס if-ים.
+• But success revealed something new
 
-[פאוזה]
+• 3 tokens here, 5 more off-slide — component injects ALL, always, even when not needed
 
-אבל ההצלחה הזו חשפה משהו חדש.
+• What if sorting is optional? Storage not relevant?
 
-תסתכלו על הקוד הזה. שלושה tokens, ועוד חמישה שלא נכנסו לסלייד.
-הקומפוננטה מזריקה את כולם. תמיד. גם כשלא צריך.
+• [click] One does not simply inject everything
 
-מה אם המיון הוא אופציונלי? מה אם הסינון לא רלוונטי בכלל?
-הקומפוננטה עדיין סוחבת את כל ה-tokens האלה.
+• Main problem: can't see in template what's on
 
-[Click for meme]
+• New dev opens file — no clue what this list does without reading code
 
-וזה עוד לא הבעיה העיקרית.
-הבעיה היא שאי אפשר לראות בטמפלט מה דלוק.
-מפתח חדש פותח את הקובץ — ואין לו מושג מה הרשימה הזו עושה בלי לקרוא קוד.
-
-Strategy פתר את ה-HOW.
-עכשיו צריך כלי שפותר את ה-WHETHER — ושאפשר לראות אותו בעיניים.
--->
-
----
-layout: default
----
-
-<template #title>
-
-# The Hidden Behavior
-
-</template>
-
-```ts [list.ts]
-persistState = input(false);
-#storage = inject(STORAGE_STRATEGY); // always injected!
-
-ngOnInit() {
-  if (this.persistState()) {
-    this.#storage.save(this.storageKey(), this.state());
-  }
-}
-```
-
-Service injected even when not needed. Invisible from outside.
-
-<!--
-BEATS:<br>• persistState עם service מוזרק תמיד<br>• אי אפשר לראות מבחוץ אם הרשימה נשמרת<br>• הפלאג שולט בהתנהגות פנימית, אבל ה-service תמיד שם<br>• זה ה-tell של Directives
-
-[13:00 - 13:15]
-
-תסתכלו על persistState.
-
-הפלאג קיים, והלוגיקה קבורה בתוך ngOnInit.
-
-אבל יותר גרוע — ה-STORAGE_STRATEGY מוזרק תמיד. גם כש-persistState הוא false.
-
-מבחוץ? אי אפשר לדעת שהרשימה הזו נשמרת בלי לקרוא את הקוד.
-
-זה ה-tell. כשיש לכם התנהגות מוסתרת מאחורי פלאג — זו דירקטיבה שמחכה לצאת.
--->
-
----
-layout: section
----
-
-<template #title>
-
-# Tool 3: Directives
-
-</template>
-
-Separating the <span style="color: var(--cx-green); font-weight: bold;">WHETHER</span>
-
-Is it on or off? Composable opt-ins.
-
-<div class="text-sm text-gray-500 mt-8">
-  <span class="text-yellow-500">Short term:</span> "Just inject it everywhere"
-  <span class="mx-4">→</span>
-  <span class="text-red-400">Long term:</span> Hidden features, null-check hell
-</div>
-
-<!--
-BEATS:<br>• כלי 3: Directives — מפריד את ה-WHETHER<br>• showHeader ← projection (WHAT). Strategy נתן לנו HOW. מה נשאר? persistable (WHETHER)<br>• Short term: נזריק בכל מקום. Long term: פיצ'רים נסתרים, null-check hell<br>• Directive = היחידה הכי קטנה ששרדה את החילוץ + מביאה את ה-dependencies שלה
-
-[13:15 - 14:00]
-
-כלי שלישי, Directives. זה מפריד את ה-WHETHER — האם ההתנהגות קיימת בכלל.
-
-מה המחיר? בטווח הקצר, "נזריק את זה בכל מקום". בטווח הארוך? פיצ'רים נסתרים שאי אפשר לראות בטמפלט, null-check hell.
-
-בואו נסכם: Content Projection מפריד את ה-WHAT — מה התוכן. Strategy מפריד את ה-HOW — איך השמירה עובדת.
-
-אבל רגע — Strategy נתן לנו את ה-HOW. הוא לא פתר את ה-WHETHER.
-
-הרשימה עדיין מזריקה את STORAGE_STRATEGY תמיד, גם כשלא צריך אותו.
-
-Directives פותרים את זה. ההזרקה עוברת לדירקטיבה.
-אין דירקטיבה? אין הזרקה.
-
-בלי "אולי", בלי תנאים, יש או אין — WHETHER.
-
-זו דירקטיבה, חתיכת התנהגות קטנה שמביאה איתה את ה-dependencies שלה.
-
-[הגדרה מחדש — WHAT/HOW/WHETHER]
+• Strategy solved HOW — need tool for WHETHER, and it must be VISIBLE
 -->
 
 ---
@@ -1151,9 +1171,9 @@ layout: default
 
 </template>
 
-```ts [persistable.ts]
-@Directive({ selector: 'app-list[persistable]' })
-export class Persistable {
+```ts
+@Directive({ selector: 'app-list[appListPersistable]' })
+export class AppListPersistable {
   #list = inject(ListComponent);
   #storage = inject(STORAGE_STRATEGY);
   storageKey = input.required<string>();
@@ -1170,24 +1190,19 @@ export class Persistable {
 Directive owns persistence. List doesn't know it's being saved.
 
 <!--
-BEATS:<br>• סלקטור: app-list[persistable] — בלי האטריביוט = לא קיים<br>• הדירקטיבה היא הבעלים של ה-storageKey<br>• הדירקטיבה מזריקה את ה-Strategy — לא הרשימה<br>• הסלקטור הופך את הצימוד לגלוי ומפורש
+[15:02 - 15:41] (39s)
 
-[14:00 - 14:30]
+• Selector: `app-list[appListPersistable]` — no attribute = doesn't exist, zero overhead
 
-תראו את ה-Selector: `app-list[persistable]`.
+• Remember the problem? List injected STORAGE_STRATEGY even when not needed
 
-בלי האטריביוט? הדירקטיבה לא קיימת. אפס overhead.
+• Now: DIRECTIVE injects Strategy, not list
 
-וזה הקטע החזק — תזכרו את הבעיה? הרשימה הזריקה STORAGE_STRATEGY גם כשלא היה צריך?
+• List doesn't even know it's being saved
 
-עכשיו הדירקטיבה מזריקה את ה-Strategy, לא הרשימה.
-הרשימה לא יודעת בכלל שמישהו שומר אותה.
+• Directive owns storageKey, listens to state changes, saves
 
-הדירקטיבה מחזיקה את storageKey, מאזינה לשינויים ב-state, ושומרת.
-
-ה-effect ננקה אוטומטית ב-destroy של הדירקטיבה.
-
-[מהר — להראות את הדפוס]
+• effect auto-cleans on directive destroy
 -->
 
 ---
@@ -1200,38 +1215,36 @@ layout: default
 
 </template>
 
-```html [app.html]
+```html
 <!-- Simple -->
 <app-list [items]="data" />
 
 <!-- With persistence -->
-<app-list persistable storageKey="admin-list" [items]="data" />
+<app-list appListPersistable storageKey="admin-list" [items]="data" />
 
 <!-- Full-featured -->
-<app-list sortable sortKey="date" sortDir="desc"
-          filterable persistable storageKey="main" [items]="data" />
+<app-list appListSortable sortKey="date" sortDir="desc"
+          appListFilterable appListPersistable storageKey="main" [items]="data" />
 ```
 
 **Visible in the template.** Look at the HTML, know what it does.
 
 <!--
-BEATS:<br>• פשוט: בלי דירקטיבות. עם persistence: persistable + storageKey. מלא: כל השלוש<br>• מפתח: גלוי בטמפלט — תסתכלו על ה-HTML, תדעו מה הוא עושה<br>• כל דף בוחר את השילוב שלו — מורכבות בבחירה (opt-in)
+[15:41 - 16:21] (40s)
 
-[14:30 - 15:00]
+• Simple list? Nothing. Zero unnecessary injections
 
-תסתכלו על ה-HTML.
+• Want persistence? Add `appListPersistable` — directive brings storageKey
 
-רשימה פשוטה? בלי כלום. אפס injections מיותרים.
-רוצים persistence? תוסיפו `persistable`. הדירקטיבה מביאה איתה את ה-storageKey.
+• STORAGE_STRATEGY injected ONLY when appListPersistable exists
 
-וזה הקטע — ה-STORAGE_STRATEGY מוזרק רק כשיש persistable.
-הרשימה הפשוטה? בלי storage service. בלי null checks.
+• Simple list? No storage service. No null checks
 
-הכל גלוי, מפתח חדש פותח את הקובץ ורואה *בדיוק* מה הרשימה הזו עושה.
+• Everything visible — new dev sees EXACTLY what this list does
 
-כל דירקטיבה עצמאית — אפשר לשלב אותן בכל סדר, כל דף בוחר את מה שהוא צריך.
+• Each directive independent — combine in any order
 
-[זה ה-Payoff של ה-visibility]
+• This is the visibility payoff
 -->
 
 ---
@@ -1244,41 +1257,33 @@ layout: default
 
 </template>
 
-```html [scattered across pages]
+```html
 <!-- Page A -->
-<app-list sortable filterable persistable [items]="a" />
+<app-list appListSortable appListFilterable appListPersistable [items]="a" />
 
 <!-- Page B -->
-<app-list sortable filterable persistable [items]="b" />
+<app-list appListSortable appListFilterable appListPersistable [items]="b" />
 
 <!-- Page C -->
-<app-list sortable filterable persistable [items]="c" />
+<app-list appListSortable appListFilterable appListPersistable [items]="c" />
 ```
 
 Same combo. Three times.
 
-<v-click>
-<img src="/assets/distracted-boyfriend.jpg" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-120 rounded-lg shadow-xl" />
-</v-click>
+<img v-click src="/assets/distracted-boyfriend.jpg" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-120 rounded-lg shadow-xl" />
 
 <!--
-BEATS:<br>• שלושה דפים, אותן שלוש דירקטיבות — מועתק (copy-paste)<br>• הצימוד נסתר בתוך החזרתיות<br>• רוצים להוסיף חמישית? צריך לחפש בכל דף. פספסתם אחד? נוצר drift<br>• [CLICK MEME]<br>• אותו שילוב 3 פעמים = קונספט שאין לו שם
+[16:21 - 17:01] (40s)
 
-[15:00 - 15:45]
+• Three different pages, exact same combo — copy-paste
 
-אבל רגע, תסתכלו על זה.
+• Coupling hides inside repetition: "we always put these three together"
 
-שלושה דפים שונים, אותו שילוב בדיוק, קופי פייסט.
+• Want to add a fourth? Hunt through entire app. Miss one? Drift begins
 
-הצימוד מתחבא בתוך החזרתיות, "אנחנו תמיד שמים את השלושה האלה ביחד".
+• [click] Distracted by repetition
 
-מה קורה כשרוצים להוסיף רביעי? צריך לרוץ על כל האפליקציה, שכחתם אחד? הכל מתחיל להתפרק, סטייה בין המקומות.
-
-[Click for meme]
-
-שלוש פעמים אותו דבר? זה לא מקרי, זה קונספט שפשוט אין לו עדיין שם.
-
-[מכינים את חוק הקידום]
+• Same thing 3 times? Not coincidence — concept without a name yet
 -->
 
 ---
@@ -1291,6 +1296,8 @@ layout: section
 
 </template>
 
+One time is just code.
+
 Two times is coincidence.
 
 **Three times is a concept.**
@@ -1298,25 +1305,77 @@ Two times is coincidence.
 ## Name it.
 
 <!--
-BEATS:<br>• פעם 1 = קוד. פעם 2 = מקריות. פעם 3 = קונספט — תנו לו שם<br>• סייג: אותה משמעות, אותה סיבה. סיבות שונות = אל תקבצו<br>• שם = אפשר לדבר על זה, לתעד, לבדוק, לפתח במקום אחד<br>• דפוסים בלי שם נוטים ל-drift (סיפור: הסינון כבוי "זמנית")<br>• 3 פעמים אותה משמעות? תנו לזה שם
+[17:01 - 17:41] (40s)
 
-[15:45 - 16:30]
+• Once = code. Twice = coincidence. Three times = concept — NAME IT
 
-הנה הכלל:
+• Caveat: must be same REASON. Different reasons? Don't combine — false duplication
 
-פעם אחת? זה קוד.
-פעמיים? צירוף מקרים.
-שלוש פעמים? זה קונספט. תנו לו שם.
+• With a name: becomes entity, can document, test, discuss in daily
 
-סייג חשוב, זה חייב להיות מאותה סיבה, אם הסיבות שונות, אל תאחדו סתם, כפילויות שווא.
+• Without name: things drift. Saw 3 "identical" lists, one had sorting off "temporarily", 6 months later nobody remembered why
 
-כשאתם נותנים למשהו שם, הוא הופך לישות, אפשר לתעד אותו, לבדוק אותו, לדבר עליו בדיילי.
+• Name it
+-->
 
-בלי שם? הדברים מתפזרים, ראיתי פעם שלוש רשימות "זהות", שבאחת מהן מישהו כיבה את המיון "זמנית", חצי שנה אחר כך אף אחד לא זכר למה.
+---
+layout: section
+---
 
-תנו לזה שם.
+<template #title>
 
-[מסר חזק]
+# Directives
+
+</template>
+
+Separating the <span style="color: var(--cx-green); font-weight: bold;">WHETHER</span>
+
+Is it on or off? Composable opt-ins.
+
+<!--
+[17:41 - 18:01] (20s)
+
+• Tool 3: Directives — separates the WHETHER
+
+• Recap: Content Projection = WHAT, Strategy = HOW
+
+• Directives fix WHETHER — injection moves to directive
+
+• No directive? No injection. Exists or doesn't
+-->
+
+---
+layout: section
+---
+
+# The Shortcut
+
+"Just inject it everywhere"
+
+<!--
+[18:01 - 18:09] (8s)
+
+• The familiar excuse — inject all services, check flags later
+
+• Easier than thinking about what's actually needed
+-->
+
+---
+layout: section
+---
+
+# The Tax
+
+Hidden features.
+
+## Null-check hell.
+
+<!--
+[18:09 - 18:17] (8s)
+
+• Reality: can't tell what's active without reading code
+
+• Every service needs null checks and guards
 -->
 
 ---
@@ -1329,44 +1388,38 @@ layout: default
 
 </template>
 
-```ts [power-list.ts]
+```ts
 @Directive({
-  selector: 'app-list[powerList]',
+  selector: 'app-list[appListPowerList]',
   hostDirectives: [
-    { directive: Sortable, inputs: ['sortKey', 'sortDir'] },
-    { directive: Filterable, inputs: ['filterKey'] },
-    Persistable,
+    { directive: AppListSortable, inputs: ['sortKey', 'sortDir'] },
+    { directive: AppListFilterable, inputs: ['filterKey'] },
+    AppListPersistable,
   ],
 })
-export class PowerList {}
+export class AppListPowerList {}
 ```
 
 Forward inputs explicitly. **No magic.**
 
 <!--
-BEATS:<br>• hostDirectives — מקבץ דירקטיבות<br>• PowerList: אטריביוט אחד, שלוש התנהגויות<br>• Trade-off: מאבדים visibility בטמפלט, מקבלים קונספט עם שם + מקום אחד לעדכן<br>• Input forwarding מפורש — אין קסם<br>• Persistable בלי forwarding = preset קבוע
+[18:17 - 18:57] (40s)
 
-[16:30 - 17:00]
+• Angular has `hostDirectives`
 
-באנגולר יש לנו את `hostDirectives`.
+• AppListPowerList bundles all three — one directive brings the whole package
 
-`PowerList` מאגדת את כל השלוש. אטריביוט אחד שמביא איתו את כל החבילה.
+• Trade-off: lose template visibility, gain named concept + single update point
 
-כן, אנחנו מאבדים את ה-visibility בטמפלט שדיברנו עליה קודם.
-אבל מה אנחנו מקבלים בתמורה? קונספט עם שם, ומקום אחד לעדכן את כל המקומות.
+• No magic — input forwarding is explicit
 
-הבהרה חשובה — אין פה קסם.
+• See `inputs: ['sortKey', 'sortDir']`? That's forwarding
 
-אם אני רוצה להעביר sortKey דרך powerList, אני חייב לחשוף את זה מפורשות.
-רואים את inputs: ['sortKey', 'sortDir']? זה ה-forwarding.
+• Persistable without forwarding = fixed preset, no knobs
 
-Persistable בלי forwarding — זה preset קבוע. אין לו knobs.
+• Intentional. You choose what to expose
 
-זה מכוון. אתם בוחרים מה לחשוף.
-
-רוצים להוסיף התנהגות רביעית? מקום אחד וסגרנו את הפינה.
-
-[קלות תחזוקה]
+• Want to add fourth behavior? One place
 -->
 
 ---
@@ -1379,33 +1432,28 @@ layout: default
 
 </template>
 
-```html [app.html]
-<!-- Before: 3 attributes -->
-<app-list sortable filterable persistable [items]="data" />
+```html
+<!-- Before: 3 directives -->
+<app-list appListSortable appListFilterable appListPersistable [items]="data" />
 
 <!-- After: 1 named concept -->
-<app-list powerList [items]="data" />
+<app-list appListPowerList [items]="data" />
 ```
 
-<v-click>
-<img src="/assets/pam-theyre-different.jpg" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-120 rounded-lg shadow-xl" />
-</v-click>
+<img v-click src="/assets/drake-coupling.jpg" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-120 rounded-lg shadow-xl" />
 
 <!--
-BEATS:<br>• Before: 3 אטריביוטים. After: מילה אחת — powerList<br>• [CLICK MEME]<br>• פונקציונלית זה זהה, קונספטואלית זה עולמות שונים<br>• מפתח חדש רואה "powerList" — מבין מיד<br>• רשימה של דברים ← קונספט
+[18:57 - 19:17] (20s)
 
-[17:00 - 17:15]
+• Before: grocery list of directives. After: `appListPowerList`
 
-לפני: רשימת מכולת של אטריביוטים.
-אחרי: `powerList`.
+• [click] Drake approves
 
-[Click for meme]
+• Code runs same thing. In your head? Different world
 
-בקוד זה רץ אותו דבר, בראש? זה עולם אחר.
+• New dev joins, sees `appListPowerList` — understands immediately
 
-מישהו חדש מצטרף לצוות, רואה `powerList`, ומבין מיד מה קורה פה. הפכנו רשימה של דברים לקונספט עם משמעות.
-
-[קצר]
+• Turned a list of things into a concept with meaning
 -->
 
 ---
@@ -1418,42 +1466,36 @@ layout: default
 
 </template>
 
-```ts [auto-saveable.ts]
+```ts
 @Directive({
-  selector: 'app-list[autoSaveable]',
-  hostDirectives: [DirtyTrackable, Debounceable, Persistable],
+  selector: 'app-list[appListPersistSelection]',
+  hostDirectives: [AppListSelectable, AppListPersistable],
 })
-export class AutoSaveable {
-  #dirty = inject(DirtyTrackable);
-  #debounce = inject(Debounceable);
-  #persist = inject(Persistable);
+export class AppListPersistSelection {
+  #selectable = inject(AppListSelectable);
+  #persistable = inject(AppListPersistable);
 
-  #autoSave = effect(() => {
-    if (this.#dirty.isDirty()) {
-      this.#debounce.run(() => this.#persist.save());
-    }
-  });
+  constructor() {
+    // The Glue: selection changes → persist
+    effect(() => this.#persistable.save(this.#selectable.selection()));
+  }
 }
 ```
 
-When A and B **must** work together.
+The **Glue**. Selectable doesn't know Persistable. This connects them.
 
 <!--
-BEATS:<br>• Coordinator directive — כשדירקטיבות חייבות לעבוד ביחד<br>• DirtyTrackable + Debounceable = עצמאיות<br>• AutoSaveable מתאם: כשזה dirty, תריץ debounce לשמירה<br>• צימוד מכוון? תנו לו בית — עם שם, שאפשר לבדוק
+[19:17 - 19:52] (35s)
 
-[17:15 - 17:45]
+• Last pattern: Coordinator — the glue
 
-דפוס אחרון, Coordinator.
+• Product asks: "remember which items user selected"
 
-הפרודקט מבקש: "תשמור אוטומטית, אבל רק כשזה Dirty, ועם Debounce."
+• Two independent directives: Selectable tracks selection, Persistable saves state
 
-יש לנו דירקטיבה ל-Dirty, יש לנו דירקטיבה ל-Debounce, הן לא מכירות אחת את השנייה.
+• Neither knows about the other — Coordinator connects them
 
-ה-Coordinator מחבר ביניהן. "כשאתה Dirty, תריץ את זה ב-Debounce."
-
-זה Coupling, אבל הוא מכוון, תנו לו בית, תנו לו שם, תכתבו לו טסט.
-
-[מובן]
+• This IS coupling — but intentional. Give it a home, a name, write a test
 -->
 
 ---
@@ -1461,7 +1503,7 @@ layout: center
 ---
 
 <div class="text-center">
-  <div class="text-gray-400 text-sm uppercase tracking-widest mb-6">The Journey</div>
+  <div class="text-gray-600 text-sm uppercase tracking-widest mb-6">The Journey</div>
   <div class="flex justify-center gap-4">
     <div class="px-4 py-2 rounded-full text-sm font-semibold shadow-lg" style="background: var(--cx-green); color: #111827;">
       ✓ Map
@@ -1476,15 +1518,15 @@ layout: center
       ✓ Compose
     </div>
     <div class="px-4 py-2 rounded-full text-sm font-semibold shadow-lg" style="background: var(--cx-green); color: #111827;">
-      ✓ Name
+      ✓ Bundle
     </div>
   </div>
 </div>
 
 <!--
-[17:45 - 17:52]
+[19:52 - 19:59] (7s)
 
-חמישה שלבים, סיימנו את המסע.
+• Five steps — journey complete
 -->
 
 ---
@@ -1492,47 +1534,81 @@ layout: center
 ---
 
 <div class="text-center">
-  <div class="text-gray-400 text-sm uppercase tracking-widest mb-6">Team Superpowers</div>
-  <div class="flex justify-center gap-8 mt-8">
-    <div class="text-center">
-      <div class="text-2xl mb-2">🎯</div>
-      <div class="text-sm text-gray-300">Clear scope</div>
-    </div>
-    <div class="text-center">
-      <div class="text-2xl mb-2">⚡</div>
-      <div class="text-sm text-gray-300">Parallel work</div>
-    </div>
-    <div class="text-center">
-      <div class="text-2xl mb-2">🧪</div>
-      <div class="text-sm text-gray-300">Testable in isolation</div>
-    </div>
-    <div class="text-center">
-      <div class="text-2xl mb-2">📍</div>
-      <div class="text-sm text-gray-300">Single point of change</div>
-    </div>
-    <div class="text-center">
-      <div class="text-2xl mb-2">💬</div>
-      <div class="text-sm text-gray-300">Shared vocabulary</div>
-    </div>
-  </div>
+  <div class="text-8xl mb-8">🎯</div>
+  <div class="text-4xl font-bold mb-4">Clear Scope</div>
+  <div class="text-xl text-gray-600">Know exactly what to extract before starting</div>
 </div>
 
 <!--
-[17:52 - 18:00]
+[19:59 - 20:07] (8s)
 
-כל אחד נתן לנו סופרפאואר אחר:
+• Clear scope — know exactly what to extract before starting
+-->
 
-Clear scope — יודעים בדיוק מה לחלץ לפני שמתחילים.
+---
+layout: center
+---
 
-Parallel work — מפתח אחד על הרשימה, אחר על ההדר, בלי לחכות.
+<div class="text-center">
+  <div class="text-8xl mb-8">⚡</div>
+  <div class="text-4xl font-bold mb-4">Parallel Work</div>
+  <div class="text-xl text-gray-600">One dev on list, another on header — no waiting</div>
+</div>
 
-Testable in isolation — כל חלק אפשר לבדוק בנפרד.
+<!--
+[20:07 - 20:15] (8s)
 
-Single point of change — רוצים להוסיף התנהגות? מקום אחד.
+• Parallel work — one dev on list, another on header, no waiting
+-->
 
-Shared vocabulary — אומרים "powerList" בדיילי וכולם יודעים.
+---
+layout: center
+---
 
-עכשיו בואו נשים גבולות גזרה.
+<div class="text-center">
+  <div class="text-8xl mb-8">🧪</div>
+  <div class="text-4xl font-bold mb-4">Testable in Isolation</div>
+  <div class="text-xl text-gray-600">Each part testable separately</div>
+</div>
+
+<!--
+[20:15 - 20:23] (8s)
+
+• Testable in isolation — each part testable separately
+-->
+
+---
+layout: center
+---
+
+<div class="text-center">
+  <div class="text-8xl mb-8">📍</div>
+  <div class="text-4xl font-bold mb-4">Single Point of Change</div>
+  <div class="text-xl text-gray-600">Add behavior? One place.</div>
+</div>
+
+<!--
+[20:23 - 20:31] (8s)
+
+• Single point of change — add behavior? one place
+-->
+
+---
+layout: center
+---
+
+<div class="text-center">
+  <div class="text-8xl mb-8">💬</div>
+  <div class="text-4xl font-bold mb-4">Shared Vocabulary</div>
+  <div class="text-xl text-gray-600">Say "PowerList" in daily — everyone knows</div>
+</div>
+
+<!--
+[20:31 - 20:42] (11s)
+
+• Shared vocabulary — say "PowerList" in daily, everyone knows
+
+• Now let's set guardrails
 -->
 
 ---
@@ -1548,48 +1624,75 @@ layout: section
 Each tool has limits.
 
 <!--
-BEATS:<br>• מעקות בטיחות קצרים — מתי לא להשתמש
+[20:42 - 20:52] (10s)
 
-[18:00 - 18:15]
-
-מתי לא להשתמש בזה? בואו נשים גבולות גזרה.
-
-[מהר]
+• When NOT to use? Let's set boundaries
 -->
 
 ---
-layout: default
+layout: center
 ---
 
-<template #title>
-
-# Guardrails
-
-</template>
-
-| Pattern            | Don't use when...                         |
-| ------------------ | ----------------------------------------- |
-| Content Projection | You need behavior, not structure          |
-| Strategy via DI    | Behaviors should be optional/composable   |
-| Directives         | Same bundle repeated — name it instead    |
-| hostDirectives     | Things are unrelated — don't bundle them  |
+<div class="text-center">
+  <div class="text-gray-600 text-sm uppercase tracking-widest mb-6">Guardrail</div>
+  <div class="text-4xl font-bold mb-6">Content Projection</div>
+  <div class="text-2xl text-red-400">Don't use when you need behavior, not structure</div>
+</div>
 
 <!--
-BEATS:<br>• Inputs = זולים, תבניות חילוץ = יקרות<br>• אל תרוצו לכלי כשיש inputs שעובדים<br>• Guardrails — מתי להישאר עם הפשוט
+[20:52 - 21:02] (10s)
 
-[18:15 - 18:30]
+• Content Projection? Structure only. Not behavior
+-->
 
-Inputs זה זול. Extraction patterns עולים מורכבות.
-תשתמשו רק כשהמחיר כבר שם.
+---
+layout: center
+---
 
-אל תשלפו תותחים כבדים אם input פשוט סוגר את הפינה.
+<div class="text-center">
+  <div class="text-gray-600 text-sm uppercase tracking-widest mb-6">Guardrail</div>
+  <div class="text-4xl font-bold mb-6">Strategy via DI</div>
+  <div class="text-2xl text-red-400">Don't use when only one implementation will ever exist</div>
+</div>
 
-Content Projection? רק למבנה. לא להתנהגות.
-Strategy? לא לדברים אופציונליים.
-Directives? אל תעשו קופי פייסט, תנו שם.
-hostDirectives? תקבצו רק דברים שיש ביניהם קשר אמיתי.
+<!--
+[21:02 - 21:12] (10s)
 
-עכשיו שיש לנו את הכלים, בואו נחזור להתחלה.
+• Strategy? Not if only one implementation exists
+-->
+
+---
+layout: center
+---
+
+<div class="text-center">
+  <div class="text-gray-600 text-sm uppercase tracking-widest mb-6">Guardrail</div>
+  <div class="text-4xl font-bold mb-6">Directives</div>
+  <div class="text-2xl text-red-400">Don't use when behavior is exclusive (use Strategy instead)</div>
+</div>
+
+<!--
+[21:12 - 21:22] (10s)
+
+• Directives? Not for exclusive A-or-B choices
+-->
+
+---
+layout: center
+---
+
+<div class="text-center">
+  <div class="text-gray-600 text-sm uppercase tracking-widest mb-6">Guardrail</div>
+  <div class="text-4xl font-bold mb-6">hostDirectives</div>
+  <div class="text-2xl text-red-400">Don't use when things are unrelated — don't bundle them</div>
+</div>
+
+<!--
+[21:22 - 21:35] (13s)
+
+• hostDirectives? Bundle only related things
+
+• Now let's go back to the beginning
 -->
 
 ---
@@ -1605,81 +1708,126 @@ layout: section
 Remember the price we paid?
 
 <!--
-BEATS:<br>• סגירת מעגל — חוזרים לכאב האנושי<br>• כל בעיה שציינו בהתחלה — עכשיו פתורה<br>• זה לא היה על patterns, זה היה על לשחרר את הצוות
+[21:35 - 22:17] (42s)
 
-[18:30 - 19:00]
+• Remember the price we paid?
 
-זוכרים את המחיר ששילמנו?
+• Cognitive Load
 
-Cognitive Load — עכשיו כל כלי עושה דבר אחד. אפשר להחזיק בראש.
+• Bottleneck 
 
-Bottleneck — עכשיו כל אחד יכול לעבוד על הדירקטיבה שלו. אין תור לאותו קובץ.
+• Slow Delivery
 
-Slow Delivery — עכשיו שינוי ב-strategy זה קובץ אחד. לא PR שנוגע בכל מקום.
+• My metric: how many places to touch for small change. Went from "many" to "one"
 
-המדד שלי היה פשוט: כמה מקומות צריך לגעת בשביל שינוי קטן. ירד מ"הרבה" ל"אחד".
+• It was about freeing the team
 
-[פאוזה]
-
-זה לא היה על patterns.
-זה היה על לשחרר את הצוות.
-
-לפני שנסיים, הנה המפה שתיקחו הביתה.
+• Before we finish — here's the map to take home
 -->
 
 ---
-layout: image-right
+layout: section
 ---
-
-::left::
 
 # Decision Framework
 
 Inputs are your default. When they fail:
 
-**WHERE, WHAT, HOW, WHETHER, NAME**
-
-::default::
-
-| The Tell           | Pattern            | Separates   |
-| ------------------ | ------------------ | ----------- |
-| Cross-context drift | Map Feature × Context | The **WHERE** (Map) |
-| Structural flags   | Content Projection | The **WHAT**    |
-| Behavioral bundles | Strategy via DI    | The **HOW**     |
-| Composable opt-ins | Directives         | The **WHETHER** |
-| Same combo 3x      | hostDirectives     | The **NAME**    |
+**WHERE, WHAT, HOW, WHETHER, WHICH**
 
 <!--
-BEATS:<br>• זוכרים את המסע? Map → Extract → Interface → Compose → Name<br>• הנה הסיכום עם ה-Tells והשאלות: WHERE/WHAT/HOW/WHETHER/NAME<br>• Cross-context drift → Map: Feature × Context (WHERE)<br>• Structural flags → Content Projection (WHAT)<br>• Behavioral bundles → Strategy via DI (HOW)<br>• Composable opt-ins → Directives (WHETHER)<br>• 3 פעמים אותה משמעות → hostDirectives (NAME)
+[22:17 - 22:29] (12s)
 
-[19:00 - 19:45]
+• Remember the journey? Map, Extract, Interface, Compose, Bundle
 
-זוכרים את המסע? Map, Extract, Interface, Compose, Name.
+• Here's the summary — five questions: WHERE, WHAT, HOW, WHETHER, WHICH
+-->
 
-הנה הסיכום, תצלמו את זה. חמש שאלות: WHERE, WHAT, HOW, WHETHER, NAME.
+---
+layout: center
+---
 
-תסתכלו על השורה הראשונה — Map זה WHERE. איפה הקומפוננטה בשימוש ומה משתנה? המטריצה.
+<div class="text-center">
+  <div class="text-gray-600 text-sm uppercase tracking-widest mb-4">The Tell</div>
+  <div class="text-2xl mb-6">Cross-context drift</div>
+  <div class="text-5xl font-bold mb-4" style="color: var(--cx-green);">Map Feature × Context</div>
+  <div class="text-xl text-gray-600">Separates the <strong>WHERE</strong></div>
+</div>
 
-כל השאר זה אותו רעיון: כל כלי עונה על שאלה אחרת.
+<!--
+[22:29 - 22:39] (10s)
 
-WHAT — מה התוכן? Content Projection.
-HOW — איך זה נעשה? Strategy.
-WHETHER — האם זה בכלל קורה? Directives.
-NAME — איך קוראים לזה? hostDirectives.
+• Component drifting across contexts? Matrix — Map
+-->
 
-Inputs זה הבית, תישארו שם.
+---
+layout: center
+---
 
-אבל כשזה נשבר, תחפשו את ה-Tell:
+<div class="text-center">
+  <div class="text-gray-600 text-sm uppercase tracking-widest mb-4">The Tell</div>
+  <div class="text-2xl mb-6">Structural flags</div>
+  <div class="text-5xl font-bold mb-4" style="color: var(--cx-green);">Content Projection</div>
+  <div class="text-xl text-gray-600">Separates the <strong>WHAT</strong></div>
+</div>
 
-קומפוננטה אחת בכמה קונטקסטים מתחילה לסטות? **מטריצה** — זה Map.
-בוליאני שמשנה מבנה? **Content Projection** — זה Extract.
-חבילת התנהגות? **Strategy** — זה Interface.
-פיצ'רים אופציונליים? **Directives** — זה Compose.
-קופי-פייסט שלוש פעמים? **hostDirectives** — זה Name.
+<!--
+[22:39 - 22:49] (10s)
 
-הקוד מדבר אליכם. העבודה שלכם היא להקשיב, ולבחור את הכלי הנכון.
+• Boolean changing structure? Content Projection — Extract
+-->
 
-[לתת להם לצלם]
+---
+layout: center
+---
+
+<div class="text-center">
+  <div class="text-gray-600 text-sm uppercase tracking-widest mb-4">The Tell</div>
+  <div class="text-2xl mb-6">Exclusive alternatives</div>
+  <div class="text-5xl font-bold mb-4" style="color: var(--cx-green);">Strategy via DI</div>
+  <div class="text-xl text-gray-600">Separates the <strong>HOW</strong></div>
+</div>
+
+<!--
+[22:49 - 22:59] (10s)
+
+• Exclusive alternatives? Strategy — Interface
+-->
+
+---
+layout: center
+---
+
+<div class="text-center">
+  <div class="text-gray-600 text-sm uppercase tracking-widest mb-4">The Tell</div>
+  <div class="text-2xl mb-6">Composable opt-ins</div>
+  <div class="text-5xl font-bold mb-4" style="color: var(--cx-green);">Directives</div>
+  <div class="text-xl text-gray-600">Separates the <strong>WHETHER</strong></div>
+</div>
+
+<!--
+[22:59 - 23:09] (10s)
+
+• Optional features? Directives — Compose
+-->
+
+---
+layout: center
+---
+
+<div class="text-center">
+  <div class="text-gray-600 text-sm uppercase tracking-widest mb-4">The Tell</div>
+  <div class="text-2xl mb-6">Same combo 3x</div>
+  <div class="text-5xl font-bold mb-4" style="color: var(--cx-green);">hostDirectives</div>
+  <div class="text-xl text-gray-600">Separates the <strong>WHICH</strong></div>
+</div>
+
+<!--
+[23:09 - 23:22] (13s)
+
+• Copy-paste 3x? hostDirectives — Bundle
+
+• Code talks to you. Your job: listen, pick right tool
 -->
 
 ---
@@ -1699,36 +1847,29 @@ Good abstractions aren't chosen.
 <img src="/assets/qr-slides.png" class="absolute bottom-8 right-8 w-28 opacity-80" />
 
 <!--
-BEATS:<br>• אבסטרקציות טובות לא נבחרות — הן מתגלות<br>• סגירת מעגל לגריד<br>• אתגר: מחר בבוקר, קומפוננטה אחת, פלאג אחד, שאלה אחת<br>• "שם הגילוי מתחיל"
+[23:22 - 24:32] (70s)
 
-[19:45 - 20:45]
+• "Good abstractions aren't chosen. They're discovered."
 
-"אבסטרקציות טובות לא נבחרות. הן מתגלות."
+• Remember the Grid from the start? 2000 lines. 2 people understood. Everyone afraid to touch
 
-[פאוזה — לתת לזה לנחות]
+• Now? Same Grid. But now it has clear boundaries. Each feature in its place. Any dev can touch their part
 
-זוכרים את הגריד מההתחלה?
-2000 שורות. שני אנשים שמבינים. כולם מפחדים לגעת.
+• Didn't happen because we read Design Patterns book
 
-עכשיו? אותו גריד. רק שעכשיו יש לו גבולות ברורים.
-כל פיצ'ר במקום שלו. כל מפתח יכול לגעת בחלק שלו.
+• Happened because we listened to code, spotted the Tells, extracted in time
 
-זה לא קרה כי קראנו ספר על Design Patterns.
-זה קרה כי הקשבנו לקוד, זיהינו את ה-Tells, וחילצנו בזמן.
+• My challenge to you:
 
-[פאוזה]
+• Tomorrow morning, find one component
 
-אז הנה האתגר שלי אליכם.
+• Look at one boolean flag
 
-מחר בבוקר, תמצאו קומפוננטה אחת.
-תסתכלו על פלאג בוליאני אחד.
-ותשאלו: "מי באמת צריך להיות אחראי על זה?"
+• Ask: "who should really own this?"
 
-אל תשנו את הקוד. רק תחשבו על זה.
+• Don't change the code. Just think about it
 
-שם הגילוי מתחיל.
-
-[סיום]
+• That's where discovery begins
 -->
 
 ---
@@ -1752,15 +1893,11 @@ layout: end
 <div class="text-left mt-4 text-3xl font-bold">Questions?</div>
 
 <!--
-BEATS:<br>• תודה רבה<br>• קומפוננטה שנלחמת בכם? בואו נדבר<br>• שאלות?
+[24:32 - 24:47] (15s)
 
-[20:45 - 21:45]
+• Thank you all
 
-תודה רבה לכולם.
+• Got a component fighting you? Let's talk. I'm here
 
-אם יש לכם קומפוננטה שעושה לכם את המוות — בואו נדבר. אני פה.
-
-שאלות?
-
-[פתוח, חיוך]
+• Questions?
 -->

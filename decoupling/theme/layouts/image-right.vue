@@ -43,7 +43,7 @@ const { $page } = useSlideContext();
 
 .left-panel {
   background: var(--cx-green-gradient-vertical);
-  padding: 2rem;
+  padding: 2.5rem 2rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -67,7 +67,7 @@ const { $page } = useSlideContext();
 
 .right-panel {
   background: var(--cx-white);
-  padding: 3rem;
+  padding: 2.5rem 3rem;
   display: flex;
   flex-direction: column;
   justify-content: center;

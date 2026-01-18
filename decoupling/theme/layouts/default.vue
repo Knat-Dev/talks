@@ -36,12 +36,13 @@ const { $page } = useSlideContext();
   width: 100%;
   height: 100%;
   background: var(--cx-light-gradient);
-  padding: 4rem;
+  padding: 2.5rem 4rem;
   box-sizing: border-box;
   overflow: hidden;
   position: relative;
   display: flex;
   flex-direction: column;
+  color: var(--cx-text-dark);
 }
 
 .logo {
