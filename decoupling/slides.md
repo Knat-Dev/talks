@@ -721,6 +721,33 @@ layout: default
 
 <template #title>
 
+# The Component Side
+
+</template>
+
+```html
+<ng-content />
+<div class="list-body">...</div>
+```
+
+Three inputs gone. **Just a slot.**
+
+<!--
+[8:15 - 8:35] (20s)
+
+• ng-content with selector — a slot
+
+• Header exists? It renders. Doesn't exist? Nothing there
+
+• Component doesn't care — parent decides
+-->
+
+---
+layout: default
+---
+
+<template #title>
+
 # Extract the @if
 
 </template>
@@ -740,19 +767,13 @@ layout: default
 The **@if** becomes a **slot**. The boolean **and its friends** disappear.
 
 <!--
-[8:15 - 8:55] (40s)
+[8:35 - 8:55] (20s)
 
 • Before: pass true, component renders internally
 
 • After: no boolean, parent just... puts header there, or doesn't
 
 • @if becomes ng-content — boolean evaporates
-
-• Content projection = what happens when you stop making structural decisions inside
-
-• Aha moment: projected content is just an @if you pulled out
-
-• Not every @if — only structural ones. Loading states, null guards stay inside
 -->
 
 ---
@@ -1744,86 +1765,37 @@ Inputs are your default. When they fail:
 -->
 
 ---
-layout: center
+layout: default
 ---
 
-<div class="text-center">
-  <div class="text-gray-600 text-sm uppercase tracking-widest mb-4">The Tell</div>
-  <div class="text-2xl mb-6">Cross-context drift</div>
-  <div class="text-5xl font-bold mb-4" style="color: var(--cx-green);">Map Feature × Context</div>
-  <div class="text-xl text-gray-600">Separates the <strong>WHERE</strong></div>
+<template #title>
+
+# Decision Framework
+
+</template>
+
+| The Tell | Tool | Separates |
+|----------|------|-----------|
+| Cross-context drift | **Map Feature × Context** | the **WHERE** |
+| Structural flags | **Content Projection** | the **WHAT** |
+| Exclusive alternatives | **Strategy via DI** | the **HOW** |
+| Composable opt-ins | **Directives** | the **WHETHER** |
+| Same combo 3× | **hostDirectives** | the **WHICH** |
+
+<div class="mt-8 text-center text-xl text-gray-600">
+Code talks to you. Your job: <strong>listen</strong>, pick the right tool.
 </div>
 
 <!--
-[22:29 - 22:39] (10s)
+[22:29 - 22:59] (30s)
 
 • Component drifting across contexts? Matrix — Map
--->
-
----
-layout: center
----
-
-<div class="text-center">
-  <div class="text-gray-600 text-sm uppercase tracking-widest mb-4">The Tell</div>
-  <div class="text-2xl mb-6">Structural flags</div>
-  <div class="text-5xl font-bold mb-4" style="color: var(--cx-green);">Content Projection</div>
-  <div class="text-xl text-gray-600">Separates the <strong>WHAT</strong></div>
-</div>
-
-<!--
-[22:39 - 22:49] (10s)
 
 • Boolean changing structure? Content Projection — Extract
--->
-
----
-layout: center
----
-
-<div class="text-center">
-  <div class="text-gray-600 text-sm uppercase tracking-widest mb-4">The Tell</div>
-  <div class="text-2xl mb-6">Exclusive alternatives</div>
-  <div class="text-5xl font-bold mb-4" style="color: var(--cx-green);">Strategy via DI</div>
-  <div class="text-xl text-gray-600">Separates the <strong>HOW</strong></div>
-</div>
-
-<!--
-[22:49 - 22:59] (10s)
 
 • Exclusive alternatives? Strategy — Interface
--->
-
----
-layout: center
----
-
-<div class="text-center">
-  <div class="text-gray-600 text-sm uppercase tracking-widest mb-4">The Tell</div>
-  <div class="text-2xl mb-6">Composable opt-ins</div>
-  <div class="text-5xl font-bold mb-4" style="color: var(--cx-green);">Directives</div>
-  <div class="text-xl text-gray-600">Separates the <strong>WHETHER</strong></div>
-</div>
-
-<!--
-[22:59 - 23:09] (10s)
 
 • Optional features? Directives — Compose
--->
-
----
-layout: center
----
-
-<div class="text-center">
-  <div class="text-gray-600 text-sm uppercase tracking-widest mb-4">The Tell</div>
-  <div class="text-2xl mb-6">Same combo 3x</div>
-  <div class="text-5xl font-bold mb-4" style="color: var(--cx-green);">hostDirectives</div>
-  <div class="text-xl text-gray-600">Separates the <strong>WHICH</strong></div>
-</div>
-
-<!--
-[23:09 - 23:22] (13s)
 
 • Copy-paste 3x? hostDirectives — Bundle
 
@@ -1847,7 +1819,7 @@ Good abstractions aren't chosen.
 <img src="/assets/qr-slides.png" class="absolute bottom-8 right-8 w-28 opacity-80" />
 
 <!--
-[23:22 - 24:32] (70s)
+[22:59 - 24:09] (70s)
 
 • "Good abstractions aren't chosen. They're discovered."
 
@@ -1893,7 +1865,7 @@ layout: end
 <div class="text-left mt-4 text-3xl font-bold">Questions?</div>
 
 <!--
-[24:32 - 24:47] (15s)
+[24:09 - 24:24] (15s)
 
 • Thank you all
 
