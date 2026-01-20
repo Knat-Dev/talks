@@ -10,21 +10,12 @@ info: |
   Runtime: ~25 min content + 5 min Q&A = 30 min total
 layout: a-main-cover-2
 highlighter: shiki
-transition: slide-left
 mdc: true
 ---
 
 # Decoupling in Angular
 
 ## Letting the Code Tell You What It Needs
-
-<template #right>
-  <img src="/assets/qr-slides.png" class="w-48 rounded-lg shadow-lg border-4 border-white" />
-  <div class="text-center mt-4">
-    <div class="text-xl font-bold text-white">slides.knat.dev</div>
-    <div class="text-white/90 text-sm mt-1">Follow along</div>
-  </div>
-</template>
 
 <div class="absolute bottom-[30px] left-[80px] flex items-center gap-3">
   <img src="/assets/profile.jpg" class="w-24 h-24 rounded-full object-cover border-2 border-white/50" />
@@ -35,8 +26,6 @@ mdc: true
 [0:00 - 0:25] (25s)
 
 • "Hi friends, today I'm going to talk about how to avoid unnecessary pain by listening to your code"
-
-• QR code to follow along
 
 • Transition to about me
 -->
@@ -162,7 +151,7 @@ layout: section
 
 Custom templates, row styles, expand/collapse...
 
-## Context menus, column management...
+Context menus, column management...
 
 <!--
 [1:40 - 2:00] (20s)
@@ -466,7 +455,6 @@ layout: center
 <div class="text-center">
   <div class="text-6xl font-bold mb-4">1. Map</div>
   <div class="text-2xl text-gray-600">The <span style="color: var(--cx-green); font-weight: bold;">WHERE</span></div>
-  <div class="text-xl text-gray-700 mt-4">Identify context</div>
 </div>
 
 <!--
@@ -482,7 +470,6 @@ layout: center
 <div class="text-center">
   <div class="text-6xl font-bold mb-4">2. Extract</div>
   <div class="text-2xl text-gray-600">The <span style="color: var(--cx-green); font-weight: bold;">WHAT</span></div>
-  <div class="text-xl text-gray-700 mt-4">Content Projection</div>
 </div>
 
 <!--
@@ -498,7 +485,6 @@ layout: center
 <div class="text-center">
   <div class="text-6xl font-bold mb-4">3. Interface</div>
   <div class="text-2xl text-gray-600">The <span style="color: var(--cx-green); font-weight: bold;">HOW</span></div>
-  <div class="text-xl text-gray-700 mt-4">Strategy via DI</div>
 </div>
 
 <!--
@@ -514,7 +500,6 @@ layout: center
 <div class="text-center">
   <div class="text-6xl font-bold mb-4">4. Compose</div>
   <div class="text-2xl text-gray-600">The <span style="color: var(--cx-green); font-weight: bold;">WHETHER</span></div>
-  <div class="text-xl text-gray-700 mt-4">Directives</div>
 </div>
 
 <!--
@@ -530,7 +515,6 @@ layout: center
 <div class="text-center">
   <div class="text-6xl font-bold mb-4">5. Bundle</div>
   <div class="text-2xl text-gray-600">The <span style="color: var(--cx-green); font-weight: bold;">WHICH</span></div>
-  <div class="text-xl text-gray-700 mt-4">hostDirectives</div>
 </div>
 
 <!--
@@ -547,126 +531,25 @@ layout: default
 
 <template #title>
 
-# The Map (WHERE) - items
+# Map (WHERE)
 
 </template>
 
 | Feature | Main Page | Admin Panel | Preview |
 |---------|-----------|-------------|---------|
 | items | ✓ | ✓ | ✓ |
+| showHeader | ✓ | ✗ | ✓ |
 
 **items** everywhere? That's the **baseline** — stays in component.
 
-<!--
-[6:12 - 6:25] (13s)
+**showHeader** varies? That's a **candidate for extraction**.
 
-• Map tool — simple matrix: rows = features, columns = contexts
+<!--
+• Simple matrix: rows = features, columns = contexts
 
 • items everywhere? baseline — stays in component
--->
 
----
-layout: default
----
-
-<template #title>
-
-# The Map (WHERE) - showHeader
-
-</template>
-
-| Feature | Main Page | Admin Panel | Preview |
-|---------|-----------|-------------|---------|
-| showHeader | ✓ | ✗ | ✓ |
-
-**showHeader** varies? Signal for **Content Projection**.
-
-<!--
-[6:25 - 6:35] (10s)
-
-• showHeader varies? signal for Content Projection
--->
-
----
-layout: default
----
-
-<template #title>
-
-# The Map (WHERE) - persistable
-
-</template>
-
-| Feature | Main Page | Admin Panel | Preview |
-|---------|-----------|-------------|---------|
-| persistable | Local | Server | Session |
-
-**persistable** varies in **type** — not just on/off. Signal for **Strategy**.
-
-<!--
-[6:35 - 6:50] (15s)
-
-• persistable varies — but not boolean! Local, Server, or Session storage
-
-• Different implementations, not just toggle — needs Strategy pattern
--->
-
----
-layout: default
----
-
-<template #title>
-
-# The Map (WHERE) - Directives
-
-</template>
-
-| Feature | Main Page | Admin Panel | Preview |
-|---------|-----------|-------------|---------|
-| sortable | ✓ | ✓ | ✗ |
-| filterable | ✓ | ✗ | ✗ |
-
-**Opt-in behaviors** — varies by context. Signal for **Directives**.
-
-<!--
-[6:50 - 7:00] (10s)
-
-• sortable, filterable — optional, vary by context
-
-• Each one is a candidate for Directives
--->
-
----
-layout: default
----
-
-<template #title>
-
-# The Tell
-
-</template>
-
-```ts {1-4}
-showHeader = input(false);
-sortable = input(false);
-filterable = input(false);
-persistable = input(false);
-```
-
-Boolean flags. The component asking _"what features am I?"_
-
-But look closer at **The Mega List**...
-
-<!--
-[7:00 - 7:35] (35s)
-
-• showHeader, sortable, filterable, persistable — each is a feature toggle
-
-• Component asking "what do you want me to be today?"
-
-• The Tell — like poker, pile of booleans = component trying to be everything
-
-• Notice: storageKey only relevant when persistable=true — they travel together
+• showHeader varies? candidate for extraction — we'll tackle this first
 
 • But one of these flags is different — showHeader controls STRUCTURE, not behavior...
 -->
@@ -677,7 +560,7 @@ layout: default
 
 <template #title>
 
-# The Structural Flag
+# Extract (WHAT)
 
 </template>
 
@@ -711,8 +594,38 @@ Why does the **list** decide whether a header exists?
 • Component asks "how should I look?" — not its job
 
 • Why should the list decide if it has a header?
+-->
 
-• Let's extract the @if
+---
+layout: section
+---
+
+# The Shortcut
+
+"Just one more @if"
+
+<!--
+• The familiar excuse — just add one more conditional
+
+• Seems harmless in the moment
+-->
+
+---
+layout: section
+---
+
+# The Tax
+
+Template spaghetti.
+
+## Impossible to test.
+
+<!--
+• Reality: template becomes unreadable
+
+• Testing requires mocking every branch
+
+• There's a better way...
 -->
 
 ---
@@ -721,7 +634,7 @@ layout: default
 
 <template #title>
 
-# The Component Side
+# Extract (WHAT)
 
 </template>
 
@@ -748,7 +661,7 @@ layout: default
 
 <template #title>
 
-# Extract the @if
+# Extract (WHAT)
 
 </template>
 
@@ -777,63 +690,16 @@ The **@if** becomes a **slot**. The boolean **and its friends** disappear.
 -->
 
 ---
-layout: section
+layout: center
 ---
 
-<template #title>
-
-# Content Projection
-
-</template>
-
-Separating the <span style="color: var(--cx-green); font-weight: bold;">WHAT</span>
-
-What content appears. Not how it behaves.
+<div class="text-center">
+  <div class="text-4xl font-bold mb-6">Extract (WHAT)</div>
+  <div class="text-2xl text-red-400">Don't use when you need behavior, not structure</div>
+</div>
 
 <!--
-[8:55 - 9:15] (20s)
-
-• Tool 1: Content Projection — separates the WHAT
-
-• When inputs control STRUCTURE (what DOM exists)
-
-• Like a picture frame — frame owns size/shape, you choose the picture
-
-• Component owns layout, you own content
--->
-
----
-layout: section
----
-
-# The Shortcut
-
-"Just one more @if"
-
-<!--
-[9:15 - 9:23] (8s)
-
-• The familiar excuse — just add one more conditional
-
-• Seems harmless in the moment
--->
-
----
-layout: section
----
-
-# The Tax
-
-Template spaghetti.
-
-## Impossible to test.
-
-<!--
-[9:23 - 9:31] (8s)
-
-• Reality: template becomes unreadable
-
-• Testing requires mocking every branch
+• Content Projection? Structure only. Not behavior
 -->
 
 ---
@@ -875,7 +741,7 @@ layout: default
 
 <template #title>
 
-# The Implementation Branch
+# Interface (HOW)
 
 </template>
 
@@ -908,12 +774,44 @@ The component knows **too much** about the "how".
 -->
 
 ---
+layout: section
+---
+
+# The Shortcut
+
+"Just add an if for each storage type"
+
+<!--
+• The tempting path — if local do this, if server do that
+
+• We all know where this leads
+-->
+
+---
+layout: section
+---
+
+# The Tax
+
+if-forests.
+
+## Untestable without mocks.
+
+<!--
+• if-else branches multiply — add cloud? another branch everywhere
+
+• Testing requires mocking everything to hit each branch
+
+• There's a better way...
+-->
+
+---
 layout: image-right
 ---
 
 ::left::
 
-# Strategy: The Problem
+# Interface (HOW)
 
 That **if-else** needs to disappear. But where does the decision go?
 
@@ -943,7 +841,7 @@ layout: default
 
 <template #title>
 
-# Strategy: The Interface
+# Interface (HOW)
 
 </template>
 
@@ -975,7 +873,7 @@ layout: default
 
 <template #title>
 
-# Strategy: LocalStorage
+# Interface (HOW)
 
 </template>
 
@@ -1006,7 +904,7 @@ layout: default
 
 <template #title>
 
-# Strategy: ServerStorage
+# Interface (HOW)
 
 </template>
 
@@ -1041,7 +939,7 @@ layout: default
 
 <template #title>
 
-# Strategy: The Provider
+# Interface (HOW)
 
 </template>
 
@@ -1078,65 +976,16 @@ export class AdminPanel {}
 -->
 
 ---
-layout: section
+layout: center
 ---
 
-<template #title>
-
-# Strategy via DI
-
-</template>
-
-Separating the <span style="color: var(--cx-green); font-weight: bold;">HOW</span>
-
-How it's done. Local or Server, never both.
+<div class="text-center">
+  <div class="text-4xl font-bold mb-6">Interface (HOW)</div>
+  <div class="text-2xl text-red-400">Don't use when only one implementation will ever exist</div>
+</div>
 
 <!--
-[13:05 - 13:25] (20s)
-
-• Tool 2: Strategy Pattern via DI
-
-• Separates the HOW — not if, but WHICH implementation
-
-• When behavior varies by context, strategy prevents if-cascades
-
-• Classic pattern from Gang of Four — Angular makes it elegant via DI
--->
-
----
-layout: section
----
-
-# The Shortcut
-
-"Just add an if for each storage type"
-
-<!--
-[13:25 - 13:33] (8s)
-
-• The tempting path — if local do this, if server do that
-
-• We all know where this leads
--->
-
----
-layout: section
----
-
-# The Tax
-
-if-forests.
-
-## Untestable without mocks.
-
-<!--
-[13:33 - 13:41] (8s)
-
-• if-else branches multiply — add cloud? another branch everywhere
-
-• Testing requires mocking everything to hit each branch
-
-• Can't reason about code without tracing all paths
+• Strategy? Not if only one implementation exists
 -->
 
 ---
@@ -1183,12 +1032,44 @@ export class ListComponent {
 -->
 
 ---
+layout: section
+---
+
+# The Shortcut
+
+"Just inject it everywhere"
+
+<!--
+• The familiar excuse — inject all services, check flags later
+
+• Easier than thinking about what's actually needed
+-->
+
+---
+layout: section
+---
+
+# The Tax
+
+Hidden features.
+
+## Null-check hell.
+
+<!--
+• Reality: can't tell what's active without reading code
+
+• Every service needs null checks and guards
+
+• There's a better way...
+-->
+
+---
 layout: default
 ---
 
 <template #title>
 
-# Directive: Persistable
+# Compose (WHETHER)
 
 </template>
 
@@ -1232,7 +1113,7 @@ layout: default
 
 <template #title>
 
-# Directives: Usage
+# Compose (WHETHER)
 
 </template>
 
@@ -1274,7 +1155,7 @@ layout: default
 
 <template #title>
 
-# The Sign
+# Compose (WHETHER)
 
 </template>
 
@@ -1308,12 +1189,25 @@ Same combo. Three times.
 -->
 
 ---
+layout: center
+---
+
+<div class="text-center">
+  <div class="text-4xl font-bold mb-6">Compose (WHETHER)</div>
+  <div class="text-2xl text-red-400">Don't use when behavior is exclusive (use Interface instead)</div>
+</div>
+
+<!--
+• Directives? Not for exclusive A-or-B choices
+-->
+
+---
 layout: section
 ---
 
 <template #title>
 
-# The Promotion Rule
+# Bundle (WHICH)
 
 </template>
 
@@ -1340,72 +1234,12 @@ Two times is coincidence.
 -->
 
 ---
-layout: section
----
-
-<template #title>
-
-# Directives
-
-</template>
-
-Separating the <span style="color: var(--cx-green); font-weight: bold;">WHETHER</span>
-
-Is it on or off? Composable opt-ins.
-
-<!--
-[17:41 - 18:01] (20s)
-
-• Tool 3: Directives — separates the WHETHER
-
-• Recap: Content Projection = WHAT, Strategy = HOW
-
-• Directives fix WHETHER — injection moves to directive
-
-• No directive? No injection. Exists or doesn't
--->
-
----
-layout: section
----
-
-# The Shortcut
-
-"Just inject it everywhere"
-
-<!--
-[18:01 - 18:09] (8s)
-
-• The familiar excuse — inject all services, check flags later
-
-• Easier than thinking about what's actually needed
--->
-
----
-layout: section
----
-
-# The Tax
-
-Hidden features.
-
-## Null-check hell.
-
-<!--
-[18:09 - 18:17] (8s)
-
-• Reality: can't tell what's active without reading code
-
-• Every service needs null checks and guards
--->
-
----
 layout: default
 ---
 
 <template #title>
 
-# hostDirectives
+# Bundle (WHICH)
 
 </template>
 
@@ -1449,7 +1283,7 @@ layout: default
 
 <template #title>
 
-# Before/After
+# Bundle (WHICH)
 
 </template>
 
@@ -1483,7 +1317,7 @@ layout: default
 
 <template #title>
 
-# Coordinator Directive
+# Bundle (WHICH)
 
 </template>
 
@@ -1517,6 +1351,19 @@ The **Glue**. Selectable doesn't know Persistable. This connects them.
 • Neither knows about the other — Coordinator connects them
 
 • This IS coupling — but intentional. Give it a home, a name, write a test
+-->
+
+---
+layout: center
+---
+
+<div class="text-center">
+  <div class="text-4xl font-bold mb-6">Bundle (WHICH)</div>
+  <div class="text-2xl text-red-400">Don't use when things are unrelated — don't bundle them</div>
+</div>
+
+<!--
+• hostDirectives? Bundle only related things
 -->
 
 ---
@@ -1628,140 +1475,6 @@ layout: center
 [20:31 - 20:42] (11s)
 
 • Shared vocabulary — say "PowerList" in daily, everyone knows
-
-• Now let's set guardrails
--->
-
----
-layout: section
----
-
-<template #title>
-
-# When NOT to Use These
-
-</template>
-
-Each tool has limits.
-
-<!--
-[20:42 - 20:52] (10s)
-
-• When NOT to use? Let's set boundaries
--->
-
----
-layout: center
----
-
-<div class="text-center">
-  <div class="text-gray-600 text-sm uppercase tracking-widest mb-6">Guardrail</div>
-  <div class="text-4xl font-bold mb-6">Content Projection</div>
-  <div class="text-2xl text-red-400">Don't use when you need behavior, not structure</div>
-</div>
-
-<!--
-[20:52 - 21:02] (10s)
-
-• Content Projection? Structure only. Not behavior
--->
-
----
-layout: center
----
-
-<div class="text-center">
-  <div class="text-gray-600 text-sm uppercase tracking-widest mb-6">Guardrail</div>
-  <div class="text-4xl font-bold mb-6">Strategy via DI</div>
-  <div class="text-2xl text-red-400">Don't use when only one implementation will ever exist</div>
-</div>
-
-<!--
-[21:02 - 21:12] (10s)
-
-• Strategy? Not if only one implementation exists
--->
-
----
-layout: center
----
-
-<div class="text-center">
-  <div class="text-gray-600 text-sm uppercase tracking-widest mb-6">Guardrail</div>
-  <div class="text-4xl font-bold mb-6">Directives</div>
-  <div class="text-2xl text-red-400">Don't use when behavior is exclusive (use Strategy instead)</div>
-</div>
-
-<!--
-[21:12 - 21:22] (10s)
-
-• Directives? Not for exclusive A-or-B choices
--->
-
----
-layout: center
----
-
-<div class="text-center">
-  <div class="text-gray-600 text-sm uppercase tracking-widest mb-6">Guardrail</div>
-  <div class="text-4xl font-bold mb-6">hostDirectives</div>
-  <div class="text-2xl text-red-400">Don't use when things are unrelated — don't bundle them</div>
-</div>
-
-<!--
-[21:22 - 21:35] (13s)
-
-• hostDirectives? Bundle only related things
-
-• Now let's go back to the beginning
--->
-
----
-layout: section
----
-
-<template #title>
-
-# The Circle Closes
-
-</template>
-
-Remember the price we paid?
-
-<!--
-[21:35 - 22:17] (42s)
-
-• Remember the price we paid?
-
-• Cognitive Load
-
-• Bottleneck 
-
-• Slow Delivery
-
-• My metric: how many places to touch for small change. Went from "many" to "one"
-
-• It was about freeing the team
-
-• Before we finish — here's the map to take home
--->
-
----
-layout: section
----
-
-# Decision Framework
-
-Inputs are your default. When they fail:
-
-**WHERE, WHAT, HOW, WHETHER, WHICH**
-
-<!--
-[22:17 - 22:29] (12s)
-
-• Remember the journey? Map, Extract, Interface, Compose, Bundle
-
-• Here's the summary — five questions: WHERE, WHAT, HOW, WHETHER, WHICH
 -->
 
 ---
@@ -1774,13 +1487,13 @@ layout: default
 
 </template>
 
-| The Tell | Tool | Separates |
-|----------|------|-----------|
-| Cross-context drift | **Map Feature × Context** | the **WHERE** |
-| Structural flags | **Content Projection** | the **WHAT** |
-| Exclusive alternatives | **Strategy via DI** | the **HOW** |
-| Composable opt-ins | **Directives** | the **WHETHER** |
-| Same combo 3× | **hostDirectives** | the **WHICH** |
+| The Tell | Step | Tool | Separates |
+|----------|------|------|-----------|
+| Cross-context drift | **Map** | Feature × Context | the **WHERE** |
+| Structural flags | **Extract** | Content Projection | the **WHAT** |
+| Exclusive alternatives | **Interface** | Strategy via DI | the **HOW** |
+| Composable opt-ins | **Compose** | Directives | the **WHETHER** |
+| Same combo 3× | **Bundle** | hostDirectives | the **WHICH** |
 
 <div class="mt-8 text-center text-xl text-gray-600">
 Code talks to you. Your job: <strong>listen</strong>, pick the right tool.
@@ -1816,8 +1529,6 @@ Good abstractions aren't chosen.
 
 ## They're discovered.
 
-<img src="/assets/qr-slides.png" class="absolute bottom-8 right-8 w-28 opacity-80" />
-
 <!--
 [22:59 - 24:09] (70s)
 
@@ -1845,10 +1556,20 @@ Good abstractions aren't chosen.
 -->
 
 ---
-layout: end
+layout: a-main-cover-2
 ---
 
 # Thank You
+
+<template #right>
+  <img src="/assets/qr-slides.png" class="w-48 rounded-lg shadow-lg border-4 border-white" />
+  <div class="text-center mt-4">
+    <div class="text-xl font-bold text-white">
+    <a href="https://slides.knat.dev" target="_blank">slides.knat.dev</a>
+    </div>
+  </div>
+</template>
+
 
 <div class="flex items-center gap-6 mt-4">
   <img src="/assets/profile.jpg" class="w-20 h-20 rounded-full object-cover" alt="Dor Peled" />
