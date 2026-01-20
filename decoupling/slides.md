@@ -7,7 +7,7 @@ info: |
 
   Dor Peled · @Knat-Dev
 
-  Runtime: ~25 min content + 5 min Q&A = 30 min total
+  Runtime: ~24-25 min content + 5 min Q&A = ~30 min total
 layout: a-main-cover-2
 highlighter: shiki
 mdc: true
@@ -23,7 +23,7 @@ mdc: true
 </div>
 
 <!--
-[0:00 - 0:25] (25s)
+[0:00 - 0:30] (30s)
 
 • "Hi friends, today I'm going to talk about how to avoid unnecessary pain by listening to your code"
 
@@ -81,7 +81,7 @@ layout: default
 </div>
 
 <!--
-[0:25 - 0:55] (30s)
+[0:30 - 1:05] (35s)
 
 • Quick intro — Dor, Coralogix, Angular in large codebase
 
@@ -105,7 +105,7 @@ Who here has added _"just one more input"_ to a component?
 One more boolean and that's it?
 
 <!--
-[0:55 - 1:25] (30s)
+[1:05 - 1:40] (35s)
 
 • Hands up: who added "just one more input"?
 
@@ -136,7 +136,7 @@ export class GridComponent<T> {
 ```
 
 <!--
-[1:25 - 1:40] (15s)
+[1:40 - 1:58] (18s)
 
 • Before theory, or even practice — let's see what actually happened
 
@@ -154,7 +154,7 @@ Custom templates, row styles, expand/collapse...
 Context menus, column management...
 
 <!--
-[1:40 - 2:00] (20s)
+[1:58 - 2:22] (24s)
 
 • Requirements started coming in...
 
@@ -178,7 +178,7 @@ layout: center
 <img v-click src="/assets/this-is-fine.jpg" class="absolute bottom-8 right-8 w-80 rounded-lg shadow-xl" />
 
 <!--
-[2:00 - 2:25] (25s)
+[2:22 - 2:52] (30s)
 
 • The big one — every team wants to use it, but they all have slightly different needs
 
@@ -196,7 +196,7 @@ layout: center
 </div>
 
 <!--
-[2:25 - 2:40] (15s)
+[2:52 - 3:10] (18s)
 
 • Cognitive Load — hold 2000 lines in your head for any change
 -->
@@ -212,7 +212,7 @@ layout: center
 </div>
 
 <!--
-[2:40 - 2:55] (15s)
+[3:10 - 3:28] (18s)
 
 • Bottleneck — only 2 people "understood" it, rest afraid to touch
 -->
@@ -228,7 +228,7 @@ layout: center
 </div>
 
 <!--
-[2:55 - 3:10] (15s)
+[3:28 - 3:46] (18s)
 
 • Slow Delivery — simple features took weeks, bugs hid in complexity
 -->
@@ -243,7 +243,7 @@ layout: center
 </div>
 
 <!--
-[3:10 - 3:25] (15s)
+[3:46 - 4:04] (18s)
 
 • Technical debt compounds — every shortcut is a tax on tomorrow
 -->
@@ -272,7 +272,7 @@ export class ListComponent<T> {
 Four boolean flags. Looks innocent.
 
 <!--
-[3:25 - 3:40] (15s)
+[4:04 - 4:22] (18s)
 
 • Grid too big for slides — built smaller example with same problems
 
@@ -300,7 +300,7 @@ headerActions = input<Action[]>([]);
 One flag → three inputs.
 
 <!--
-[3:40 - 3:55] (15s)
+[4:22 - 4:40] (18s)
 
 • showHeader brings headerTitle, headerActions
 
@@ -326,7 +326,7 @@ sortDir = input<'asc' | 'desc'>('asc');
 One flag → two config inputs.
 
 <!--
-[3:55 - 4:05] (10s)
+[4:40 - 4:52] (12s)
 
 • sortable brings sortKey, sortDir
 
@@ -352,7 +352,7 @@ filterValue = input<string>('');
 One flag → two config inputs.
 
 <!--
-[4:05 - 4:15] (10s)
+[4:52 - 5:04] (12s)
 
 • filterable brings filterKey, filterValue
 
@@ -381,7 +381,7 @@ One flag → config + mode + service.
 _"What features am I today?"_
 
 <!--
-[4:15 - 4:30] (15s)
+[5:04 - 5:22] (18s)
 
 • persistable brings storageKey, StorageService
 
@@ -403,7 +403,7 @@ layout: default
 Our **Mega List** is becoming one.
 
 <!--
-[4:30 - 4:45] (15s)
+[5:22 - 5:40] (18s)
 
 • God Component — knows too much, does too much
 
@@ -421,7 +421,7 @@ Coupling isn't bad.
 ## Hidden coupling is.
 
 <!--
-[4:45 - 5:20] (35s)
+[5:40 - 6:22] (42s)
 
 • Coupling isn't bad — HIDDEN coupling is
 
@@ -443,7 +443,7 @@ layout: section
 From God Component to clean architecture
 
 <!--
-[5:20 - 5:30] (10s)
+[6:22 - 6:34] (12s)
 
 • Here's the map — five steps from God Component to clean architecture
 -->
@@ -458,7 +458,7 @@ layout: center
 </div>
 
 <!--
-[5:30 - 5:38] (8s)
+[6:34 - 6:44] (10s)
 
 • Map — what varies and where, shooting blind without it
 -->
@@ -473,7 +473,7 @@ layout: center
 </div>
 
 <!--
-[5:38 - 5:46] (8s)
+[6:44 - 6:54] (10s)
 
 • Extract — pull behaviors out of the component
 -->
@@ -488,7 +488,7 @@ layout: center
 </div>
 
 <!--
-[5:46 - 5:54] (8s)
+[6:54 - 7:04] (10s)
 
 • Interface — define contracts for swappable behaviors
 -->
@@ -503,7 +503,7 @@ layout: center
 </div>
 
 <!--
-[5:54 - 6:02] (8s)
+[7:04 - 7:14] (10s)
 
 • Compose — make behaviors optional with directives
 -->
@@ -518,7 +518,7 @@ layout: center
 </div>
 
 <!--
-[6:02 - 6:12] (10s)
+[7:14 - 7:26] (12s)
 
 • Bundle — group repeating patterns with hostDirectives
 
@@ -545,13 +545,13 @@ layout: default
 **showHeader** varies? That's a **candidate for extraction**.
 
 <!--
+[7:26 - 8:00] (34s)
+
 • Simple matrix: rows = features, columns = contexts
 
 • items everywhere? baseline — stays in component
 
 • showHeader varies? candidate for extraction — we'll tackle this first
-
-• But one of these flags is different — showHeader controls STRUCTURE, not behavior...
 -->
 
 ---
@@ -581,7 +581,7 @@ headerActions = input<Action[]>([]);
 Why does the **list** decide whether a header exists?
 
 <!--
-[7:35 - 8:15] (40s)
+[8:00 - 8:48] (48s)
 
 • showHeader is different — controls STRUCTURE, not behavior
 
@@ -605,6 +605,8 @@ layout: section
 "Just one more @if"
 
 <!--
+[8:48 - 9:03] (15s)
+
 • The familiar excuse — just add one more conditional
 
 • Seems harmless in the moment
@@ -621,6 +623,8 @@ Template spaghetti.
 ## Impossible to test.
 
 <!--
+[9:03 - 9:21] (18s)
+
 • Reality: template becomes unreadable
 
 • Testing requires mocking every branch
@@ -646,7 +650,7 @@ layout: default
 Three inputs gone. **Just a slot.**
 
 <!--
-[8:15 - 8:35] (20s)
+[9:21 - 9:45] (24s)
 
 • ng-content with selector — a slot
 
@@ -680,7 +684,7 @@ layout: default
 The **@if** becomes a **slot**. The boolean **and its friends** disappear.
 
 <!--
-[8:35 - 8:55] (20s)
+[9:45 - 10:09] (24s)
 
 • Before: pass true, component renders internally
 
@@ -699,6 +703,8 @@ layout: center
 </div>
 
 <!--
+[10:09 - 10:19] (10s)
+
 • Content Projection? Structure only. Not behavior
 -->
 
@@ -720,7 +726,7 @@ But what about **HOW** it behaves?
 - _"Sync across devices vs keep local"_
 
 <!--
-[9:31 - 10:05] (34s)
+[10:19 - 11:00] (41s)
 
 • Good move — extracted structural decision, boolean gone, parent decides
 
@@ -760,7 +766,7 @@ save(key: string, state: ListState) {
 The component knows **too much** about the "how".
 
 <!--
-[10:05 - 10:30] (25s)
+[11:00 - 11:30] (30s)
 
 • if local → localStorage, if session → sessionStorage, if server → HTTP call
 
@@ -782,6 +788,8 @@ layout: section
 "Just add an if for each storage type"
 
 <!--
+[11:30 - 11:45] (15s)
+
 • The tempting path — if local do this, if server do that
 
 • We all know where this leads
@@ -798,6 +806,8 @@ if-forests.
 ## Untestable without mocks.
 
 <!--
+[11:45 - 12:03] (18s)
+
 • if-else branches multiply — add cloud? another branch everywhere
 
 • Testing requires mocking everything to hit each branch
@@ -824,7 +834,7 @@ That **if-else** needs to disappear. But where does the decision go?
 | Preview      | Session   |
 
 <!--
-[11:06 - 11:25] (19s)
+[12:03 - 12:26] (23s)
 
 • if-else needs to disappear from component — but where to?
 
@@ -856,7 +866,7 @@ export const STORAGE_STRATEGY =
 ```
 
 <!--
-[11:25 - 11:45] (20s)
+[12:26 - 12:50] (24s)
 
 • Interface: defines WHAT (save/load), not HOW
 
@@ -891,7 +901,7 @@ export class LocalStorage implements StorageStrategy {
 Persists across browser sessions. Works offline.
 
 <!--
-[11:45 - 12:00] (15s)
+[12:50 - 13:08] (18s)
 
 • LocalStorage — persists even after browser closes
 
@@ -926,7 +936,7 @@ Syncs across devices. Requires authentication.
 **Same interface. Different "how".**
 
 <!--
-[12:00 - 12:20] (20s)
+[13:08 - 13:32] (24s)
 
 • ServerStorage — syncs to backend, available on any device
 
@@ -958,7 +968,7 @@ export class AdminPanel {}
 **Zero if-statements.** Context decides, not component.
 
 <!--
-[12:20 - 13:05] (45s)
+[13:32 - 14:26] (54s)
 
 • Decision lives in PROVIDER
 
@@ -985,6 +995,8 @@ layout: center
 </div>
 
 <!--
+[14:26 - 14:36] (10s)
+
 • Strategy? Not if only one implementation exists
 -->
 
@@ -1012,7 +1024,7 @@ export class ListComponent {
 <img v-click src="/assets/one-does-not-simply.jpg" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-120 rounded-lg shadow-xl" />
 
 <!--
-[13:41 - 14:26] (45s)
+[14:36 - 15:30] (54s)
 
 • Strategy worked — HOW is out, zero ifs
 
@@ -1040,6 +1052,8 @@ layout: section
 "Just inject it everywhere"
 
 <!--
+[15:30 - 15:45] (15s)
+
 • The familiar excuse — inject all services, check flags later
 
 • Easier than thinking about what's actually needed
@@ -1056,6 +1070,8 @@ Hidden features.
 ## Null-check hell.
 
 <!--
+[15:45 - 16:03] (18s)
+
 • Reality: can't tell what's active without reading code
 
 • Every service needs null checks and guards
@@ -1092,7 +1108,7 @@ export class AppListPersistable {
 Directive owns persistence. List doesn't know it's being saved.
 
 <!--
-[15:02 - 15:41] (39s)
+[16:03 - 16:50] (47s)
 
 • Selector: `app-list[appListPersistable]` — no attribute = doesn't exist, zero overhead
 
@@ -1132,7 +1148,7 @@ layout: default
 **Visible in the template.** Look at the HTML, know what it does.
 
 <!--
-[15:41 - 16:21] (40s)
+[16:50 - 17:38] (48s)
 
 • Simple list? Nothing. Zero unnecessary injections
 
@@ -1175,7 +1191,7 @@ Same combo. Three times.
 <img v-click src="/assets/distracted-boyfriend.jpg" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-120 rounded-lg shadow-xl" />
 
 <!--
-[16:21 - 17:01] (40s)
+[17:38 - 18:26] (48s)
 
 • Three different pages, exact same combo — copy-paste
 
@@ -1198,6 +1214,8 @@ layout: center
 </div>
 
 <!--
+[18:26 - 18:36] (10s)
+
 • Directives? Not for exclusive A-or-B choices
 -->
 
@@ -1220,7 +1238,7 @@ Two times is coincidence.
 ## Name it.
 
 <!--
-[17:01 - 17:41] (40s)
+[18:36 - 19:24] (48s)
 
 • Once = code. Twice = coincidence. Three times = concept — NAME IT
 
@@ -1258,7 +1276,7 @@ export class AppListPowerList {}
 Forward inputs explicitly. **No magic.**
 
 <!--
-[18:17 - 18:57] (40s)
+[19:24 - 20:12] (48s)
 
 • Angular has `hostDirectives`
 
@@ -1298,7 +1316,7 @@ layout: default
 <img v-click src="/assets/drake-coupling.jpg" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-120 rounded-lg shadow-xl" />
 
 <!--
-[18:57 - 19:17] (20s)
+[20:12 - 20:36] (24s)
 
 • Before: grocery list of directives. After: `appListPowerList`
 
@@ -1340,7 +1358,7 @@ export class AppListPersistSelection {
 The **Glue**. Selectable doesn't know Persistable. This connects them.
 
 <!--
-[19:17 - 19:52] (35s)
+[20:36 - 21:18] (42s)
 
 • Last pattern: Coordinator — the glue
 
@@ -1363,6 +1381,8 @@ layout: center
 </div>
 
 <!--
+[21:18 - 21:28] (10s)
+
 • hostDirectives? Bundle only related things
 -->
 
@@ -1392,7 +1412,7 @@ layout: center
 </div>
 
 <!--
-[19:52 - 19:59] (7s)
+[21:28 - 21:36] (8s)
 
 • Five steps — journey complete
 -->
@@ -1408,7 +1428,7 @@ layout: center
 </div>
 
 <!--
-[19:59 - 20:07] (8s)
+[21:36 - 21:46] (10s)
 
 • Clear scope — know exactly what to extract before starting
 -->
@@ -1424,7 +1444,7 @@ layout: center
 </div>
 
 <!--
-[20:07 - 20:15] (8s)
+[21:46 - 21:56] (10s)
 
 • Parallel work — one dev on list, another on header, no waiting
 -->
@@ -1440,7 +1460,7 @@ layout: center
 </div>
 
 <!--
-[20:15 - 20:23] (8s)
+[21:56 - 22:06] (10s)
 
 • Testable in isolation — each part testable separately
 -->
@@ -1456,7 +1476,7 @@ layout: center
 </div>
 
 <!--
-[20:23 - 20:31] (8s)
+[22:06 - 22:16] (10s)
 
 • Single point of change — add behavior? one place
 -->
@@ -1472,7 +1492,7 @@ layout: center
 </div>
 
 <!--
-[20:31 - 20:42] (11s)
+[22:16 - 22:29] (13s)
 
 • Shared vocabulary — say "PowerList" in daily, everyone knows
 -->
@@ -1500,7 +1520,7 @@ Code talks to you. Your job: <strong>listen</strong>, pick the right tool.
 </div>
 
 <!--
-[22:29 - 22:59] (30s)
+[22:29 - 23:05] (36s)
 
 • Component drifting across contexts? Matrix — Map
 
@@ -1530,7 +1550,7 @@ Good abstractions aren't chosen.
 ## They're discovered.
 
 <!--
-[22:59 - 24:09] (70s)
+[23:05 - 24:29] (84s)
 
 • "Good abstractions aren't chosen. They're discovered."
 
@@ -1586,7 +1606,7 @@ layout: a-main-cover-2
 <div class="text-left mt-4 text-3xl font-bold">Questions?</div>
 
 <!--
-[24:09 - 24:24] (15s)
+[24:29 - 24:47] (18s)
 
 • Thank you all
 
