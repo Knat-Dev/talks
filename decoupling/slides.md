@@ -1297,8 +1297,7 @@ layout: default
 
 ```ts
 @Directive({
-  selector: 'app-list[appListPersistSelection]',
-  hostDirectives: [AppListSelectable, AppListPersistable],
+  selector: 'app-list[appListSelectable][appListPersistable]',
 })
 export class AppListPersistSelection {
   #selectable = inject(AppListSelectable);
