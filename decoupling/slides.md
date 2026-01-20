@@ -694,21 +694,6 @@ The **@if** becomes a **slot**. The boolean **and its friends** disappear.
 -->
 
 ---
-layout: center
----
-
-<div class="text-center">
-  <div class="text-4xl font-bold mb-6">Extract (WHAT)</div>
-  <div class="text-2xl text-red-400">Don't use when you need behavior, not structure</div>
-</div>
-
-<!--
-[10:09 - 10:19] (10s)
-
-• Content Projection? Structure only. Not behavior
--->
-
----
 layout: default
 ---
 
@@ -986,21 +971,6 @@ export class AdminPanel {}
 -->
 
 ---
-layout: center
----
-
-<div class="text-center">
-  <div class="text-4xl font-bold mb-6">Interface (HOW)</div>
-  <div class="text-2xl text-red-400">Don't use when only one implementation will ever exist</div>
-</div>
-
-<!--
-[14:26 - 14:36] (10s)
-
-• Strategy? Not if only one implementation exists
--->
-
----
 layout: default
 ---
 
@@ -1204,20 +1174,6 @@ Same combo. Three times.
 • Same thing 3 times? Not coincidence — concept without a name yet
 -->
 
----
-layout: center
----
-
-<div class="text-center">
-  <div class="text-4xl font-bold mb-6">Compose (WHETHER)</div>
-  <div class="text-2xl text-red-400">Don't use when behavior is exclusive (use Interface instead)</div>
-</div>
-
-<!--
-[18:26 - 18:36] (10s)
-
-• Directives? Not for exclusive A-or-B choices
--->
 
 ---
 layout: section
@@ -1370,15 +1326,6 @@ The **Glue**. Selectable doesn't know Persistable. This connects them.
 
 • This IS coupling — but intentional. Give it a home, a name, write a test
 -->
-
----
-layout: center
----
-
-<div class="text-center">
-  <div class="text-4xl font-bold mb-6">Bundle (WHICH)</div>
-  <div class="text-2xl text-red-400">Don't use when things are unrelated — don't bundle them</div>
-</div>
 
 <!--
 [21:18 - 21:28] (10s)
