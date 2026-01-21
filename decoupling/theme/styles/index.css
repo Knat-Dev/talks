@@ -217,8 +217,9 @@ tr:last-child td {
 ul li {
   list-style: none;
   position: relative;
-  padding-left: 1.25rem;
-  margin-bottom: 0.4rem;
+  padding-left: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
 }
 
 ul li::before {
@@ -226,17 +227,17 @@ ul li::before {
   position: absolute;
   left: 0;
   color: var(--cx-text);
-  font-size: 0.45rem;
-  top: 0.45rem;
+  font-size: 0.5rem;
+  top: 0.65rem;
 }
 
 ul {
-  margin: 0.5rem 0;
+  margin: 0;
 }
 
 /* Paragraphs */
 p {
-  margin: 0.5rem 0;
+  margin: 0;
 }
 
 /* Strong/Bold */
@@ -293,7 +294,7 @@ h3 {
 /* Blockquote styling */
 blockquote {
   position: relative;
-  margin: 1.5rem 0;
+  margin: 0.5rem 0;
   padding: 1.5rem 2rem 1.5rem 1.5rem;
   background: rgba(52, 211, 153, 0.08);
   border-left: 4px solid var(--cx-green);

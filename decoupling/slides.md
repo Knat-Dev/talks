@@ -149,7 +149,7 @@ layout: section
 
 # Then Requirements Came...
 
-<ul>
+<ul class="mt-6">
   <li>Custom templates</li>
   <li v-click>Row styles</li>
   <li v-click>Expand/collapse</li>
@@ -402,7 +402,13 @@ layout: default
 
 </template>
 
-> A component that knows too much or does too much. It violates the single responsibility principle by handling multiple concerns that should be separated.
+> A component that knows too much or does too much. It violates the **single responsibility principle**.
+
+<div v-click class="text-gray-600 mt-1">
+
+> **SRP**: Does one thing and does it well.
+
+</div>
 
 Our **Mega List** is becoming one.
 
