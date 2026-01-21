@@ -59,21 +59,21 @@ layout: default
 
   <!-- Outside of work -->
   <div class="flex flex-col gap-3">
-    <div class="flex items-center gap-3">
+    <div v-click class="flex items-center gap-3">
       <span class="text-2xl">🎸</span>
       <span class="text-gray-600">
         Playing guitar ~20 years (metal bands in the past)
       </span>
     </div>
-    <div class="flex items-center gap-3">
+    <div v-click class="flex items-center gap-3">
       <span class="text-2xl">🤘</span>
       <span class="text-gray-600">Metal — taste, not background noise</span>
     </div>
-    <div class="flex items-center gap-3">
+    <div v-click class="flex items-center gap-3">
       <span class="text-2xl">📚</span>
       <span class="text-gray-600">Fantasy & long-form worlds</span>
     </div>
-    <div class="flex items-center gap-3">
+    <div v-click class="flex items-center gap-3">
       <span class="text-2xl">🖥️</span>
       <span class="text-gray-600">Homelab tinkering</span>
     </div>
@@ -149,9 +149,13 @@ layout: section
 
 # Then Requirements Came...
 
-Custom templates, row styles, expand/collapse...
-
-Context menus, column management...
+<ul>
+  <li>Custom templates</li>
+  <li v-click>Row styles</li>
+  <li v-click>Expand/collapse</li>
+  <li v-click>Context menus</li>
+  <li v-click>Column management</li>
+</ul>
 
 <!--
 [1:58 - 2:22] (24s)
@@ -372,7 +376,7 @@ layout: default
 ```ts
 persistable = input(false);
 storageKey = input<string>('');
-storageMode = input<'local' | 'session' | 'server'>('local');
+storageMode = input<'local' | 'server'>('local');
 #http = inject(HttpClient);
 ```
 
@@ -445,7 +449,7 @@ From God Component to clean architecture
 <!--
 [6:22 - 6:34] (12s)
 
-• Here's the map — five steps from God Component to clean architecture
+• Here's the journey — five questions from God Component to clean architecture
 -->
 
 ---
@@ -453,14 +457,14 @@ layout: center
 ---
 
 <div class="text-center">
-  <div class="text-6xl font-bold mb-4">1. Map</div>
-  <div class="text-2xl text-gray-600">The <span style="color: var(--cx-green); font-weight: bold;">WHERE</span></div>
+  <div class="text-6xl font-bold mb-4"><span style="color: var(--cx-green);">1. Where</span></div>
+  <div class="text-2xl text-gray-600">Map the variation points</div>
 </div>
 
 <!--
 [6:34 - 6:44] (10s)
 
-• Map — what varies and where, shooting blind without it
+• 1. Where — what varies and where, shooting blind without it
 -->
 
 ---
@@ -468,14 +472,14 @@ layout: center
 ---
 
 <div class="text-center">
-  <div class="text-6xl font-bold mb-4">2. Extract</div>
-  <div class="text-2xl text-gray-600">The <span style="color: var(--cx-green); font-weight: bold;">WHAT</span></div>
+  <div class="text-6xl font-bold mb-4"><span style="color: var(--cx-green);">2. What</span></div>
+  <div class="text-2xl text-gray-600">Extract structural decisions</div>
 </div>
 
 <!--
 [6:44 - 6:54] (10s)
 
-• Extract — pull behaviors out of the component
+• 2. What — pull behaviors out of the component
 -->
 
 ---
@@ -483,14 +487,14 @@ layout: center
 ---
 
 <div class="text-center">
-  <div class="text-6xl font-bold mb-4">3. Interface</div>
-  <div class="text-2xl text-gray-600">The <span style="color: var(--cx-green); font-weight: bold;">HOW</span></div>
+  <div class="text-6xl font-bold mb-4"><span style="color: var(--cx-green);">3. How</span></div>
+  <div class="text-2xl text-gray-600">Define contracts for swappable behaviors</div>
 </div>
 
 <!--
 [6:54 - 7:04] (10s)
 
-• Interface — define contracts for swappable behaviors
+• 3. How — define contracts for swappable behaviors
 -->
 
 ---
@@ -498,14 +502,14 @@ layout: center
 ---
 
 <div class="text-center">
-  <div class="text-6xl font-bold mb-4">4. Compose</div>
-  <div class="text-2xl text-gray-600">The <span style="color: var(--cx-green); font-weight: bold;">WHETHER</span></div>
+  <div class="text-6xl font-bold mb-4"><span style="color: var(--cx-green);">4. Whether</span></div>
+  <div class="text-2xl text-gray-600">Make behaviors optional</div>
 </div>
 
 <!--
 [7:04 - 7:14] (10s)
 
-• Compose — make behaviors optional with directives
+• 4. Whether — make behaviors optional with directives
 -->
 
 ---
@@ -513,16 +517,16 @@ layout: center
 ---
 
 <div class="text-center">
-  <div class="text-6xl font-bold mb-4">5. Bundle</div>
-  <div class="text-2xl text-gray-600">The <span style="color: var(--cx-green); font-weight: bold;">WHICH</span></div>
+  <div class="text-6xl font-bold mb-4"><span style="color: var(--cx-green);">5. Which</span></div>
+  <div class="text-2xl text-gray-600">Bundle repeating patterns</div>
 </div>
 
 <!--
 [7:14 - 7:26] (12s)
 
-• Bundle — group repeating patterns with hostDirectives
+• 5. Which — group repeating patterns with hostDirectives
 
-• Let's start with Map
+• Let's start with 1. Where
 -->
 
 ---
@@ -531,18 +535,28 @@ layout: default
 
 <template #title>
 
-# Map (WHERE)
+# 1. Where
 
 </template>
 
-| Feature | Main Page | Admin Panel | Preview |
-|---------|-----------|-------------|---------|
-| items | ✓ | ✓ | ✓ |
-| showHeader | ✓ | ✗ | ✓ |
+<div class="flex gap-6 justify-center">
+  <div class="border-2 rounded-lg p-5" style="border-color: var(--cx-green);">
+    <div class="text-xl font-bold mb-4 text-center">Main Page</div>
+    <div class="text-green-500">✓ items</div>
+    <div class="text-green-500">✓ showHeader</div>
+  </div>
+  <div v-click class="border-2 rounded-lg p-5" style="border-color: var(--cx-green);">
+    <div class="text-xl font-bold mb-4 text-center">Admin Panel</div>
+    <div class="text-green-500">✓ items</div>
+    <div class="text-red-400">✗ showHeader</div>
+  </div>
+</div>
 
-**items** everywhere? That's the **baseline** — stays in component.
+<div class="mt-8 text-center">
 
-**showHeader** varies? That's a **candidate for extraction**.
+**items** everywhere? **Baseline.** &nbsp;&nbsp;|&nbsp;&nbsp; **showHeader** differs? **Candidate for extraction.**
+
+</div>
 
 <!--
 [7:26 - 8:00] (34s)
@@ -560,7 +574,7 @@ layout: default
 
 <template #title>
 
-# Extract (WHAT)
+# 2. What
 
 </template>
 
@@ -620,7 +634,7 @@ layout: section
 
 Template spaghetti.
 
-## Impossible to test.
+## <span class="text-red-400">Impossible to test.</span>
 
 <!--
 [9:03 - 9:21] (18s)
@@ -638,7 +652,7 @@ layout: default
 
 <template #title>
 
-# Extract (WHAT)
+# 2. What
 
 </template>
 
@@ -665,7 +679,7 @@ layout: default
 
 <template #title>
 
-# Extract (WHAT)
+# 2. What
 
 </template>
 
@@ -732,7 +746,7 @@ layout: default
 
 <template #title>
 
-# Interface (HOW)
+# 3. How
 
 </template>
 
@@ -740,8 +754,6 @@ layout: default
 save(key: string, state: ListState) {
   if (this.storageMode() === 'local') {
     localStorage.setItem(key, JSON.stringify(state));
-  } else if (this.storageMode() === 'session') {
-    sessionStorage.setItem(key, JSON.stringify(state));
   } else if (this.storageMode() === 'server') {
     this.#http.post('/api/preferences', { key, state });
   }
@@ -753,7 +765,7 @@ The component knows **too much** about the "how".
 <!--
 [11:00 - 11:30] (30s)
 
-• if local → localStorage, if session → sessionStorage, if server → HTTP call
+• if local → localStorage, if server → HTTP call
 
 • Component knows all storage implementations — knows too much
 
@@ -761,7 +773,7 @@ The component knows **too much** about the "how".
 
 • More else-if? And another?
 
-• The tell: if-else on implementations = Strategy
+• The sign: if-else on implementations = Strategy
 -->
 
 ---
@@ -788,7 +800,7 @@ layout: section
 
 if-forests.
 
-## Untestable without mocks.
+## <span class="text-red-400">Untestable without mocks.</span>
 
 <!--
 [11:45 - 12:03] (18s)
@@ -801,29 +813,34 @@ if-forests.
 -->
 
 ---
-layout: image-right
+layout: default
 ---
 
-::left::
+<template #title>
 
-# Interface (HOW)
+# 3. How
+
+</template>
 
 That **if-else** needs to disappear. But where does the decision go?
 
-::default::
-
-| Context      | Storage   |
-| ------------ | --------- |
-| Main Page    | Local     |
-| Admin Panel  | Server    |
-| Preview      | Session   |
+<div class="flex gap-6 justify-center mt-8">
+  <div class="border-2 rounded-lg p-5" style="border-color: var(--cx-green);">
+    <div class="text-xl font-bold mb-2 text-center">Main Page</div>
+    <div class="text-center text-gray-600">Local</div>
+  </div>
+  <div v-click class="border-2 rounded-lg p-5" style="border-color: var(--cx-green);">
+    <div class="text-xl font-bold mb-2 text-center">Admin Panel</div>
+    <div class="text-center text-gray-600">Server</div>
+  </div>
+</div>
 
 <!--
 [12:03 - 12:26] (23s)
 
 • if-else needs to disappear from component — but where to?
 
-• Depends on context: Main=local, Admin=server, Preview=session
+• Depends on context: Main=local, Admin=server
 
 • Same component, completely different storage behavior
 
@@ -836,7 +853,7 @@ layout: default
 
 <template #title>
 
-# Interface (HOW)
+# 3. How
 
 </template>
 
@@ -853,7 +870,7 @@ export const STORAGE_STRATEGY =
 <!--
 [12:26 - 12:50] (24s)
 
-• Interface: defines WHAT (save/load), not HOW
+• Interface defines WHAT (save/load), not HOW
 
 • InjectionToken = our key for DI
 
@@ -868,7 +885,7 @@ layout: default
 
 <template #title>
 
-# Interface (HOW)
+# 3. How
 
 </template>
 
@@ -899,7 +916,7 @@ layout: default
 
 <template #title>
 
-# Interface (HOW)
+# 3. How
 
 </template>
 
@@ -934,7 +951,7 @@ layout: default
 
 <template #title>
 
-# Interface (HOW)
+# 3. How
 
 </template>
 
@@ -1037,7 +1054,7 @@ layout: section
 
 Hidden features.
 
-## Null-check hell.
+## <span class="text-red-400">Null-check hell.</span>
 
 <!--
 [15:45 - 16:03] (18s)
@@ -1055,7 +1072,7 @@ layout: default
 
 <template #title>
 
-# Compose (WHETHER)
+# 4. Whether
 
 </template>
 
@@ -1099,7 +1116,7 @@ layout: default
 
 <template #title>
 
-# Compose (WHETHER)
+# 4. Whether
 
 </template>
 
@@ -1141,7 +1158,7 @@ layout: default
 
 <template #title>
 
-# Compose (WHETHER)
+# 4. Whether
 
 </template>
 
@@ -1158,20 +1175,16 @@ layout: default
 
 Same combo. Three times.
 
-<img v-click src="/assets/distracted-boyfriend.jpg" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-120 rounded-lg shadow-xl" />
-
 <!--
 [17:38 - 18:26] (48s)
 
 • Three different pages, exact same combo — copy-paste
 
-• Coupling hides inside repetition: "we always put these three together"
+• Coupling hides inside repetition: "we always put these together"
 
 • Want to add a fourth? Hunt through entire app. Miss one? Drift begins
 
-• [click] Distracted by repetition
-
-• Same thing 3 times? Not coincidence — concept without a name yet
+• Same thing three times? That's a concept without a name
 -->
 
 
@@ -1181,7 +1194,7 @@ layout: section
 
 <template #title>
 
-# Bundle (WHICH)
+# 5. Which
 
 </template>
 
@@ -1213,7 +1226,7 @@ layout: default
 
 <template #title>
 
-# Bundle (WHICH)
+# 5. Which
 
 </template>
 
@@ -1257,7 +1270,7 @@ layout: default
 
 <template #title>
 
-# Bundle (WHICH)
+# 5. Which
 
 </template>
 
@@ -1291,7 +1304,7 @@ layout: default
 
 <template #title>
 
-# Bundle (WHICH)
+# 5. Which
 
 </template>
 
@@ -1329,7 +1342,7 @@ The **Glue**. Selectable doesn't know Persistable. This connects them.
 <!--
 [21:18 - 21:28] (10s)
 
-• hostDirectives? Bundle only related things
+• hostDirectives? Only bundle related things
 -->
 
 ---
@@ -1340,19 +1353,19 @@ layout: center
   <div class="text-gray-600 text-sm uppercase tracking-widest mb-6">The Journey</div>
   <div class="flex justify-center gap-4">
     <div class="px-4 py-2 rounded-full text-sm font-semibold shadow-lg" style="background: var(--cx-green); color: #111827;">
-      ✓ Map
+      ✓ 1. Where
     </div>
     <div class="px-4 py-2 rounded-full text-sm font-semibold shadow-lg" style="background: var(--cx-green); color: #111827;">
-      ✓ Extract
+      ✓ 2. What
     </div>
     <div class="px-4 py-2 rounded-full text-sm font-semibold shadow-lg" style="background: var(--cx-green); color: #111827;">
-      ✓ Interface
+      ✓ 3. How
     </div>
     <div class="px-4 py-2 rounded-full text-sm font-semibold shadow-lg" style="background: var(--cx-green); color: #111827;">
-      ✓ Compose
+      ✓ 4. Whether
     </div>
     <div class="px-4 py-2 rounded-full text-sm font-semibold shadow-lg" style="background: var(--cx-green); color: #111827;">
-      ✓ Bundle
+      ✓ 5. Which
     </div>
   </div>
 </div>
@@ -1453,13 +1466,13 @@ layout: default
 
 </template>
 
-| The Tell | Step | Tool | Separates |
-|----------|------|------|-----------|
-| Cross-context drift | **Map** | Feature × Context | the **WHERE** |
-| Structural flags | **Extract** | Content Projection | the **WHAT** |
-| Exclusive alternatives | **Interface** | Strategy via DI | the **HOW** |
-| Composable opt-ins | **Compose** | Directives | the **WHETHER** |
-| Same combo 3× | **Bundle** | hostDirectives | the **WHICH** |
+| Separates | The Sign | Tool |
+|-----------|----------|------|
+| **1. Where** | Cross-context drift | Feature × Context |
+| **2. What** | Structural flags | Content Projection |
+| **3. How** | Exclusive alternatives | Strategy via DI |
+| **4. Whether** | Composable opt-ins | Directives |
+| **5. Which** | Same combo 3× | hostDirectives |
 
 <div class="mt-8 text-center text-xl text-gray-600">
 Code talks to you. Your job: <strong>listen</strong>, pick the right tool.
@@ -1468,15 +1481,15 @@ Code talks to you. Your job: <strong>listen</strong>, pick the right tool.
 <!--
 [22:29 - 23:05] (36s)
 
-• Component drifting across contexts? Matrix — Map
+• Component drifting across contexts? Matrix — 1. Where
 
-• Boolean changing structure? Content Projection — Extract
+• Boolean changing structure? Content Projection — 2. What
 
-• Exclusive alternatives? Strategy — Interface
+• Exclusive alternatives? Strategy — 3. How
 
-• Optional features? Directives — Compose
+• Optional features? Directives — 4. Whether
 
-• Copy-paste 3x? hostDirectives — Bundle
+• Copy-paste 3x? hostDirectives — 5. Which
 
 • Code talks to you. Your job: listen, pick right tool
 -->
@@ -1506,7 +1519,7 @@ Good abstractions aren't chosen.
 
 • Didn't happen because we read Design Patterns book
 
-• Happened because we listened to code, spotted the Tells, extracted in time
+• Happened because we listened to code, spotted the signs, extracted in time
 
 • My challenge to you:
 

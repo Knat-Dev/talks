@@ -93,7 +93,7 @@ const { $page } = useSlideContext();
 
 .section :deep(p) {
   color: var(--cx-text);
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   line-height: 1.5;
 }
 
